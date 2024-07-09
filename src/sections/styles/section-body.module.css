@@ -1,0 +1,10 @@
+.sectionBody {
+  align-self: stretch;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--pixel-10) var(--pixel-80) var(--pixel-30);
+  gap: var(--pixel-13);
+}

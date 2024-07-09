@@ -1,0 +1,50 @@
+.replaceThis,
+.replaceThis1 {
+  width: var(--pixel-300);
+  position: relative;
+  background-color: #888;
+  height: var(--pixel-60);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.replaceThis1 {
+  width: var(--pixel-20);
+  height: var(--pixel-20);
+}
+.syaratKetentuan {
+  text-decoration: underline;
+}
+.tncText {
+  margin: 0;
+  flex: 1;
+  position: relative;
+  font-size: var(--font-xsm);
+  font-weight: 500;
+  font-family: var(--font-karla);
+  color: rgba(9, 29, 44, 0.5);
+  text-align: left;
+}
+.formTnc,
+.portalForm {
+  display: flex;
+  justify-content: flex-start;
+}
+.formTnc {
+  align-self: stretch;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--pixel-5);
+}
+.portalForm {
+  margin: 0;
+  width: 100%;
+  border-radius: var(--pixel-20);
+  background-color: #fffefe;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--pixel-60) var(--pixel-30);
+  box-sizing: border-box;
+  gap: var(--pixel-30);
+  max-width: var(--pixel-500);
+}

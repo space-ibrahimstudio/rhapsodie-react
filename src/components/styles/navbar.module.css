@@ -1,0 +1,53 @@
+.replaceThis,
+.replaceThis1 {
+  width: var(--pixel-100);
+  position: relative;
+  background-color: #888;
+  height: 41px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.replaceThis1 {
+  width: 352px;
+}
+.navbarMenu {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--pixel-10);
+  max-width: var(--pixel-600);
+}
+.navbar,
+.navbarContent {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+.navbarContent {
+  margin: 0;
+  box-shadow: 0 19px 5px transparent, 0 12px 5px rgba(9, 29, 44, 0.01),
+    0 7px 4px rgba(9, 29, 44, 0.03), 0 3px 3px rgba(9, 29, 44, 0.04),
+    0 1px 2px rgba(9, 29, 44, 0.05);
+  border-radius: 9999px;
+  background-color: #fffefe;
+  border: 1px solid rgba(38, 137, 199, 0.3);
+  box-sizing: border-box;
+  height: var(--pixel-70);
+  overflow: hidden;
+  flex-shrink: 0;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: var(--pixel-15);
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--pixel-10) var(--pixel-45);
+}

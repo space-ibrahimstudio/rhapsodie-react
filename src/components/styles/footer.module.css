@@ -1,0 +1,30 @@
+.footerContent {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--pixel-30) var(--pixel-50);
+}
+.footerCopyright {
+  align-self: stretch;
+  position: relative;
+  font-weight: 500;
+}
+.footer {
+  align-self: stretch;
+  background-color: #091d2c;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--pixel-30) var(--pixel-100);
+  gap: var(--pixel-30);
+  text-align: center;
+  font-size: var(--font-xsm);
+  color: rgba(255, 254, 254, 0.5);
+  font-family: var(--font-karla);
+}

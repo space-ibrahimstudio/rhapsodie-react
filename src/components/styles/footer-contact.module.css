@@ -1,0 +1,21 @@
+.replaceThis {
+  width: var(--pixel-100);
+  position: relative;
+  background-color: #888;
+  height: 41px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.footerContact {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--pixel-10);
+  min-width: var(--pixel-350);
+  text-align: left;
+  font-size: var(--font-xsm);
+  color: #fffefe;
+  font-family: var(--font-karla);
+}

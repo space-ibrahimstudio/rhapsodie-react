@@ -1,0 +1,9 @@
+.section {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--pixel-30) var(--pixel-80);
+}

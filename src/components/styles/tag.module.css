@@ -1,0 +1,19 @@
+.tagText {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tag {
+  border-radius: var(--pixel-5);
+  background-color: rgba(38, 137, 199, 0.2);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--pixel-2) var(--pixel-5);
+  text-align: center;
+  font-size: var(--font-tiny);
+  color: #2689c7;
+  font-family: var(--font-karla);
+}

@@ -1,0 +1,24 @@
+.menuTitle {
+  margin: 0;
+  position: relative;
+  font-size: var(--font-sm);
+  font-weight: 800;
+  font-family: var(--font-mulish);
+  color: #fffefe;
+}
+.menuLi {
+  position: relative;
+  font-weight: 500;
+}
+.footerMenu {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--pixel-10);
+  text-align: left;
+  font-size: var(--font-xsm);
+  color: rgba(255, 254, 254, 0.7);
+  font-family: var(--font-karla);
+}
