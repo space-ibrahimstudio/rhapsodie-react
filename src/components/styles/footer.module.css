@@ -8,14 +8,16 @@
   justify-content: flex-start;
   gap: var(--pixel-30) var(--pixel-50);
 }
+
 .footerCopyright {
   align-self: stretch;
   position: relative;
   font-weight: 500;
 }
+
 .footer {
   align-self: stretch;
-  background-color: #091d2c;
+  background-color: var(--color-secondary);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -25,6 +27,6 @@
   gap: var(--pixel-30);
   text-align: center;
   font-size: var(--font-xsm);
-  color: rgba(255, 254, 254, 0.5);
+  color: var(--color-foreground-50);
   font-family: var(--font-karla);
 }

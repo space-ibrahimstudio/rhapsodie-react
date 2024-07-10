@@ -6,14 +6,7 @@
   font-weight: 800;
   font-family: inherit;
 }
-.replaceThis {
-  width: var(--pixel-100);
-  position: relative;
-  background-color: #888;
-  height: 41px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
+
 .sectionHead {
   align-self: stretch;
   display: flex;
@@ -24,6 +17,6 @@
   gap: var(--pixel-10);
   text-align: left;
   font-size: var(--font-md);
-  color: #091d2c;
+  color: var(--color-secondary);
   font-family: var(--font-mulish);
 }

@@ -1,37 +1,43 @@
 import React from "react";
+import Image from "./image";
 import styles from "./styles/portal-form.module.css";
 import fields from "./styles/form-fieldset.module.css";
 
 export const FormFieldset = ({ startAlt, startAltClick, endAlt, endAltClick, children }) => {
   return (
     <section className={fields.formFieldset}>
-      <span className={fields.fieldsetAlt} onClick={startAltClick}>
-        {startAlt}
-      </span>
+      {startAlt && (
+        <span className={fields.fieldsetAlt} onClick={startAltClick}>
+          {startAlt}
+        </span>
+      )}
       {children}
-      <span className={fields.fieldsetAlt} onClick={endAltClick}>
-        {endAlt}
-      </span>
+      {endAlt && (
+        <span className={fields.fieldsetAlt} onClick={endAltClick}>
+          {endAlt}
+        </span>
+      )}
     </section>
   );
 };
 
-export const FormTnC = () => {
+export const FormTnC = ({ checked, onChange }) => {
   return (
-    <footer className={styles.formTnc}>
-      <div className={styles.replaceThis1} />
+    <label className={styles.formTnc}>
+      <input type="checkbox" checked={checked} onChange={onChange} className={styles.checkbox} />
+      <span className={styles.checkmark}></span>
       <p className={styles.tncText}>
-        {`Dengan klik “Daftar Sekarang” saya telah menyetujui `}
-        <span className={styles.syaratKetentuan}>{`Syarat & Ketentuan`}</span> yang berlaku.
+        Dengan klik “Daftar Sekarang” saya telah menyetujui
+        <span style={{ textDecoration: "underline" }}>{` Syarat & Ketentuan `}</span>yang berlaku.
       </p>
-    </footer>
+    </label>
   );
 };
 
-const PortalForm = ({ children }) => {
+const PortalForm = ({ children, onSubmit }) => {
   return (
-    <form className={styles.portalForm}>
-      <div className={styles.replaceThis} />
+    <form className={styles.portalForm} onSubmit={onSubmit}>
+      <Image width="var(--pixel-300)" height="auto" src="/png/logo-primary.png" />
       {children}
     </form>
   );

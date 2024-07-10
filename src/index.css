@@ -18,8 +18,15 @@
   --theme-color-secondary: var(--color-secondary);
 
   --color-foreground: #FFFEFE;
+  --color-foreground-50: rgba(255, 254, 254, 0.5);
+  --color-foreground-70: rgba(255, 254, 254, 0.7);
   --color-primary: #2689C7;
+  --color-primary-5: rgba(38, 137, 199, 0.05);
+  --color-primary-20: rgba(38, 137, 199, 0.2);
+  --color-primary-30: rgba(38, 137, 199, 0.3);
   --color-secondary: #091D2C;
+  --color-secondary-10: rgba(9, 29, 44, 0.1);
+  --color-secondary-50: rgba(9, 29, 44, 0.5);
   --color-hint: #EC801C;
 
   --pixel-2: 2px;

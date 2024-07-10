@@ -36,8 +36,8 @@ const TeacherBoard = ({ avatar, header, name, shortBio, bio, location, rating, t
       </section>
       <section className={styles.teacherReview}>
         <h1 className={styles.reviewTitle}>
-          <span className={styles.ulasan}>{`Ulasan `}</span>
-          <span className={styles.ulasan1}>{`(${rating} ulasan)`}</span>
+          <span style={{ fontWeight: "800" }}>{`Ulasan `}</span>
+          <span style={{ fontWeight: "600", opacity: "0.5" }}>{`(${rating} ulasan)`}</span>
         </h1>
         <div className={styles.reviewContent}>
           {reviews.map((review, index) => (

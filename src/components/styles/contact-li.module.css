@@ -1,16 +1,9 @@
-.replaceThis {
-  width: var(--pixel-20);
-  position: relative;
-  background-color: #888;
-  height: var(--pixel-20);
-  overflow: hidden;
-  flex-shrink: 0;
-}
 .liText {
   flex: 1;
   position: relative;
   font-weight: 500;
 }
+
 .contactLi {
   align-self: stretch;
   display: flex;
@@ -20,6 +13,6 @@
   gap: var(--pixel-10);
   text-align: left;
   font-size: var(--font-xsm);
-  color: #fffefe;
+  color: var(--color-foreground);
   font-family: var(--font-karla);
 }

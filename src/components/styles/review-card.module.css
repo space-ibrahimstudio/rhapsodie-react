@@ -6,33 +6,39 @@
   flex-shrink: 0;
   object-fit: cover;
 }
+
 .cardName,
 .cardStatus {
   align-self: stretch;
   position: relative;
 }
+
 .cardName {
   margin: 0;
   font-size: inherit;
   font-weight: 800;
   font-family: inherit;
 }
+
 .cardStatus {
   font-size: var(--font-xsm);
   font-weight: 500;
   font-family: var(--font-karla);
 }
+
 .cardHead,
 .cardInfo {
   display: flex;
   justify-content: flex-start;
 }
+
 .cardInfo {
   flex: 1;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--pixel-2);
 }
+
 .cardHead {
   align-self: stretch;
   flex-direction: row;
@@ -40,28 +46,22 @@
   gap: var(--pixel-20);
   text-align: left;
   font-size: var(--font-sm);
-  color: #091d2c;
+  color: var(--color-secondary);
   font-family: var(--font-mulish);
 }
-.replaceThis {
-  width: var(--pixel-20);
-  position: relative;
-  background-color: #888;
-  height: var(--pixel-20);
-  overflow: hidden;
-  flex-shrink: 0;
-}
+
 .cardContent {
   margin: 0;
   align-self: stretch;
   position: relative;
   font-weight: 500;
 }
+
 .reviewCard {
   align-self: stretch;
   border-radius: var(--pixel-20);
-  background-color: rgba(38, 137, 199, 0.05);
-  border: 1px solid rgba(38, 137, 199, 0.3);
+  background-color: var(--color-primary-5);
+  border: 1px solid var(--color-primary-30);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -71,9 +71,10 @@
   gap: var(--pixel-20);
   text-align: left;
   font-size: var(--font-xsm);
-  color: #091d2c;
+  color: var(--color-secondary);
   font-family: var(--font-karla);
 }
+
 .reviewCard.even {
   background-color: transparent;
   border: 1px solid transparent;

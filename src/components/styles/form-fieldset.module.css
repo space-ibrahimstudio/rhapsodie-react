@@ -1,17 +1,9 @@
-.fieldsetAlt,
-.replaceThis {
+.fieldsetAlt {
   align-self: stretch;
   position: relative;
-}
-.fieldsetAlt {
   font-weight: 500;
 }
-.replaceThis {
-  background-color: #888;
-  height: var(--pixel-50);
-  overflow: hidden;
-  flex-shrink: 0;
-}
+
 .formFieldset {
   align-self: stretch;
   display: flex;
@@ -21,6 +13,6 @@
   gap: var(--pixel-10);
   text-align: center;
   font-size: var(--font-xsm);
-  color: #091d2c;
+  color: var(--color-secondary);
   font-family: var(--font-karla);
 }

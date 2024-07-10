@@ -4,9 +4,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .tag {
   border-radius: var(--pixel-5);
-  background-color: rgba(38, 137, 199, 0.2);
+  background-color: var(--color-primary-20);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -14,6 +15,6 @@
   padding: var(--pixel-2) var(--pixel-5);
   text-align: center;
   font-size: var(--font-tiny);
-  color: #2689c7;
+  color: var(--color-primary);
   font-family: var(--font-karla);
 }
