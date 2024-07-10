@@ -32,7 +32,7 @@ jobs:
         run: npm install
 
       - name: Builds the app for production
-        run: CI= npm run deploy
+        run: CI= npm run build
 
       - name: List output files
         run: find build/ -print
