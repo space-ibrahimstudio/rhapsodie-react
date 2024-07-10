@@ -46,7 +46,6 @@
 }
 
 .locText {
-  flex: 1;
   position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -161,4 +160,20 @@
   border-radius: var(--pixel-20);
   border: 1px solid var(--color-primary-30);
   align-items: center;
+}
+
+@media (max-width: 700px) {
+  .teacherBanner {
+    align-items: center;
+  }
+
+  .teacherDetails {
+    text-align: center;
+  }
+
+  .teacherLoc,
+  .teacherRating,
+  .detailsActions {
+    justify-content: center;
+  }
 }

@@ -22,3 +22,9 @@
   overflow: hidden;
   padding: var(--pixel-30) var(--pixel-80);
 }
+
+@media (max-width: 910px) {
+  .categorySection {
+    padding: var(--pixel-30) var(--pixel-30);
+  }
+}

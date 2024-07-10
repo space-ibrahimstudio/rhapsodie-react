@@ -20,3 +20,9 @@
   color: var(--color-secondary);
   font-family: var(--font-mulish);
 }
+
+@media (max-width: 910px) {
+  .sectionHead {
+    padding: var(--pixel-30) var(--pixel-30) var(--pixel-10);
+  }
+}

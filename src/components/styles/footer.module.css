@@ -30,3 +30,9 @@
   color: var(--color-foreground-50);
   font-family: var(--font-karla);
 }
+
+@media (max-width: 910px) {
+  .footer {
+    padding: var(--pixel-30);
+  }
+}

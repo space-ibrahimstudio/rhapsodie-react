@@ -13,3 +13,9 @@
   background-position: top;
   min-height: 100vh;
 }
+
+@media (max-width: 910px) {
+  .portal {
+    padding: var(--pixel-30);
+  }
+}

@@ -7,3 +7,9 @@
   justify-content: center;
   padding: var(--pixel-30) var(--pixel-80);
 }
+
+@media (max-width: 910px) {
+  .section {
+    padding: var(--pixel-30);
+  }
+}

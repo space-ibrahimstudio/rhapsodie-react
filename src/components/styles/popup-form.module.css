@@ -1,0 +1,147 @@
+.formTitle {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  font-size: var(--font-md);
+  font-weight: 800;
+  font-family: var(--font-mulish);
+  color: var(--color-secondary);
+  text-align: center;
+}
+
+.formFieldset {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--pixel-10);
+}
+
+.formNote {
+  align-self: stretch;
+  position: relative;
+  font-size: var(--font-xsm);
+  font-family: var(--font-karla);
+  color: var(--color-secondary-50);
+  text-align: left;
+}
+
+.formBody,
+.popupContainer,
+.popupForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formBody {
+  align-self: stretch;
+  justify-content: flex-start;
+  gap: var(--pixel-10);
+}
+
+.popupContainer {
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.popupForm {
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: var(--pixel-20);
+  background-color: var(--color-foreground);
+  justify-content: flex-start;
+  padding: var(--pixel-60) var(--pixel-30);
+  gap: var(--pixel-30);
+  max-width: var(--pixel-650);
+  animation-name: slideup;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.popupForm.close {
+  animation-name: slidedown;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.popupContainer {
+  flex-shrink: 0;
+  align-self: stretch;
+  justify-content: center;
+  padding: var(--pixel-30) var(--pixel-80);
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation-name: fadein;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.popupContainer.close {
+  animation-name: fadeout;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.popupScroll {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 100vh;
+  overflow-y: auto;
+  justify-content: flex-start;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideup {
+  from {
+    opacity: 0;
+    transform: translateY(var(--pixel-30));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slidedown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(var(--pixel-30));
+  }
+}
+
+@media (max-width: 910px) {
+  .popupContainer {
+    padding: var(--pixel-30);
+  }
+}

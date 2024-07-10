@@ -1,0 +1,30 @@
+.backButton {
+  position: fixed;
+  top: var(--pixel-30);
+  left: var(--pixel-80);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--color-primary-30);
+  padding: 0 var(--pixel-20);
+  background-color: var(--color-foreground);
+  box-shadow: 0 17px 5px transparent, 0 11px 4px rgba(0, 0, 0, 0.01),
+    0 6px 4px rgba(0, 0, 0, 0.03), 0 3px 3px rgba(0, 0, 0, 0.04),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: var(--pixel-20);
+  box-sizing: border-box;
+  height: var(--pixel-50);
+  flex-direction: row;
+}
+
+.backButton.lower {
+  top: var(--pixel-120);
+}
+
+@media (max-width: 910px) {
+  .backButton {
+    left: var(--pixel-30);
+  }
+}

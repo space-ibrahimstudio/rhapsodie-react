@@ -8,3 +8,13 @@
   padding: var(--pixel-10) var(--pixel-80) var(--pixel-30);
   gap: var(--pixel-13);
 }
+
+.sectionBody::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 910px) {
+  .sectionBody {
+    padding: var(--pixel-10) var(--pixel-30) var(--pixel-30);
+  }
+}

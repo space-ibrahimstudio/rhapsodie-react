@@ -3,9 +3,17 @@
   flex: 1;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-end;
+  gap: var(--pixel-10);
+}
+
+.navbarSearch {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
   justify-content: flex-start;
   gap: var(--pixel-10);
-  max-width: var(--pixel-600);
 }
 
 .navbar,
@@ -41,4 +49,16 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: var(--pixel-10) var(--pixel-45);
+}
+
+@media (min-width: 773px) {
+  .navbarMenu {
+    max-width: var(--pixel-600);
+  }
+}
+
+@media (max-width: 910px) {
+  .navbar {
+    padding: var(--pixel-10) var(--pixel-15);
+  }
 }

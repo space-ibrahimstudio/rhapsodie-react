@@ -8,7 +8,7 @@ const TeacherPage = ({ params }) => {
   const selectedTeacher = teacherList.find((item) => item.id === params);
 
   return (
-    <PageLayout>
+    <PageLayout as="child">
       <Section>
         <TeacherBoard name={selectedTeacher.name} avatar={selectedTeacher.image} header="/jpg/fallback.jpg" shortBio={selectedTeacher.short} bio={selectedTeacher.bio} location={selectedTeacher.location} rating={selectedTeacher.rating_total} tags={selectedTeacher.tags} reviews={selectedTeacher.reviews} />
       </Section>

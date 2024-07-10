@@ -33,7 +33,7 @@ const LoginPage = () => {
   };
 
   return (
-    <PageLayout type="sub">
+    <PageLayout type="sub" as="child">
       <PortalSection>
         <PortalForm onSubmit={handleSubmit}>
           <FormFieldset>

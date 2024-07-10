@@ -1,14 +1,14 @@
 export const lessonCategory = [
-  { icon: "/png/akustik.png", label: "GITAR AKUSTIK" },
-  { icon: "/png/bass.png", label: "GITAR BASS" },
-  { icon: "/png/gitar-elektrik.png", label: "GITAR ELEKTRIK" },
-  { icon: "/png/biola.png", label: "BIOLA" },
-  { icon: "/png/vocal.png", label: "VOCAL" },
-  { icon: "/png/piano.png", label: "PIANO" },
-  { icon: "/png/drum.png", label: "DRUM" },
-  { icon: "/png/drum-elektrik.png", label: "DRUM ELEKTRIK" },
-  { icon: "/png/saxophone.png", label: "SAXOPHONE" },
-  { icon: "/png/seruling.png", label: "FLUTE" },
+  { icon: "/png/akustik.png", label: "GITAR AKUSTIK", value: "gitar" },
+  { icon: "/png/bass.png", label: "GITAR BASS", value: "bass" },
+  { icon: "/png/gitar-elektrik.png", label: "GITAR ELEKTRIK", value: "g-elektrik" },
+  { icon: "/png/biola.png", label: "BIOLA", value: "biola" },
+  { icon: "/png/vocal.png", label: "VOCAL", value: "vokal" },
+  { icon: "/png/piano.png", label: "PIANO", value: "piano" },
+  { icon: "/png/drum.png", label: "DRUM", value: "drum" },
+  { icon: "/png/drum-elektrik.png", label: "DRUM ELEKTRIK", value: "d-elektrik" },
+  { icon: "/png/saxophone.png", label: "SAXOPHONE", value: "saxo" },
+  { icon: "/png/seruling.png", label: "FLUTE", value: "flute" },
 ];
 
 export const teacherList = [
