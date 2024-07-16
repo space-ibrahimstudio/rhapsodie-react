@@ -1,7 +1,7 @@
 import React from "react";
-import Tag from "./tag";
-import Image from "./image";
-import { Location } from "./icons";
+import Tag from "../contents/tag";
+import Image from "../contents/image";
+import { Location } from "../contents/icons";
 import styles from "./styles/teacher-card.module.css";
 
 const TeacherCard = ({ image, name, location, rating, tags, onClick }) => {

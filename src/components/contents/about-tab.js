@@ -1,5 +1,5 @@
-import React, { act, useState } from "react";
-import Tag from "./tag";
+import React, { useState } from "react";
+import Tag from "../contents/tag";
 import styles from "./styles/about-tab.module.css";
 
 const AboutTab = ({ tags, content }) => {

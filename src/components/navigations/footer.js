@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import Image from "./image";
+import Image from "../contents/image";
 import styles from "./styles/footer.module.css";
 import li from "./styles/contact-li.module.css";
 import contact from "./styles/footer-contact.module.css";

@@ -1,8 +1,8 @@
 import React from "react";
 import { teacherList } from "../lib/dummy";
-import PageLayout from "../components/pages";
-import Section from "../sections/section";
-import TeacherBoard from "../components/teacher-board";
+import PageLayout from "../components/frames/pages";
+import Section from "../components/frames/section";
+import TeacherBoard from "../components/contents/teacher-board";
 
 const TeacherPage = ({ params }) => {
   const selectedTeacher = teacherList.find((item) => item.id === params);

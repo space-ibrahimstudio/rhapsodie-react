@@ -3,10 +3,10 @@ import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@ibrahimstudio/input";
 import { Button } from "@ibrahimstudio/button";
-import { teacherList } from "../lib/dummy";
-import { Location, Search, Close } from "./icons";
-import Suggest from "./suggest";
-import TeacherCard from "./teacher-card";
+import { teacherList } from "../../lib/dummy";
+import { Location, Search, Close } from "../contents/icons";
+import Suggest from "../contents/suggest";
+import TeacherCard from "../cards/teacher-card";
 import styles from "./styles/search-drawer.module.css";
 
 const modalRoot = document.getElementById("modal-root") || document.body;

@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { lessonCategory, teacherList } from "../lib/dummy";
-import PageLayout from "../components/pages";
+import PageLayout from "../components/frames/pages";
 import SliderSection from "../sections/slider-section";
 import CategorySection from "../sections/category-section";
 import TeacherSection, { SectionHead, SectionBody } from "../sections/teacher-section";
-import Image from "../components/image";
-import CatCard from "../components/cat-card";
-import TeacherCard from "../components/teacher-card";
+import Image from "../components/contents/image";
+import CatCard from "../components/cards/cat-card";
+import TeacherCard from "../components/cards/teacher-card";
 
 const HomePage = () => {
   const navigate = useNavigate();

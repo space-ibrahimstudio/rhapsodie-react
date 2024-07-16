@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./styles/icons.module.css";
 
 export const Arrow = ({ size, color, direction }) => {

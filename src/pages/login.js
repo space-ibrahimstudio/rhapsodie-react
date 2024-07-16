@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "@ibrahimstudio/input";
 import { Button } from "@ibrahimstudio/button";
 import { inputValidator } from "../lib/controller";
-import PageLayout from "../components/pages";
+import PageLayout from "../components/frames/pages";
 import PortalSection from "../sections/portal-section";
-import Image from "../components/image";
-import PortalForm, { FormFieldset } from "../components/portal-form";
+import Image from "../components/contents/image";
+import PortalForm, { FormFieldset } from "../components/inputs/portal-form";
 
 const LoginPage = () => {
   const navigate = useNavigate();

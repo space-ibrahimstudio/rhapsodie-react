@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@ibrahimstudio/button";
-import { Arrow } from "../components/icons";
+import { Arrow } from "../components/contents/icons";
 import styles from "./styles/teacher-section.module.css";
 import head from "./styles/section-head.module.css";
 import body from "./styles/section-body.module.css";

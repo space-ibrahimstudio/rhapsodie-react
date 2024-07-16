@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Arrow } from "./icons";
+import { Arrow } from "../contents/icons";
 import styles from "./styles/back-button.module.css";
 
 const BackButton = ({ isLower = true }) => {

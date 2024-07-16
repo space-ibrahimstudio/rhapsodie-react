@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "./image";
+import Image from "../contents/image";
 import styles from "./styles/portal-form.module.css";
 import fields from "./styles/form-fieldset.module.css";
 

@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useWindow } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
-import Image from "./image";
+import Image from "../contents/image";
 import SearchDrawer from "./search-drawer";
 import MenuDrawer from "./menu-drawer";
-import { Search, Burger, Close } from "./icons";
+import { Search, Burger, Close } from "../contents/icons";
 import styles from "./styles/navbar.module.css";
 
 const Navbar = () => {

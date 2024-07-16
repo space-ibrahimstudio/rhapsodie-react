@@ -2,14 +2,14 @@ import React, { Fragment, useState } from "react";
 import { useWindow } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
-import { lessonCategory } from "../lib/dummy";
+import { lessonCategory } from "../../lib/dummy";
 import AboutTab from "./about-tab";
-import ReviewCard from "./review-card";
+import ReviewCard from "../cards/review-card";
 import Image from "./image";
 import { Location, Love, Share } from "./icons";
 import InvoiceSm from "./invoice-sm";
 import ProductSm from "./product-sm";
-import PopupForm, { PopupBody, PopupFieldset, PopupFooter, PopupNote } from "./popup-form";
+import PopupForm, { PopupBody, PopupFieldset, PopupFooter, PopupNote } from "../inputs/popup-form";
 import styles from "./styles/teacher-board.module.css";
 
 const TeacherBoard = ({ avatar, header, name, shortBio, bio, location, rating, tags, reviews }) => {
