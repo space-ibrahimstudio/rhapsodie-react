@@ -27,11 +27,13 @@ const AboutTab = ({ tags, content }) => {
       </nav>
       {activeTab === "1" && (
         <div className={styles.tabContent}>
-          <div className={styles.contentCat}>
-            {convertedTags.map((tag, index) => (
-              <Tag key={index} tagText={tag} />
-            ))}
-          </div>
+          {convertedTags.length > 0 && (
+            <div className={styles.contentCat}>
+              {convertedTags.map((tag, index) => (
+                <Tag key={index} tagText={tag} />
+              ))}
+            </div>
+          )}
           <p className={styles.contentText}>{strippedContent}</p>
         </div>
       )}

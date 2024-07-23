@@ -4,15 +4,16 @@ import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
 import { lessonCategory } from "../../lib/dummy";
 import AboutTab from "./about-tab";
-import ReviewCard from "../cards/review-card";
+import { ReviewCard } from "./cards";
 import Image from "./image";
 import { Location, Love, Share } from "./icons";
+import Skeleton, { SkeGroup } from "./skeleton";
 import InvoiceSm from "./invoice-sm";
 import ProductSm from "./product-sm";
 import PopupForm, { PopupBody, PopupFieldset, PopupFooter, PopupNote } from "../inputs/popup-form";
 import styles from "./styles/teacher-board.module.css";
 
-const TeacherBoard = ({ avatar, header, name, shortBio, bio, location, rating, tags, reviews = [] }) => {
+const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, location, rating, tags, reviews = [] }) => {
   const { width } = useWindow();
   const { newDate } = useFormat();
   const [step, setStep] = useState("1");
@@ -48,49 +49,93 @@ const TeacherBoard = ({ avatar, header, name, shortBio, bio, location, rating, t
     setInputData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleNextStep = (step) => {
-    setStep(step);
-  };
+  const handleNextStep = (step) => setStep(step);
 
   return (
     <Fragment>
       <article className={styles.teacherBoard}>
-        <header className={styles.teacherBanner} style={{ backgroundImage: `url(${header})` }}>
-          <img className={styles.teacherAvatarIcon} alt="" src={avatar} />
+        <header className={styles.teacherBanner} style={{ backgroundImage: `url(${isLoading ? "/jpg/fallback.jpg" : header})` }}>
+          <Image className={styles.teacherAvatarIcon} alt={name} src={isLoading ? "/jpg/fallback.jpg" : avatar} />
         </header>
         <section className={styles.teacherDetails}>
           <div className={styles.detailsContent}>
-            <h1 className={styles.teacherName}>{name}</h1>
-            <p className={styles.teacherBio}>{shortBio}</p>
+            {isLoading ? (
+              <SkeGroup justifyC={width <= 700 ? "center" : "flex-start"} alignI={width <= 700 ? "center" : "flex-start"}>
+                <Skeleton w="40%" />
+                <Skeleton type="txt-xsm" w="70%" />
+              </SkeGroup>
+            ) : (
+              <Fragment>
+                <h1 className={styles.teacherName}>{(name && name) || "N/A"}</h1>
+                {shortBio && <p className={styles.teacherBio}>{shortBio}</p>}
+              </Fragment>
+            )}
             <div className={styles.teacherLoc}>
-              <Location size="var(--pixel-15)" />
-              <b className={styles.locText}>{location}</b>
+              {isLoading ? (
+                <Fragment>
+                  <Skeleton w="var(--pixel-20)" h="var(--pixel-20)" />
+                  <Skeleton type="txt-xsm" w="20%" />
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Location size="var(--pixel-15)" />
+                  <b className={styles.locText}>{(location && location) || "N/A"}</b>
+                </Fragment>
+              )}
             </div>
-            <div className={styles.teacherRating}>
-              <Image width="auto" height="var(--pixel-15)" src="/svg/star.svg" />
-              <b className={styles.locText}>{`(${rating} ulasan)`}</b>
-            </div>
+            {!isLoading && (
+              <div className={styles.teacherRating}>
+                {rating !== 0 && <Image width="auto" height="var(--pixel-15)" src="/svg/star.svg" />}
+                <b className={styles.locText}>{rating === 0 ? "Belum ada ulasan" : `(${rating} ulasan)`}</b>
+              </div>
+            )}
           </div>
           <div className={styles.detailsActions}>
-            <Button radius="full" buttonText="Reservasi Sekarang" onClick={() => setReservOpen(true)} />
-            <Button variant="line" subVariant="icon" radius="full" color="var(--color-primary)" iconContent={<Love />} />
-            {width <= 700 ? <Button variant="hollow" subVariant="icon" radius="full" color="var(--color-secondary)" iconContent={<Share />} /> : <Button variant="hollow" radius="full" color="var(--color-secondary)" buttonText="Bagikan" startContent={<Share />} />}
+            {isLoading ? (
+              <Fragment>
+                <Skeleton w="var(--pixel-200)" h="var(--pixel-50)" />
+                <Skeleton w="var(--pixel-50)" h="var(--pixel-50)" />
+                <Skeleton w="var(--pixel-50)" h="var(--pixel-50)" />
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Button radius="full" buttonText="Reservasi Sekarang" onClick={() => setReservOpen(true)} />
+                <Button variant="line" subVariant="icon" radius="full" color="var(--color-primary)" iconContent={<Love />} />
+                {width <= 700 ? <Button variant="hollow" subVariant="icon" radius="full" color="var(--color-secondary)" iconContent={<Share />} /> : <Button variant="hollow" radius="full" color="var(--color-secondary)" buttonText="Bagikan" startContent={<Share />} />}
+              </Fragment>
+            )}
           </div>
         </section>
         <section className={styles.teacherAbout}>
-          <AboutTab tags={tags} content={bio} />
+          {isLoading ? (
+            <SkeGroup gap="var(--pixel-15)">
+              <SkeGroup flexDir="row">
+                <Skeleton w="var(--pixel-100)" h="var(--pixel-40)" />
+                <Skeleton w="var(--pixel-100)" h="var(--pixel-40)" />
+              </SkeGroup>
+              <SkeGroup>
+                <Skeleton type="txt-xsm" />
+                <Skeleton type="txt-xsm" />
+                <Skeleton type="txt-xsm" w="60%" />
+              </SkeGroup>
+            </SkeGroup>
+          ) : (
+            <AboutTab tags={tags} content={bio} />
+          )}
         </section>
-        <section className={styles.teacherReview}>
-          <h1 className={styles.reviewTitle}>
-            <span style={{ fontWeight: "800" }}>{`Ulasan `}</span>
-            <span style={{ fontWeight: "600", opacity: "0.5" }}>{`(${rating} ulasan)`}</span>
-          </h1>
-          <div className={styles.reviewContent}>
-            {reviews.map((review, index) => (
-              <ReviewCard key={index} isEven={index % 2 === 0 ? false : true} name={review.name} status={`Bergabung sejak ${newDate(review.created_at)}`} avatar="/jpg/avatar.jpg" content={review.description} />
-            ))}
-          </div>
-        </section>
+        {!isLoading && (
+          <section className={styles.teacherReview}>
+            <h1 className={styles.reviewTitle}>
+              <span style={{ fontWeight: "800" }}>{`Ulasan `}</span>
+              <span style={{ fontWeight: "600", opacity: "0.5" }}>{`(${rating} ulasan)`}</span>
+            </h1>
+            <div className={styles.reviewContent}>
+              {reviews.map((review, index) => (
+                <ReviewCard key={index} isEven={index % 2 === 0 ? false : true} name={review.name} status={`Bergabung sejak ${newDate(review.created_at)}`} avatar="/jpg/avatar.jpg" content={review.description} />
+              ))}
+            </div>
+          </section>
+        )}
       </article>
       {reservOpen && (
         <PopupForm title={formtitle} onClose={() => setReservOpen(false)} onSubmit={() => {}}>

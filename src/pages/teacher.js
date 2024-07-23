@@ -10,13 +10,13 @@ const imgURL = process.env.REACT_APP_IMGSRC_URL;
 const TeacherPage = () => {
   const { slug } = useParams();
   const { apiRead } = useApi();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedData, setSelectedData] = useState([]);
   const [ratingData, setRatingData] = useState([]);
 
   const fetchData = async () => {
     const errormsg = "Terjadi kesalahan saat memuat data. Mohon periksa koneksi internet anda dan coba lagi.";
-    setLoading(true);
+    setIsLoading(true);
     try {
       const formData = new FormData();
       const ratingFormData = new FormData();
@@ -24,7 +24,7 @@ const TeacherPage = () => {
       const data = await apiRead(formData, "main", "teacherdetail");
       if (data && data.length > 0) {
         setSelectedData(data[0]);
-        ratingFormData.append("data", JSON.stringify({ iduser: "10" }));
+        ratingFormData.append("data", JSON.stringify({ iduser: data[0].id }));
         const ratingdata = await apiRead(ratingFormData, "main", "teacherreview");
         if (ratingdata && ratingdata.length > 0) {
           setRatingData(ratingdata);
@@ -38,7 +38,7 @@ const TeacherPage = () => {
     } catch (error) {
       console.error(errormsg, error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -46,14 +46,10 @@ const TeacherPage = () => {
     fetchData();
   }, [slug]);
 
-  if (loading) {
-    return <div>Loading ...</div>;
-  }
-
   return (
     <PageLayout as="child">
       <Section>
-        <TeacherBoard name={selectedData.name} avatar={selectedData.logo === null ? "/jpg/fallback.jpg" : `${imgURL}/${selectedData.logo}`} header={selectedData.cover === null ? "/jpg/fallback.jpg" : `${imgURL}/${selectedData.cover}`} shortBio={selectedData.short_description} bio={selectedData.description} location={selectedData.address} rating={ratingData.length} tags={selectedData.services} reviews={ratingData} />
+        <TeacherBoard isLoading={isLoading} name={selectedData.name} avatar={selectedData.logo === null ? "/jpg/fallback.jpg" : `${imgURL}/${selectedData.logo}`} header={selectedData.cover === null ? "/jpg/fallback.jpg" : `${imgURL}/${selectedData.cover}`} shortBio={selectedData.short_description} bio={selectedData.description} location={selectedData.address} rating={ratingData.length} tags={selectedData.services} reviews={ratingData} />
       </Section>
     </PageLayout>
   );

@@ -18,8 +18,12 @@ export const SectionBody = ({ children }) => {
   return <section className={body.sectionBody}>{children}</section>;
 };
 
-const TeacherSection = ({ children }) => {
-  return <section className={styles.teacherSection}>{children}</section>;
+const TeacherSection = ({ id, children }) => {
+  return (
+    <section id={id} className={styles.teacherSection}>
+      {children}
+    </section>
+  );
 };
 
 export default TeacherSection;

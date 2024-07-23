@@ -3,10 +3,8 @@ import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@ibrahimstudio/input";
 import { Button } from "@ibrahimstudio/button";
-import { teacherList } from "../../lib/dummy";
 import { Location, Search, Close } from "../contents/icons";
 import Suggest from "../contents/suggest";
-import TeacherCard from "../cards/teacher-card";
 import styles from "./styles/search-drawer.module.css";
 
 const modalRoot = document.getElementById("modal-root") || document.body;
@@ -65,21 +63,6 @@ const SearchDrawer = ({ onClose }) => {
             <Suggest label="Guru Piano" />
           </div>
         </section>
-        {/* <section className={styles.searchResult}>
-          <div className={styles.resultHead}>
-            <h1 className={styles.resultTitle}>Guru Popular</h1>
-          </div>
-          <div className={styles.resultItems}>
-            {teacherList.map((teacher, index) => (
-              <TeacherCard key={index} image="/jpg/fallback.jpg" name={teacher.name} location={teacher.location} rating={teacher.rating_total} tags={teacher.tags} onClick={() => navigate(`/guru/${teacher.id}`)} />
-            ))}
-          </div>
-          <div className={styles.resultItems}>
-            {teacherList.map((teacher, index) => (
-              <TeacherCard key={index} image="/jpg/fallback.jpg" name={teacher.name} location={teacher.location} rating={teacher.rating_total} tags={teacher.tags} onClick={() => navigate(`/guru/${teacher.id}`)} />
-            ))}
-          </div>
-        </section> */}
       </section>
     </main>
   );
