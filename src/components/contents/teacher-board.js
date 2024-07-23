@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { useWindow } from "@ibrahimstudio/react";
+import { useWindow, useFormat } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
 import { lessonCategory } from "../../lib/dummy";
@@ -12,8 +12,9 @@ import ProductSm from "./product-sm";
 import PopupForm, { PopupBody, PopupFieldset, PopupFooter, PopupNote } from "../inputs/popup-form";
 import styles from "./styles/teacher-board.module.css";
 
-const TeacherBoard = ({ avatar, header, name, shortBio, bio, location, rating, tags, reviews }) => {
+const TeacherBoard = ({ avatar, header, name, shortBio, bio, location, rating, tags, reviews = [] }) => {
   const { width } = useWindow();
+  const { newDate } = useFormat();
   const [step, setStep] = useState("1");
   const [reservOpen, setReservOpen] = useState(false);
   const [inputData, setInputData] = useState({ location_type: "", category: "", date: "", time: "", payment_type: "" });
@@ -86,7 +87,7 @@ const TeacherBoard = ({ avatar, header, name, shortBio, bio, location, rating, t
           </h1>
           <div className={styles.reviewContent}>
             {reviews.map((review, index) => (
-              <ReviewCard key={index} isEven={index % 2 === 0 ? false : true} name={review.name} status={review.status} avatar={review.image} content={review.content} />
+              <ReviewCard key={index} isEven={index % 2 === 0 ? false : true} name={review.name} status={`Bergabung sejak ${newDate(review.created_at)}`} avatar="/jpg/avatar.jpg" content={review.description} />
             ))}
           </div>
         </section>

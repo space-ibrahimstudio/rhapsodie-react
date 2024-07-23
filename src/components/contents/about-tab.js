@@ -1,9 +1,19 @@
 import React, { useState } from "react";
+import { useContent } from "@ibrahimstudio/react";
 import Tag from "../contents/tag";
 import styles from "./styles/about-tab.module.css";
 
 const AboutTab = ({ tags, content }) => {
   const [activeTab, setActiveTab] = useState("1");
+  const { stripContent } = useContent();
+
+  const stringToArray = (tagsString) => {
+    if (!tagsString) return [];
+    return tagsString.split(",").map((tag) => tag.trim());
+  };
+
+  const convertedTags = stringToArray(tags);
+  const strippedContent = (content && stripContent(content)) || "Tidak ada deskripsi.";
 
   return (
     <section className={styles.aboutTab}>
@@ -18,11 +28,11 @@ const AboutTab = ({ tags, content }) => {
       {activeTab === "1" && (
         <div className={styles.tabContent}>
           <div className={styles.contentCat}>
-            {tags.map((tag, index) => (
-              <Tag key={index} tagText={tag.label} />
+            {convertedTags.map((tag, index) => (
+              <Tag key={index} tagText={tag} />
             ))}
           </div>
-          <p className={styles.contentText}>{content}</p>
+          <p className={styles.contentText}>{strippedContent}</p>
         </div>
       )}
       {activeTab === "2" && <div className={styles.tabContent}></div>}

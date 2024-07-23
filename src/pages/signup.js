@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@ibrahimstudio/input";
 import { Button } from "@ibrahimstudio/button";
+import { SEO } from "../lib/seo";
 import { inputValidator } from "../lib/controller";
 import PageLayout from "../components/frames/pages";
 import PortalSection from "../sections/portal-section";
@@ -64,44 +65,47 @@ const SignupPage = () => {
   };
 
   return (
-    <PageLayout type="sub" as="child">
-      <PortalSection>
-        <PortalForm onSubmit={handleSubmit}>
-          {step === "1" && (
-            <Fragment>
-              <FormFieldset>
-                <Input isLabeled={false} type="text" radius="full" name="full_name" value={inputData.full_name} placeholder="Nama Lengkap" isRequired onChange={handleInputChange} errorContent={errors.full_name} />
-                <Input isLabeled={false} type="text" radius="full" name="phone" value={inputData.phone} placeholder="Nomor Telepon" isRequired onChange={handleInputChange} errorContent={errors.phone} />
-                <Input isLabeled={false} type="text" radius="full" name="email" value={inputData.email} placeholder="Email" isRequired onChange={handleInputChange} errorContent={errors.email} />
-              </FormFieldset>
-              <FormFieldset>
-                <Button isFullwidth radius="full" buttonText="Selanjutnya" onClick={handleNext} />
-              </FormFieldset>
-              <FormFieldset>
-                <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Facebook" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/fb-auth.svg" />} />
-                <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Google" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/gm-auth.svg" />} />
-              </FormFieldset>
-              <FormFieldset startAlt="Sudah Punya Akun?">
-                <Button isFullwidth variant="line" radius="full" color="var(--color-primary)" buttonText="Masuk" onClick={() => navigate("/login")} />
-              </FormFieldset>
-            </Fragment>
-          )}
-          {step === "2" && (
-            <Fragment>
-              <FormFieldset>
-                <Input isLabeled={false} type="password" radius="full" name="password" value={inputData.password} placeholder="Password Baru" isRequired onChange={handleInputChange} errorContent={errors.password} />
-                <Input isLabeled={false} type="password" radius="full" name="confirm_password" value={inputData.confirm_password} placeholder="Konfirmasi Password" isRequired onChange={handleInputChange} errorContent={errors.confirm_password} />
-              </FormFieldset>
-              <FormFieldset>
-                <Button type="submit" isFullwidth radius="full" buttonText="Daftar Sekarang" />
-                <Button variant="line" isFullwidth radius="full" color="var(--color-primary)" buttonText="Kembali" onClick={handlePrev} />
-              </FormFieldset>
-              <FormTnC checked={isChecked} onChange={handleCheckboxChange} />
-            </Fragment>
-          )}
-        </PortalForm>
-      </PortalSection>
-    </PageLayout>
+    <Fragment>
+      <SEO title="Signup" route="/signup" />
+      <PageLayout type="sub" as="child">
+        <PortalSection>
+          <PortalForm onSubmit={handleSubmit}>
+            {step === "1" && (
+              <Fragment>
+                <FormFieldset>
+                  <Input isLabeled={false} type="text" radius="full" name="full_name" value={inputData.full_name} placeholder="Nama Lengkap" isRequired onChange={handleInputChange} errorContent={errors.full_name} />
+                  <Input isLabeled={false} type="text" radius="full" name="phone" value={inputData.phone} placeholder="Nomor Telepon" isRequired onChange={handleInputChange} errorContent={errors.phone} />
+                  <Input isLabeled={false} type="text" radius="full" name="email" value={inputData.email} placeholder="Email" isRequired onChange={handleInputChange} errorContent={errors.email} />
+                </FormFieldset>
+                <FormFieldset>
+                  <Button isFullwidth radius="full" buttonText="Selanjutnya" onClick={handleNext} />
+                </FormFieldset>
+                <FormFieldset>
+                  <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Facebook" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/fb-auth.svg" />} />
+                  <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Google" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/gm-auth.svg" />} />
+                </FormFieldset>
+                <FormFieldset startAlt="Sudah Punya Akun?">
+                  <Button isFullwidth variant="line" radius="full" color="var(--color-primary)" buttonText="Masuk" onClick={() => navigate("/login")} />
+                </FormFieldset>
+              </Fragment>
+            )}
+            {step === "2" && (
+              <Fragment>
+                <FormFieldset>
+                  <Input isLabeled={false} type="password" radius="full" name="password" value={inputData.password} placeholder="Password Baru" isRequired onChange={handleInputChange} errorContent={errors.password} />
+                  <Input isLabeled={false} type="password" radius="full" name="confirm_password" value={inputData.confirm_password} placeholder="Konfirmasi Password" isRequired onChange={handleInputChange} errorContent={errors.confirm_password} />
+                </FormFieldset>
+                <FormFieldset>
+                  <Button type="submit" isFullwidth radius="full" buttonText="Daftar Sekarang" />
+                  <Button variant="line" isFullwidth radius="full" color="var(--color-primary)" buttonText="Kembali" onClick={handlePrev} />
+                </FormFieldset>
+                <FormTnC checked={isChecked} onChange={handleCheckboxChange} />
+              </Fragment>
+            )}
+          </PortalForm>
+        </PortalSection>
+      </PageLayout>
+    </Fragment>
   );
 };
 

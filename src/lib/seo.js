@@ -5,9 +5,8 @@ import { useContent } from "@ibrahimstudio/react";
 export function SEO({ title, description, route, thumbSrc }) {
   const { stripContent } = useContent();
   const domainurl = process.env.REACT_APP_DOMAIN_URL;
-  const markers = process.env.REACT_APP_MARKERS;
   const thumbnail = thumbSrc || "/img/img-01.jpg";
-  const strippedDesc = (description && stripContent(description).substring(0, 160)) || "Platform Informasi Terkini dan Teraktual, Kanal Aspirasi Netizen, dan Digital Market";
+  const strippedDesc = (description && stripContent(description).substring(0, 160)) || "Rhapsodie Music is a music marketplace where you can find music teacher or music school to learn how to play music instruments.";
 
   return (
     <Helmet>
@@ -22,7 +21,6 @@ export function SEO({ title, description, route, thumbSrc }) {
       <meta name="twitter:description" content={strippedDesc} />
       <meta name="twitter:image" content={`${domainurl}${thumbnail}`} />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="author" content={markers} />
     </Helmet>
   );
 }

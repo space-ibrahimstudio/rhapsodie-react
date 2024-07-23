@@ -1,14 +1,14 @@
 export const lessonCategory = [
-  { icon: "/png/akustik.png", label: "GITAR AKUSTIK", value: "gitar" },
-  { icon: "/png/bass.png", label: "GITAR BASS", value: "bass" },
-  { icon: "/png/gitar-elektrik.png", label: "GITAR ELEKTRIK", value: "g-elektrik" },
-  { icon: "/png/biola.png", label: "BIOLA", value: "biola" },
-  { icon: "/png/vocal.png", label: "VOCAL", value: "vokal" },
-  { icon: "/png/piano.png", label: "PIANO", value: "piano" },
-  { icon: "/png/drum.png", label: "DRUM", value: "drum" },
-  { icon: "/png/drum-elektrik.png", label: "DRUM ELEKTRIK", value: "d-elektrik" },
-  { icon: "/png/saxophone.png", label: "SAXOPHONE", value: "saxo" },
-  { icon: "/png/seruling.png", label: "FLUTE", value: "flute" },
+  { icon: "/png/akustik.png", label: "Gitar Akustik", value: "gitar" },
+  { icon: "/png/bass.png", label: "Gitar Bass", value: "bass" },
+  { icon: "/png/gitar-elektrik.png", label: "Gitar Elektrik", value: "g-elektrik" },
+  { icon: "/png/biola.png", label: "Biola", value: "biola" },
+  { icon: "/png/vocal.png", label: "Vokal", value: "vokal" },
+  { icon: "/png/piano.png", label: "Piano", value: "piano" },
+  { icon: "/png/drum.png", label: "Drum", value: "drum" },
+  { icon: "/png/drum-elektrik.png", label: "Drum Elektrik", value: "d-elektrik" },
+  { icon: "/png/saxophone.png", label: "Saxophone", value: "saxo" },
+  { icon: "/png/seruling.png", label: "Flute", value: "flute" },
 ];
 
 export const teacherList = [

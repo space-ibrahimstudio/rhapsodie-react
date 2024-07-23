@@ -1,34 +1,35 @@
 .cardImageIcon {
-  width: var(--pixel-55);
+  width: var(--pixel-35);
   position: relative;
-  height: var(--pixel-55);
+  height: var(--pixel-35);
   object-fit: cover;
 }
 
 .cardFrame {
-  width: var(--pixel-70);
-  border-radius: var(--pixel-15);
-  border: 1px solid var(--color-primary);
+  width: var(--pixel-45);
+  border-radius: var(--pixel-10);
+  border: 1px solid var(--color-primary-30);
   box-sizing: border-box;
-  height: var(--pixel-70);
+  height: var(--pixel-45);
   overflow: hidden;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease-in-out;
 }
 
 .cardTitle {
   align-self: stretch;
   position: relative;
-  text-transform: uppercase;
-  font-weight: 800;
+  font-weight: 700;
   overflow: hidden;
 }
 
 .catCard {
   flex: 1;
+  cursor: pointer;
   border-radius: var(--pixel-10);
   overflow: hidden;
   display: flex;
@@ -41,4 +42,14 @@
   font-size: var(--font-tiny);
   color: var(--color-primary);
   font-family: var(--font-mulish);
+  transform: translateY(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.catCard:hover {
+  transform: translateY(var(--pixel-min-5));
+}
+
+.catCard:hover .cardFrame {
+  border: 1px solid var(--color-primary);
 }

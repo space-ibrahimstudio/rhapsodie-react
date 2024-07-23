@@ -5,6 +5,13 @@ import { Location } from "../contents/icons";
 import styles from "./styles/teacher-card.module.css";
 
 const TeacherCard = ({ image, name, location, rating, tags, onClick }) => {
+  const stringToArray = (tagsString) => {
+    if (!tagsString) return [];
+    return tagsString.split(",").map((tag) => tag.trim());
+  };
+
+  const convertedTags = stringToArray(tags);
+
   return (
     <section className={styles.teacherCard} onClick={onClick}>
       <img className={styles.cardImageIcon} alt="" src={image} />
@@ -22,11 +29,11 @@ const TeacherCard = ({ image, name, location, rating, tags, onClick }) => {
         </div>
         <div className={styles.contentTag}>
           <div className={styles.tagWrap}>
-            {tags.map((tag, index) => (
-              <Tag key={index} tagText={tag.label} />
+            {convertedTags.slice(0, 2).map((tag, index) => (
+              <Tag key={index} tagText={tag} />
             ))}
           </div>
-          <Tag tagText="+5 Lainnya" />
+          {convertedTags.length > 2 && <Tag tagText={`${convertedTags.length - 2} Lainnya`} />}
         </div>
       </section>
     </section>

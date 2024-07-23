@@ -14,7 +14,7 @@
 .categoryBody {
   align-items: flex-start;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   gap: var(--pixel-10);
 }
 
@@ -26,5 +26,9 @@
 @media (max-width: 910px) {
   .categorySection {
     padding: var(--pixel-30) var(--pixel-30);
+  }
+
+  .categoryBody {
+    grid-template-columns: repeat(5, 1fr);
   }
 }

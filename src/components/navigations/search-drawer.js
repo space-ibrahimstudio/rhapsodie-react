@@ -65,7 +65,7 @@ const SearchDrawer = ({ onClose }) => {
             <Suggest label="Guru Piano" />
           </div>
         </section>
-        <section className={styles.searchResult}>
+        {/* <section className={styles.searchResult}>
           <div className={styles.resultHead}>
             <h1 className={styles.resultTitle}>Guru Popular</h1>
           </div>
@@ -79,7 +79,7 @@ const SearchDrawer = ({ onClose }) => {
               <TeacherCard key={index} image="/jpg/fallback.jpg" name={teacher.name} location={teacher.location} rating={teacher.rating_total} tags={teacher.tags} onClick={() => navigate(`/guru/${teacher.id}`)} />
             ))}
           </div>
-        </section>
+        </section> */}
       </section>
     </main>
   );
