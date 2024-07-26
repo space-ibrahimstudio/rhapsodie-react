@@ -104,6 +104,11 @@ const SliderSection = ({ content, renderContent, swipeThreshold = 50, slideInter
           ))}
         </div>
       </div>
+      <div className={styles.dotContainer}>
+        {content.map((_, index) => (
+          <div key={index} className={`${styles.dot} ${index === currentIndex ? styles.activeDot : ""}`} onClick={() => setCurrentIndex(index)} />
+        ))}
+      </div>
     </section>
   );
 };

@@ -40,8 +40,8 @@ export const TeacherCard = ({ isLoading = false, image, name, location, rating, 
             <Skeleton type="txt-xsm" w="80%" />
           ) : (
             <Fragment>
-              {rating !== 0 && <Image width="auto" height="var(--pixel-15)" src="/svg/star.svg" />}
-              <b className={tchrcss.starCount}>{rating === 0 ? "Belum ada ulasan" : `(${rating})`}</b>
+              {rating === 0 ? <Image width="auto" height="var(--pixel-15)" src="/svg/nostar.svg" /> : <Image width="auto" height="var(--pixel-15)" src="/svg/star.svg" />}
+              <b className={tchrcss.starCount}>{rating === 0 ? "(0)" : `(${rating})`}</b>
             </Fragment>
           )}
         </div>

@@ -109,7 +109,7 @@
   overflow: hidden;
   padding: var(--pixel-90) 0 0;
   box-sizing: border-box;
-  background-color: var(--color-foreground);
+  background-color: var(--color-secondary-50);
   gap: var(--pixel-30);
   min-height: 100vh;
   animation-name: fadein;

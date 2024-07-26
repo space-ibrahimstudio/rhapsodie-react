@@ -30,6 +30,7 @@
 }
 
 .newsSliderSection {
+  position: relative;
   flex-direction: column;
   align-items: center;
   gap: var(--pixel-10);
@@ -46,4 +47,26 @@
   .newsSliderSection {
     padding: 0;
   }
+}
+
+.dotContainer {
+  position: absolute;
+  bottom: var(--pixel-20);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--pixel-5);
+}
+
+.dot {
+  width: var(--pixel-10);
+  height: var(--pixel-10);
+  background: var(--color-primary-30);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.activeDot {
+  background: var(--color-primary);
 }

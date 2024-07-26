@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap");
 
 :root {
   --font-mulish: "Mulish", sans-serif;
@@ -17,18 +17,19 @@
   --theme-color-primary: var(--color-primary);
   --theme-color-secondary: var(--color-secondary);
 
-  --color-foreground: #FFFEFE;
+  --color-foreground: #fffefe;
   --color-foreground-50: rgba(255, 254, 254, 0.5);
   --color-foreground-70: rgba(255, 254, 254, 0.7);
-  --color-primary: #2689C7;
+  --color-primary: #2689c7;
   --color-primary-5: rgba(38, 137, 199, 0.05);
   --color-primary-10: rgba(38, 137, 199, 0.1);
   --color-primary-20: rgba(38, 137, 199, 0.2);
   --color-primary-30: rgba(38, 137, 199, 0.3);
-  --color-secondary: #091D2C;
+  --color-secondary: #091d2c;
+  --color-secondary-5: rgba(9, 29, 44, 0.05);
   --color-secondary-10: rgba(9, 29, 44, 0.1);
   --color-secondary-50: rgba(9, 29, 44, 0.5);
-  --color-hint: #EC801C;
+  --color-hint: #ec801c;
 
   --pixel-2: 2px;
   --pixel-5: 5px;

@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { useNavigate } from "react-router-dom";
-import { Input } from "@ibrahimstudio/input";
-import { Button } from "@ibrahimstudio/button";
-import { Location, Search, Close } from "../contents/icons";
-import Suggest from "../contents/suggest";
 import styles from "./styles/search-drawer.module.css";
 
 const modalRoot = document.getElementById("modal-root") || document.body;
 
 const SearchDrawer = ({ onClose }) => {
-  const navigate = useNavigate();
   const [isClosing, setIsClosing] = useState(false);
-  const [searchQuery, setSearchQuery] = useState({ query: "", location: "" });
-
-  const handleClose = () => setIsClosing(true);
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSearchQuery((prevState) => ({ ...prevState, [name]: value }));
-  };
 
   useEffect(() => {
     if (isClosing) {
@@ -45,25 +32,7 @@ const SearchDrawer = ({ onClose }) => {
 
   const modalElement = (
     <main className={styles.searchScroll}>
-      <section className={`${styles.searchDrawer} ${isClosing ? styles.close : ""}`}>
-        <nav className={styles.searchBar}>
-          <Button subVariant="icon" radius="full" color="var(--color-primary)" bgColor="var(--color-primary-10)" iconContent={<Close />} onClick={handleClose} />
-          <div className={styles.searchFieldset}>
-            <Input isLabeled={false} type="text" radius="full" name="query" value={searchQuery.query} placeholder="Cari yang kamu butuhkan disini ..." onChange={handleInputChange} startContent={<Search />} />
-            <Input isLabeled={false} type="text" radius="full" name="location" value={searchQuery.location} placeholder="Masukkan alamat kamu disini ..." onChange={handleInputChange} startContent={<Location />} />
-          </div>
-          <Button radius="full" buttonText="Temukan" />
-        </nav>
-        <section className={styles.searchSuggest}>
-          <h1 className={styles.suggestTitle}>Paling sering dicari</h1>
-          <div className={styles.suggestItems}>
-            <Suggest label="Guitar Accoustic" />
-            <Suggest label="Bass" />
-            <Suggest label="Kelas Biola" />
-            <Suggest label="Guru Piano" />
-          </div>
-        </section>
-      </section>
+      <section className={`${styles.searchDrawer} ${isClosing ? styles.close : ""}`}></section>
     </main>
   );
 
