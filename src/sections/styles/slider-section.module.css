@@ -34,7 +34,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--pixel-10);
-  padding: var(--pixel-10) var(--pixel-80);
+  padding: var(--pixel-10) var(--pixel-200);
 }
 
 @media screen and (min-width: 701px) and (max-width: 910px) {

@@ -20,7 +20,7 @@
 
 .categorySection {
   overflow: hidden;
-  padding: var(--pixel-30) var(--pixel-80);
+  padding: var(--pixel-30) var(--pixel-200);
 }
 
 @media (max-width: 910px) {
