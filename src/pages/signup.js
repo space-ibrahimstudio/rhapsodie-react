@@ -1,7 +1,8 @@
 import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { Input } from "@ibrahimstudio/input";
 import { Button } from "@ibrahimstudio/button";
+import { useAuth } from "../lib/auth";
 import { SEO } from "../lib/seo";
 import { inputValidator } from "../lib/controller";
 import PageLayout from "../components/frames/pages";
@@ -11,6 +12,7 @@ import PortalForm, { FormFieldset, FormTnC } from "../components/inputs/portal-f
 
 const SignupPage = () => {
   const navigate = useNavigate();
+  const { isLoggedin, signup } = useAuth();
   const [step, setStep] = useState("1");
   const [isChecked, setIsChecked] = useState(false);
   const [inputData, setInputData] = useState({ full_name: "", phone: "", email: "", password: "", confirm_password: "" });
@@ -58,11 +60,16 @@ const SignupPage = () => {
       alert("Mohon setujui Syarat & Ketentuan.");
       return;
     }
+    const submittedData = { name: inputData.full_name, phone: inputData.phone, email: inputData.email, password: inputData.password };
+    signup(submittedData);
     alert("Selamat! Pendaftaran akun berhasil. Login untuk melanjutkan.");
     console.log("form submitted:", inputData);
-    setInputData({ full_name: "", phone: "", email: "", password: "", confirm_password: "" });
     navigate("/login");
   };
+
+  if (isLoggedin) {
+    return <Navigate to="/profil" />;
+  }
 
   return (
     <Fragment>

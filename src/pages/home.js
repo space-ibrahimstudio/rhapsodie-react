@@ -86,7 +86,7 @@ const HomePage = () => {
             <SectionHead title={section.title} />
             <SectionBody>
               {section.arraydata.map((teacher, index) => (
-                <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"] && teacher["teacher"].logo === null ? "/jpg/fallback.jpg" : teacher["teacher"] && `${imgURL}/${teacher["teacher"].logo}`} name={teacher["teacher"] && teacher["teacher"].name} location={teacher["teacher"] && teacher["teacher"].address} rating={teacher["review"] && teacher["review"].length} tags={teacher["teacher"] && teacher["teacher"].services} onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
+                <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"] && teacher["teacher"].image === null ? "/jpg/fallback.jpg" : teacher["teacher"] && `${imgURL}/${teacher["teacher"].image}`} name={teacher["teacher"] && teacher["teacher"].name} location={teacher["location"]} rating={teacher["review"] && teacher["review"].length} tags={teacher["teacher"] && teacher["teacher"].services} onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
               ))}
             </SectionBody>
           </TeacherSection>

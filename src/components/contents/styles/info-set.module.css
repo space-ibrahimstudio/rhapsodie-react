@@ -1,0 +1,33 @@
+.infoLabel {
+  flex: 1;
+  display: inline-block;
+  color: var(--color-secondary-50);
+  max-width: var(--pixel-150);
+}
+
+.infoLabel,
+.infoSeparator,
+.infoValue {
+  position: relative;
+}
+
+.infoValue {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.infoSet {
+  overflow: hidden;
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--pixel-5) 0;
+  gap: var(--pixel-10);
+  text-align: left;
+  font-size: var(--font-xsm);
+  color: var(--color-secondary);
+  font-family: var(--font-karla);
+}

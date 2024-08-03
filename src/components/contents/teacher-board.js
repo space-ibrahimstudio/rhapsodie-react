@@ -13,7 +13,7 @@ import ProductSm from "./product-sm";
 import PopupForm, { PopupBody, PopupFieldset, PopupFooter, PopupNote } from "../inputs/popup-form";
 import styles from "./styles/teacher-board.module.css";
 
-const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, location, rating, tags, reviews = [] }) => {
+const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, location = [], rating, tags, reviews = [] }) => {
   const { width } = useWindow();
   const { newDate } = useFormat();
   const [step, setStep] = useState("1");
@@ -79,14 +79,14 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
               ) : (
                 <Fragment>
                   <Location size="var(--pixel-15)" />
-                  <b className={styles.locText}>{(location && location) || "N/A"}</b>
+                  <b className={styles.locText}>{location.length > 0 ? location.map((loc, index) => (index + 1 === location.length ? loc.name : `${loc.name}, `)) : "N/A"}</b>
                 </Fragment>
               )}
             </div>
             {!isLoading && (
               <div className={styles.teacherRating}>
-                {rating !== 0 && <Image width="auto" height="var(--pixel-15)" src="/svg/star.svg" />}
-                <b className={styles.locText}>{rating === 0 ? "Belum ada ulasan" : `(${rating} ulasan)`}</b>
+                {rating === 0 ? <Image width="auto" height="var(--pixel-15)" src="/svg/nostar.svg" /> : <Image width="auto" height="var(--pixel-15)" src="/svg/star.svg" />}
+                <b className={styles.locText}>{rating === 0 ? "(0)" : `(${rating} ulasan)`}</b>
               </div>
             )}
           </div>

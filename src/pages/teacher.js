@@ -21,10 +21,10 @@ const TeacherPage = () => {
       const formData = new FormData();
       const ratingFormData = new FormData();
       formData.append("slug", slug);
-      const data = await apiRead(formData, "main", "teacherdetail");
+      const data = await apiRead(formData, "main", "teacherdetail2");
       if (data && data.length > 0) {
         setSelectedData(data[0]);
-        ratingFormData.append("data", JSON.stringify({ iduser: data[0].id }));
+        ratingFormData.append("data", JSON.stringify({ iduser: data[0]["teacher"].id }));
         const ratingdata = await apiRead(ratingFormData, "main", "teacherreview");
         if (ratingdata && ratingdata.length > 0) {
           setRatingData(ratingdata);
@@ -49,7 +49,18 @@ const TeacherPage = () => {
   return (
     <PageLayout as="child">
       <Section>
-        <TeacherBoard isLoading={isLoading} name={selectedData.name} avatar={selectedData.logo === null ? "/jpg/fallback.jpg" : `${imgURL}/${selectedData.logo}`} header={selectedData.cover === null ? "/jpg/fallback.jpg" : `${imgURL}/${selectedData.cover}`} shortBio={selectedData.short_description} bio={selectedData.description} location={selectedData.address} rating={ratingData.length} tags={selectedData.services} reviews={ratingData} />
+        <TeacherBoard
+          isLoading={isLoading}
+          name={selectedData["teacher"] && selectedData["teacher"].name}
+          avatar={selectedData["teacher"] && selectedData["teacher"].image === null ? "/jpg/fallback.jpg" : `${imgURL}/${selectedData["teacher"] && selectedData["teacher"].image}`}
+          header={selectedData["teacher"] && selectedData["teacher"].cover === null ? "/jpg/fallback.jpg" : `${imgURL}/${selectedData["teacher"] && selectedData["teacher"].cover}`}
+          shortBio={selectedData["teacher"] && selectedData["teacher"].short_description}
+          bio={selectedData["teacher"] && selectedData["teacher"].description}
+          location={selectedData["location"] && selectedData["location"]}
+          rating={ratingData.length}
+          tags={selectedData["teacher"] && selectedData["teacher"].services}
+          reviews={ratingData}
+        />
       </Section>
     </PageLayout>
   );

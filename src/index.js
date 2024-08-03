@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { IbrahimStudioProvider } from "@ibrahimstudio/react";
+import { AuthProvider } from "./lib/auth";
 import { ApiProvider } from "./lib/api";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -14,9 +15,11 @@ root.render(
     <HelmetProvider>
       <BrowserRouter>
         <IbrahimStudioProvider>
-          <ApiProvider>
-            <App />
-          </ApiProvider>
+          <AuthProvider>
+            <ApiProvider>
+              <App />
+            </ApiProvider>
+          </AuthProvider>
         </IbrahimStudioProvider>
       </BrowserRouter>
     </HelmetProvider>

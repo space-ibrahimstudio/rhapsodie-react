@@ -30,7 +30,7 @@ export const TeacherCard = ({ isLoading = false, image, name, location, rating, 
             ) : (
               <Fragment>
                 <Location size="var(--pixel-15)" />
-                <b className={tchrcss.detLoc}>{(location && location) || "N/A"}</b>
+                <b className={tchrcss.detLoc}>{location.length > 0 ? location.map((loc, index) => (index + 1 === location.length ? loc.name : `${loc.name}, `)) : "N/A"}</b>
               </Fragment>
             )}
           </div>

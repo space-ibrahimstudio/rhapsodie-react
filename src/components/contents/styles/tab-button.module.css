@@ -1,0 +1,37 @@
+.buttonText {
+  flex: 1;
+  position: relative;
+  font-size: var(--font-tiny);
+  font-family: var(--font-karla);
+  color: inherit;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tabButton {
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--pixel-5);
+  padding: 0 var(--pixel-20);
+  color: var(--color-secondary);
+  background-color: transparent;
+  align-self: stretch;
+  height: var(--pixel-35);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+}
+
+.tabButton:hover {
+  color: var(--color-primary);
+}
+
+.tabButton.active {
+  color: var(--color-primary);
+  background-color: var(--color-primary-10);
+}

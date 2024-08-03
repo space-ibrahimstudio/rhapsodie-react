@@ -1,0 +1,125 @@
+.boardTitle {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  font-size: inherit;
+  font-weight: 800;
+  font-family: inherit;
+}
+
+.picIcon {
+  overflow: hidden;
+  flex-shrink: 0;
+  width: var(--pixel-150);
+  border-radius: 50%;
+  height: var(--pixel-150);
+  object-fit: cover;
+}
+
+.profileInfo,
+.profilePic {
+  display: flex;
+  justify-content: flex-start;
+  padding: var(--pixel-10);
+  gap: var(--pixel-10);
+}
+
+.profilePic {
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileInfo {
+  /* flex: 1; */
+  overflow: hidden;
+  align-items: flex-start;
+  flex-direction: column;
+  /* text-align: left; */
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+  font-family: var(--font-mulish);
+}
+
+.boardProfile {
+  overflow: hidden;
+  /* align-items: flex-start; */
+  align-self: stretch;
+  /* flex-direction: row; */
+  display: flex;
+  /* justify-content: flex-start; */
+  padding: var(--pixel-10);
+  gap: var(--pixel-10);
+}
+
+.subsDesc {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  font-weight: 500;
+  font-family: var(--font-karla);
+  color: var(--color-secondary);
+}
+
+.subsHeading {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--pixel-10);
+  text-align: left;
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+  font-family: var(--font-mulish);
+}
+
+.boardSubs {
+  align-self: stretch;
+  border-radius: var(--pixel-5);
+  background-color: var(--color-primary-10);
+  overflow: hidden;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--pixel-20);
+  gap: var(--pixel-20);
+}
+
+.boardBody,
+.boardContent,
+.boardSubs,
+.userBoard {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.boardContent {
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.boardBody,
+.userBoard {
+  align-self: stretch;
+}
+
+.boardBody {
+  background-color: transparent;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.userBoard {
+  border-radius: var(--pixel-20);
+  border: 1px solid var(--color-primary-30);
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--pixel-15);
+  gap: var(--pixel-15);
+  text-align: center;
+  font-size: var(--font-md);
+  color: var(--color-secondary);
+  font-family: var(--font-mulish);
+}
