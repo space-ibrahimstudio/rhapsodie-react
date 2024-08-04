@@ -1,3 +1,21 @@
+.filterButton {
+  position: fixed;
+  top: var(--pixel-120);
+  right: var(--pixel-80);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-direction: row;
+}
+
+@media (max-width: 910px) {
+  .filterButton {
+    right: var(--pixel-30);
+  }
+}
+
 .buttonText {
   position: relative;
   font-size: var(--font-tiny);
@@ -54,6 +72,21 @@
   font-family: var(--font-mulish);
 }
 
+.drawerFilter.float {
+  background-color: var(--color-foreground);
+  animation-name: slidein;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.drawerFilter.float.close {
+  animation-name: slideout;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
 .setTitle {
   align-self: stretch;
   position: relative;
@@ -92,4 +125,82 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: var(--pixel-15);
+}
+
+.drawerContainer {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--pixel-30) var(--pixel-80);
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  animation-name: fadein;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.drawerContainer.close {
+  animation-name: fadeout;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.drawerScroll {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 100vh;
+  overflow-y: auto;
+  justify-content: flex-start;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+    transform: translateX(var(--pixel-100));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideout {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(var(--pixel-100));
+  }
+}
+
+@media (max-width: 910px) {
+  .drawerContainer {
+    padding: var(--pixel-30);
+  }
 }

@@ -22,7 +22,7 @@ export const PopupFooter = ({ children }) => {
 };
 
 const PopupForm = ({ title, children, onSubmit, onClose }) => {
-  const ref = useRef();
+  const ref = useRef(null);
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClickOutside = (e) => {

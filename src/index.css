@@ -80,6 +80,7 @@
   --pixel-min-15: -15px;
   --pixel-min-20: -20px;
   --pixel-min-30: -30px;
+  --pixel-min-100: -100px;
 }
 
 @media screen and (min-width: 701px) and (max-width: 1120px) {
@@ -139,6 +140,7 @@
     --pixel-min-15: -13px;
     --pixel-min-20: -17px;
     --pixel-min-30: -26px;
+    --pixel-min-100: -85px;
   }
 }
 
@@ -199,6 +201,7 @@
     --pixel-min-15: -11px;
     --pixel-min-20: -14px;
     --pixel-min-30: -21px;
+    --pixel-min-100: -71.5px;
   }
 }
 
