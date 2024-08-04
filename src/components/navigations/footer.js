@@ -77,7 +77,7 @@ const Footer = () => {
 
   const lessons = [{ label: "Piano Courses" }, { label: "Vocal Courses" }, { label: "Violin Courses" }, { label: "Keyboard Courses" }, { label: "Bass Courses" }, { label: "Cello Courses" }, { label: "Clarinet Courses" }];
   const abouts = [{ label: "About Us" }, { label: "FAQs" }, { label: "Blogs" }, { label: "Terms & Condition" }, { label: "Privacy Policy" }];
-  const teacherfor = [{ label: "Become a Music" }, { label: "FAQs" }];
+  const teacherfor = [{ label: "Become a Music Teacher" }, { label: "FAQs" }];
   const teachernear = [{ label: "Music Teacher in Tangerang Selatan" }, { label: "Music Teacher in Tangerang Kota" }, { label: "Music Teacher in Jakarta" }, { label: "Music Teacher in Depok" }, { label: "Music Teacher in Bogor" }, { label: "Music Teacher in Bekasi" }];
 
   return (

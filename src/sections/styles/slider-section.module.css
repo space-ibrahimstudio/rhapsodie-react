@@ -25,28 +25,16 @@
 
 .newsSliderSection,
 .sectionBody {
+  position: relative;
   align-self: stretch;
   overflow: hidden;
 }
 
 .newsSliderSection {
-  position: relative;
   flex-direction: column;
   align-items: center;
   gap: var(--pixel-10);
-  padding: var(--pixel-10) var(--pixel-200);
-}
-
-@media screen and (min-width: 701px) and (max-width: 910px) {
-  .newsSliderSection {
-    padding: var(--pixel-10) var(--pixel-30);
-  }
-}
-
-@media screen and (max-width: 700px) {
-  .newsSliderSection {
-    padding: 0;
-  }
+  padding: var(--pixel-10) var(--pixel-150);
 }
 
 .dotContainer {
@@ -69,4 +57,20 @@
 
 .activeDot {
   background: var(--color-primary);
+}
+
+@media screen and (min-width: 701px) and (max-width: 910px) {
+  .newsSliderSection {
+    padding: var(--pixel-10) var(--pixel-30);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .newsSliderSection {
+    padding: 0;
+  }
+
+  .dotContainer {
+    bottom: var(--pixel-10);
+  }
 }

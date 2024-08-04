@@ -58,9 +58,9 @@ export const TeacherCard = ({ isLoading = false, image, name, location, rating, 
   );
 };
 
-export const CatCard = ({ isLoading = false, cardImage, cardTitle }) => {
+export const CatCard = ({ isLoading = false, cardImage, cardTitle, onClick = () => {} }) => {
   return (
-    <section className={ctgrcss.catCard}>
+    <section className={ctgrcss.catCard} onClick={onClick}>
       <div className={ctgrcss.cardFrame}>
         <img className={ctgrcss.cardImageIcon} alt="" src={cardImage} />
       </div>

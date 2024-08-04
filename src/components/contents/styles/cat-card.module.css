@@ -1,4 +1,5 @@
 .cardImageIcon {
+  border-radius: var(--pixel-5);
   width: var(--pixel-35);
   position: relative;
   height: var(--pixel-35);

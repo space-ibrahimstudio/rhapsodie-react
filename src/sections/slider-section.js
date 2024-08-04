@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Image from "../components/contents/image";
 import styles from "./styles/slider-section.module.css";
 
 const SliderSection = ({ content, renderContent, swipeThreshold = 50, slideInterval = 3000, contentStyle }) => {
@@ -21,6 +22,9 @@ const SliderSection = ({ content, renderContent, swipeThreshold = 50, slideInter
       setVisible(rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight));
     }
   };
+
+  const handlePrev = () => setCurrentIndex((prevIndex) => (prevIndex - 1 + totalContent) % totalContent);
+  const handleNext = () => setCurrentIndex((prevIndex) => (prevIndex + 1) % totalContent);
 
   const handleTouchStart = (event) => setStartX(event.touches[0].clientX);
   const handleTouchEnd = () => setStartX(null);
@@ -103,11 +107,17 @@ const SliderSection = ({ content, renderContent, swipeThreshold = 50, slideInter
             </div>
           ))}
         </div>
-      </div>
-      <div className={styles.dotContainer}>
-        {content.map((_, index) => (
-          <div key={index} className={`${styles.dot} ${index === currentIndex ? styles.activeDot : ""}`} onClick={() => setCurrentIndex(index)} />
-        ))}
+        <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", left: "0", display: "flex", alignItems: "center", justifyContent: "center", padding: "var(--pixel-10)", height: "var(--pixel-40)", backgroundColor: "var(--color-secondary-30)", cursor: "pointer" }} onClick={handlePrev}>
+          <Image width="var(--pixel-10)" height="auto" style={{ transform: "scaleX(-1)" }} src="/svg/chevron-right.svg" />
+        </div>
+        <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", right: "0", display: "flex", alignItems: "center", justifyContent: "center", padding: "var(--pixel-10)", height: "var(--pixel-40)", backgroundColor: "var(--color-secondary-30)", cursor: "pointer" }} onClick={handleNext}>
+          <Image width="var(--pixel-10)" height="auto" src="/svg/chevron-right.svg" />
+        </div>
+        <div className={styles.dotContainer}>
+          {content.map((_, index) => (
+            <div key={index} className={`${styles.dot} ${index === currentIndex ? styles.activeDot : ""}`} onClick={() => setCurrentIndex(index)} />
+          ))}
+        </div>
       </div>
     </section>
   );
