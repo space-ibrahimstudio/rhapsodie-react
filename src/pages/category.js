@@ -1,4 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useContent } from "@ibrahimstudio/react";
 import { SEO } from "../lib/seo";
 import { useApi } from "../lib/api";
 import PageLayout from "../components/frames/pages";
@@ -8,6 +10,8 @@ import { CatCard } from "../components/contents/cards";
 const imgURL = process.env.REACT_APP_IMGSRC_URL;
 
 const CategoryPage = () => {
+  const navigate = useNavigate();
+  const { toPathname } = useContent();
   const { apiGet } = useApi();
   const [isLoading, setIsLoading] = useState(false);
   const [categData, setCategData] = useState([]);
@@ -17,7 +21,7 @@ const CategoryPage = () => {
     setIsLoading(true);
     try {
       const categdata = await apiGet("main", "categoryview");
-      setCategData(categdata && categdata.length > 0 ? categdata : []);
+      setCategData(categdata && categdata.data && categdata.data.length > 0 ? categdata.data : []);
     } catch (error) {
       console.error(errormsg, error);
     } finally {
@@ -35,7 +39,7 @@ const CategoryPage = () => {
       <PageLayout as="child">
         <CategorySection title="Semua Kategori">
           {categData.map((lesson, index) => (
-            <CatCard key={index} cardImage={lesson.image ? `${imgURL}/${lesson.image}` : "/jpg/fallback.jpg"} cardTitle={lesson.name} />
+            <CatCard key={index} cardImage={lesson.image ? `${imgURL}/${lesson.image}` : "/jpg/fallback.jpg"} cardTitle={lesson.name} onClick={() => navigate(`/kategori/${toPathname(lesson.name)}`)} />
           ))}
         </CategorySection>
       </PageLayout>

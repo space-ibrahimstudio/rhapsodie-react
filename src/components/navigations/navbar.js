@@ -17,14 +17,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { width } = useWindow();
   const { isLoggedin, userData, logout } = useAuth();
-  const [searchQuery, setSearchQuery] = useState({ query: "" });
+  const [keyword, setKeyword] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSearchQuery((prevState) => ({ ...prevState, [name]: value }));
-  };
 
   const handleClickOutside = (e) => {
     if (ref.current && !ref.current.contains(e.target)) {
@@ -33,6 +28,11 @@ const Navbar = () => {
   };
 
   const handleLogout = () => logout();
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/pencarian/${keyword}`);
+    }
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -47,8 +47,8 @@ const Navbar = () => {
         <nav className={styles.navbarContent}>
           {width > 772 ? <Image width="auto" height="var(--pixel-30)" style={{ marginLeft: "var(--pixel-20)", marginRight: "var(--pixel-20)", cursor: "pointer" }} src="/png/logo-primary.png" onClick={() => navigate("/")} /> : <Image width="auto" height="var(--pixel-40)" style={{ marginRight: "var(--pixel-15)" }} src="/svg/logo-secondary.svg" onClick={() => navigate("/")} />}
           <div className={styles.navbarMenu}>
-            <div ref={ref} className={styles.navbarSearch} onClick={() => setSearchOpen(true)}>
-              <Input isLabeled={false} radius="full" type="text" name="query" value={searchQuery.query} placeholder="Cari yang kamu butuhkan disini ..." onChange={handleInputChange} endContent={<Search />} />
+            <div ref={ref} className={styles.navbarSearch} onClick={() => setSearchOpen(true)} onKeyDown={handleSearch}>
+              <Input isLabeled={false} radius="full" type="text" name="keyword" value={keyword} placeholder="Cari yang kamu butuhkan disini ..." onChange={(e) => setKeyword(e.target.value)} endContent={<Search />} />
             </div>
             {width > 772 ? (
               <Fragment>

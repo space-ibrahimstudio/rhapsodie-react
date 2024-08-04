@@ -22,12 +22,12 @@ const TeacherPage = () => {
       const ratingFormData = new FormData();
       formData.append("slug", slug);
       const data = await apiRead(formData, "main", "teacherdetail2");
-      if (data && data.length > 0) {
-        setSelectedData(data[0]);
-        ratingFormData.append("data", JSON.stringify({ iduser: data[0]["teacher"].id }));
+      if (data && data.data && data.data.length > 0) {
+        setSelectedData(data.data[0]);
+        ratingFormData.append("data", JSON.stringify({ iduser: data.data[0]["teacher"].id }));
         const ratingdata = await apiRead(ratingFormData, "main", "teacherreview");
-        if (ratingdata && ratingdata.length > 0) {
-          setRatingData(ratingdata);
+        if (ratingdata && ratingdata.data && ratingdata.data.length > 0) {
+          setRatingData(ratingdata.data);
         } else {
           setRatingData([]);
         }

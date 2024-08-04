@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useWindow } from "@ibrahimstudio/react";
+import { useWindow, useContent } from "@ibrahimstudio/react";
 import { SEO } from "../lib/seo";
 import { useApi } from "../lib/api";
 import PageLayout from "../components/frames/pages";
@@ -16,6 +16,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { apiGet } = useApi();
   const { width } = useWindow();
+  const { toPathname } = useContent();
   const [isLoading, setIsLoading] = useState(false);
   const [categData, setCategData] = useState([]);
   const [recoTData, setRecoTData] = useState([]);
@@ -35,13 +36,13 @@ const HomePage = () => {
     setIsLoading(true);
     try {
       const recotdata = await apiGet("main", "teacherrekom");
-      setRecoTData(recotdata && recotdata.length > 0 ? recotdata : []);
+      setRecoTData(recotdata && recotdata.data && recotdata.data.length > 0 ? recotdata.data : []);
       const spectdata = await apiGet("main", "teacherspesial");
-      setSpecTData(spectdata && spectdata.length > 0 ? spectdata : []);
+      setSpecTData(spectdata && spectdata.data && spectdata.data.length > 0 ? spectdata.data : []);
       const privtdata = await apiGet("main", "teacherprivate");
-      setPrivTData(privtdata && privtdata.length > 0 ? privtdata : []);
+      setPrivTData(privtdata && privtdata.data && privtdata.data.length > 0 ? privtdata.data : []);
       const categdata = await apiGet("main", "categoryview");
-      setCategData(categdata && categdata.length > 0 ? categdata : []);
+      setCategData(categdata && categdata.data && categdata.data.length > 0 ? categdata.data : []);
     } catch (error) {
       console.error(errormsg, error);
     } finally {
@@ -70,7 +71,7 @@ const HomePage = () => {
         <SliderSection content={sliders} renderContent={renderSlider} contentStyle={{ minWidth: "100%" }} />
         <CategorySection>
           {categData.slice(0, 9).map((lesson, index) => (
-            <CatCard key={index} cardImage={`${imgURL}/${lesson.image}`} cardTitle={lesson.name} />
+            <CatCard key={index} cardImage={`${imgURL}/${lesson.image}`} cardTitle={lesson.name} onClick={() => navigate(`/kategori/${toPathname(lesson.name)}`)} />
           ))}
           <CatCard cardImage="/svg/drawer.svg" cardTitle="Lihat Semua" onClick={() => navigate("/kategori")} />
         </CategorySection>

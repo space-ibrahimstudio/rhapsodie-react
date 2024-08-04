@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useContent } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Arrow } from "../components/contents/icons";
 import styles from "./styles/teacher-section.module.css";
@@ -8,10 +10,13 @@ export const SectionBody = ({ children }) => {
 };
 
 export const SectionHead = ({ title }) => {
+  const navigate = useNavigate();
+  const { toPathname } = useContent();
+
   return (
     <header className={styles.sectionHead}>
       <h1 className={styles.sectionTitle}>{title}</h1>
-      <Button variant="hollow" size="sm" color="var(--color-primary)" buttonText="Lihat Semua" endContent={<Arrow />} />
+      <Button variant="hollow" size="sm" color="var(--color-primary)" buttonText="Lihat Semua" endContent={<Arrow />} onClick={() => navigate(`/${toPathname(title)}`)} />
     </header>
   );
 };

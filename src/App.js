@@ -6,6 +6,9 @@ import SignupPage from "./pages/signup";
 import TeacherPage from "./pages/teacher";
 import UserPage from "./pages/profile";
 import CategoryPage from "./pages/category";
+import CatSlugPage from "./pages/cat-slug";
+import GroupTypePage from "./pages/group-type";
+import SearchParamsPage from "./pages/search-params";
 
 function App() {
   const { pathname } = useLocation();
@@ -22,6 +25,9 @@ function App() {
       <Route path="/guru/:slug" element={<TeacherPage />} />
       <Route path="/profil" element={<UserPage />} />
       <Route path="/kategori" element={<CategoryPage />} />
+      <Route path="/kategori/:slug" element={<CatSlugPage />} />
+      <Route path="/:type" element={<GroupTypePage />} />
+      <Route path="/pencarian/:params" element={<SearchParamsPage />} />
     </Routes>
   );
 }
