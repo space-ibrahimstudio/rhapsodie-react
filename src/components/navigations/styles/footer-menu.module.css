@@ -8,8 +8,14 @@
 }
 
 .menuLi {
+  color: var(--color-foreground-70);
+  cursor: pointer;
   position: relative;
   font-weight: 500;
+}
+
+.menuLi:hover {
+  color: var(--color-foreground);
 }
 
 .footerMenu {
@@ -21,6 +27,5 @@
   gap: var(--pixel-10);
   text-align: left;
   font-size: var(--font-xsm);
-  color: var(--color-foreground-70);
   font-family: var(--font-karla);
 }

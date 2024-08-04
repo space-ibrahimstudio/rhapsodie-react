@@ -5,6 +5,7 @@
 }
 
 .contactLi {
+  cursor: pointer;
   align-self: stretch;
   display: flex;
   flex-direction: row;
