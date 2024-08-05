@@ -16,7 +16,7 @@ const GroupTypePage = () => {
   const navigate = useNavigate();
   const { type } = useParams();
   const { width } = useWindow();
-  const { apiGet } = useApi();
+  const { apiGet, apiRead } = useApi();
   const [pageInfo, setPageInfo] = useState({ title: "", path: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [teacherData, setTeacherData] = useState([]);
@@ -31,17 +31,19 @@ const GroupTypePage = () => {
   const fetchData = async () => {
     const errormsg = "Terjadi kesalahan saat memuat data. Mohon periksa koneksi internet anda dan coba lagi.";
     setIsLoading(true);
+    const formData = new FormData();
+    formData.append("limit", "20");
     try {
       let teacherdata;
       switch (type) {
         case "guru-rekomendasi":
-          teacherdata = await apiGet("main", "teacherrekom");
+          teacherdata = await apiRead(formData, "main", "teacherrekom");
           break;
         case "penawaran-spesial":
-          teacherdata = await apiGet("main", "teacherspesial");
+          teacherdata = await apiRead(formData, "main", "teacherspesial");
           break;
         case "guru-privat":
-          teacherdata = await apiGet("main", "teacherprivate");
+          teacherdata = await apiRead(formData, "main", "teacherprivate");
           break;
         default:
           break;
@@ -81,7 +83,7 @@ const GroupTypePage = () => {
       <SEO title={pageInfo.title} route={pageInfo.path} />
       <PageLayout as="child">
         <Section>
-          <SectionTitle>{pageInfo.title}</SectionTitle>
+          <SectionTitle>{isLoading ? "Memuat ..." : pageInfo.title}</SectionTitle>
           <Drawer>
             {width < 870 ? (
               <FilterButton onClick={() => setFilterOpen(true)} />

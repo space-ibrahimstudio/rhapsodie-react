@@ -67,7 +67,7 @@ const CatSlugPage = () => {
       <SEO title={selectedCatData.name} route={`/kategori/${slug}`} />
       <PageLayout as="child">
         <Section>
-          <SectionTitle>{`Kategori "${selectedCatData.name}"`}</SectionTitle>
+          <SectionTitle>{isLoading ? "Memuat ..." : `Kategori "${selectedCatData.name}"`}</SectionTitle>
           <Drawer>
             {width < 870 ? (
               <FilterButton onClick={() => setFilterOpen(true)} />

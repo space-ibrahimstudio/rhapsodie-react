@@ -7,8 +7,10 @@ export const DrawerContent = ({ children }) => {
 };
 
 export const OptionButton = ({ children }) => {
+  const [isActive, setIsActive] = useState(false);
+
   return (
-    <button className={styles.optionButton}>
+    <button className={`${styles.optionButton} ${isActive ? styles.active : ""}`} onClick={() => setIsActive(!isActive)}>
       <b className={styles.buttonText}>{children}</b>
     </button>
   );

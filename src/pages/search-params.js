@@ -61,7 +61,7 @@ const SearchParamsPage = () => {
       <SEO title={`Pencarian "${params}"`} route={`/pencarian/${params}`} />
       <PageLayout as="child">
         <Section>
-          <SectionTitle>{title}</SectionTitle>
+          <SectionTitle>{isLoading ? "Memuat hasil ..." : title}</SectionTitle>
           <Drawer>
             {width < 870 ? (
               <FilterButton onClick={() => setFilterOpen(true)} />

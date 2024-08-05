@@ -14,7 +14,7 @@ const imgURL = process.env.REACT_APP_IMGSRC_URL;
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { apiGet } = useApi();
+  const { apiGet, apiRead } = useApi();
   const { width } = useWindow();
   const { toPathname } = useContent();
   const [isLoading, setIsLoading] = useState(false);
@@ -34,12 +34,14 @@ const HomePage = () => {
   const fetchData = async () => {
     const errormsg = "Terjadi kesalahan saat memuat data. Mohon periksa koneksi internet anda dan coba lagi.";
     setIsLoading(true);
+    const formData = new FormData();
+    formData.append("limit", "5");
     try {
-      const recotdata = await apiGet("main", "teacherrekom");
+      const recotdata = await apiRead(formData, "main", "teacherrekom");
       setRecoTData(recotdata && recotdata.data && recotdata.data.length > 0 ? recotdata.data : []);
-      const spectdata = await apiGet("main", "teacherspesial");
+      const spectdata = await apiRead(formData, "main", "teacherspesial");
       setSpecTData(spectdata && spectdata.data && spectdata.data.length > 0 ? spectdata.data : []);
-      const privtdata = await apiGet("main", "teacherprivate");
+      const privtdata = await apiRead(formData, "main", "teacherprivate");
       setPrivTData(privtdata && privtdata.data && privtdata.data.length > 0 ? privtdata.data : []);
       const categdata = await apiGet("main", "categoryview");
       setCategData(categdata && categdata.data && categdata.data.length > 0 ? categdata.data : []);
