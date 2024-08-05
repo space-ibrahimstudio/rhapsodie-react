@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { Input } from "@ibrahimstudio/input";
 import { Button } from "@ibrahimstudio/button";
 import { useAuth } from "../lib/auth";
+import { facebook, google } from "../lib/firebaseConfig";
 import { SEO } from "../lib/seo";
 import { inputValidator } from "../lib/controller";
 import PageLayout from "../components/frames/pages";
@@ -12,8 +13,9 @@ import PortalForm, { FormFieldset, FormTnC } from "../components/inputs/portal-f
 
 const SignupPage = () => {
   const navigate = useNavigate();
-  const { isLoggedin, signup } = useAuth();
+  const { isLoggedin, signup, oAuthLogin } = useAuth();
   const [step, setStep] = useState("1");
+  const [loading, setLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [inputData, setInputData] = useState({ full_name: "", phone: "", email: "", password: "", confirm_password: "" });
   const [errors, setErrors] = useState({ full_name: "", phone: "", email: "", password: "", confirm_password: "" });
@@ -44,6 +46,17 @@ const SignupPage = () => {
     setStep("1");
   };
 
+  const handleOAuthLogin = async (provider) => {
+    setLoading(true);
+    try {
+      await oAuthLogin(provider);
+    } catch (error) {
+      console.error("error when trying to signup:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const requiredFields = ["password", "confirm_password"];
@@ -60,11 +73,18 @@ const SignupPage = () => {
       alert("Mohon setujui Syarat & Ketentuan.");
       return;
     }
-    const submittedData = { name: inputData.full_name, phone: inputData.phone, email: inputData.email, password: inputData.password };
-    signup(submittedData);
-    alert("Selamat! Pendaftaran akun berhasil. Login untuk melanjutkan.");
-    console.log("form submitted:", inputData);
-    navigate("/login");
+    setLoading(true);
+    try {
+      const submittedData = { name: inputData.full_name, phone: inputData.phone, email: inputData.email, password: inputData.password };
+      await signup(submittedData);
+      alert("Selamat! Pendaftaran akun berhasil. Login untuk melanjutkan.");
+      console.log("form submitted:", inputData);
+      navigate("/login");
+    } catch (error) {
+      console.error("error when trying to signup:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (isLoggedin) {
@@ -88,8 +108,8 @@ const SignupPage = () => {
                   <Button isFullwidth radius="full" buttonText="Selanjutnya" onClick={handleNext} />
                 </FormFieldset>
                 <FormFieldset>
-                  <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Facebook" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/fb-auth.svg" />} />
-                  <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Google" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/gm-auth.svg" />} />
+                  <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Facebook" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/fb-auth.svg" />} onClick={() => handleOAuthLogin(facebook)} />
+                  <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Google" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/gm-auth.svg" />} onClick={() => handleOAuthLogin(google)} />
                 </FormFieldset>
                 <FormFieldset startAlt="Sudah Punya Akun?">
                   <Button isFullwidth variant="line" radius="full" color="var(--color-primary)" buttonText="Masuk" onClick={() => navigate("/login")} />
@@ -103,7 +123,7 @@ const SignupPage = () => {
                   <Input isLabeled={false} type="password" radius="full" name="confirm_password" value={inputData.confirm_password} placeholder="Konfirmasi Password" isRequired onChange={handleInputChange} errorContent={errors.confirm_password} />
                 </FormFieldset>
                 <FormFieldset>
-                  <Button type="submit" isFullwidth radius="full" buttonText="Daftar Sekarang" />
+                  <Button type="submit" isFullwidth radius="full" buttonText="Daftar Sekarang" isLoading={loading} />
                   <Button variant="line" isFullwidth radius="full" color="var(--color-primary)" buttonText="Kembali" onClick={handlePrev} />
                 </FormFieldset>
                 <FormTnC checked={isChecked} onChange={handleCheckboxChange} />
