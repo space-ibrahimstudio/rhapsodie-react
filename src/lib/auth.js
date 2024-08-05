@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useDevmode } from "@ibrahimstudio/react";
+import { signInWithPopup, signOut } from "firebase/auth";
+import { auth } from "./firebaseConfig";
 
 const AuthContext = createContext();
 const apiURL = process.env.REACT_APP_API_URL;
@@ -51,6 +53,7 @@ export const AuthProvider = ({ children }) => {
         sessionStorage.setItem("userdata", userDataString);
         sessionStorage.setItem("logged-in", "true");
         sessionStorage.setItem("username", email);
+        sessionStorage.setItem("provider", provider);
         setIsLoggedin(true);
         alert(`Kamu berhasil login. Selamat datang kembali, ${userdata.name}!`);
         log("login credential:", userdata);
@@ -66,6 +69,63 @@ export const AuthProvider = ({ children }) => {
         log("login response:", loginresponse);
         console.log("please check your internet connection and try again.");
       }
+    } catch (error) {
+      setIsLoggedin(false);
+      alert("Permintaan tidak dapat di proses. Mohon coba sesaat lagi.");
+      console.error("error occurred during login:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const oAuthLogin = async (provider) => {
+    try {
+      const response = await signInWithPopup(auth, provider);
+      const userdata = {
+        id: response.user.uid,
+        provider: response.providerId,
+        register_id: null,
+        title: null,
+        name: response.user.displayName,
+        nickname: null,
+        dob: null,
+        age: null,
+        gender: null,
+        phone: response.user.phoneNumber,
+        email: response.user.email,
+        password: null,
+        verification_code: null,
+        verification_status: "0",
+        socialite_token: null,
+        socialite_refresh_token: null,
+        socialite_expires_in: null,
+        socialite_avatar: null,
+        avatar: response.user.photoURL,
+        is_subscribe: null,
+        remember_token: null,
+        is_provider: "0",
+        timeslot_setting: "15",
+        demo_only: "0",
+        demo_school: null,
+        demo_invoice: "0",
+        invoice_sent: "0",
+        is_cantata: "0",
+        created_at: response.user.createdAt,
+        schedule_setting: "15",
+        updated_at: null,
+        deleted_at: null,
+        hide_tooltips_main: "0",
+        hide_tooltips_bussiness: "0",
+      };
+      const userDataString = JSON.stringify(userdata);
+      sessionStorage.setItem("userdata", userDataString);
+      sessionStorage.setItem("logged-in", "true");
+      sessionStorage.setItem("username", response.user.email);
+      sessionStorage.setItem("provider", response.user.providerId);
+      setIsLoggedin(true);
+      alert(`Kamu berhasil login. Selamat datang kembali, ${userdata.name}!`);
+      log("login credential:", userdata);
+      console.log("successfully logged in.");
     } catch (error) {
       setIsLoggedin(false);
       alert("Permintaan tidak dapat di proses. Mohon coba sesaat lagi.");
@@ -91,7 +151,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const auth = async () => {
+  const oAuthLogout = async () => {
+    try {
+      await signOut(auth);
+      sessionStorage.removeItem("userdata");
+      sessionStorage.removeItem("logged-in");
+      sessionStorage.removeItem("username");
+      setIsLoggedin(false);
+      alert("Kamu berhasil logout. Mohon login ulang untuk mengakses Dashboard.");
+      log("successfully logged out");
+    } catch (error) {
+      alert("danger", "Permintaan tidak dapat di proses. Mohon coba sesaat lagi.");
+      console.error("error occurred during logout:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const checkAuth = async () => {
     try {
       const loggedin = sessionStorage.getItem("logged-in");
       const username = sessionStorage.getItem("username");
@@ -115,16 +192,17 @@ export const AuthProvider = ({ children }) => {
   const username = sessionStorage.getItem("username");
   const userDataString = sessionStorage.getItem("userdata");
   const userData = JSON.parse(userDataString);
+  const userProvider = sessionStorage.getItem("provider");
 
   useEffect(() => {
-    auth();
+    checkAuth();
   }, [location.pathname]);
 
   if (isLoggedin === null || loading) {
     return <div>Authenticating ...</div>;
   }
 
-  return <AuthContext.Provider value={{ loading, isLoggedin, signup, login, logout, username, userData }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ loading, isLoggedin, signup, login, oAuthLogin, logout, oAuthLogout, username, userData, userProvider }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);

@@ -16,10 +16,12 @@ const Navbar = () => {
   const ref = useRef();
   const navigate = useNavigate();
   const { width } = useWindow();
-  const { isLoggedin, userData, logout } = useAuth();
+  const { isLoggedin, userProvider, userData, logout, oAuthLogout } = useAuth();
   const [keyword, setKeyword] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const avatarURL = userData && userData.avatar ? (userProvider === "origin" ? `${imgURL}/${userData.avatar}` : userData.avatar) : "/jpg/avatar.jpg";
 
   const handleClickOutside = (e) => {
     if (ref.current && !ref.current.contains(e.target)) {
@@ -27,7 +29,14 @@ const Navbar = () => {
     }
   };
 
-  const handleLogout = () => logout();
+  const handleLogout = () => {
+    if (userProvider === "origin") {
+      logout();
+    } else {
+      oAuthLogout();
+    }
+  };
+
   const handleSearch = (e) => {
     if (e.key === "Enter") {
       navigate(`/pencarian/${keyword}`);
@@ -54,12 +63,12 @@ const Navbar = () => {
               <Fragment>
                 {!isLoggedin && <Button radius="full" size="sm" buttonText="Masuk" onClick={() => navigate("/login")} />}
                 {!isLoggedin && <Button radius="full" size="sm" bgColor="var(--color-hint)" buttonText="Daftar Gratis" onClick={() => navigate("/signup")} />}
-                {isLoggedin && <Image width="var(--pixel-40)" height="var(--pixel-40)" style={{ borderRadius: "50%", objectFit: "cover", objectPosition: "center", cursor: "pointer" }} src={userData && userData.avatar ? `${imgURL}/${userData.avatar}` : "/jpg/avatar.jpg"} onClick={() => navigate("/profil")} />}
+                {isLoggedin && <Image width="var(--pixel-40)" height="var(--pixel-40)" style={{ borderRadius: "50%", objectFit: "cover", objectPosition: "center", cursor: "pointer" }} src={avatarURL} onClick={() => navigate("/profil")} />}
                 {isLoggedin && <Button radius="full" size="sm" bgColor="var(--color-hint)" buttonText="Keluar" onClick={handleLogout} />}
               </Fragment>
             ) : (
               <Fragment>
-                {isLoggedin && <Image width="var(--pixel-40)" height="var(--pixel-40)" style={{ borderRadius: "50%", objectFit: "cover", objectPosition: "center", cursor: "pointer" }} src={userData && userData.avatar ? `${imgURL}/${userData.avatar}` : "/jpg/avatar.jpg"} onClick={() => navigate("/profil")} />}
+                {isLoggedin && <Image width="var(--pixel-40)" height="var(--pixel-40)" style={{ borderRadius: "50%", objectFit: "cover", objectPosition: "center", cursor: "pointer" }} src={avatarURL} onClick={() => navigate("/profil")} />}
                 <Button variant="hollow" subVariant="icon" radius="full" color="var(--color-primary)" iconContent={menuOpen ? <Close /> : <Burger />} onClick={() => setMenuOpen(true)} />
               </Fragment>
             )}

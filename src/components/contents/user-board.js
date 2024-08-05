@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@ibrahimstudio/button";
 import { useWindow } from "@ibrahimstudio/react";
+import { useAuth } from "../../lib/auth";
 import styles from "./styles/user-board.module.css";
 import tabcss from "./styles/board-tab.module.css";
 import setcss from "./styles/info-set.module.css";
@@ -32,8 +33,11 @@ const BoardTab = ({ children }) => {
 
 const UserBoard = ({ userdata }) => {
   const { width } = useWindow();
+  const { userProvider } = useAuth();
   const [activeTab, setActiveTab] = useState("1");
   const [newsLetter, setNewsLetter] = useState(true);
+
+  const avatarURL = userdata && userdata.avatar ? (userProvider === "origin" ? `${imgURL}/${userdata.avatar}` : userdata.avatar) : "/jpg/avatar.jpg";
 
   return (
     <section className={styles.userBoard}>
@@ -55,7 +59,7 @@ const UserBoard = ({ userdata }) => {
         <article className={styles.boardContent} style={width > 772 ? { borderLeft: "1px solid var(--color-primary-30)" } : { borderLeft: "unset" }}>
           <section className={styles.boardProfile} style={width >= 500 ? { flexDirection: "row", alignItems: "flex-start", justifyContent: "flex-start" } : { flexDirection: "column", alignItems: "center", justifyContent: "flex-start" }}>
             <header className={styles.profilePic}>
-              <img className={styles.picIcon} alt={(userdata && userdata.name) || "Not Set"} src={userdata && userdata.avatar ? `${imgURL}/${userdata.avatar}` : "/jpg/avatar.jpg"} loading="lazy" />
+              <img className={styles.picIcon} alt={(userdata && userdata.name) || "Not Set"} src={avatarURL} loading="lazy" />
               <Button id="update-avatar" size="sm" radius="full" buttonText="Update" />
             </header>
             <section className={styles.profileInfo} style={width >= 500 ? { flex: "1", textAlign: "left" } : { width: "100%", textAlign: "center" }}>
