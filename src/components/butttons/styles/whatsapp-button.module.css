@@ -10,7 +10,7 @@
   position: fixed;
   bottom: var(--pixel-30);
   right: var(--pixel-30);
-  z-index: 999;
+  z-index: 996;
   cursor: pointer;
   border: 0;
   padding: 0;
