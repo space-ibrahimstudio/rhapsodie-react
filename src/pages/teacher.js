@@ -14,6 +14,21 @@ const TeacherPage = () => {
   const [selectedData, setSelectedData] = useState([]);
   const [ratingData, setRatingData] = useState([]);
 
+  const awardsData = [
+    { title: "Juara 2 Christian Cover Song Competition FKH UGM ke-15", image: "/png/cert-desktop.png" },
+    { title: "Pemenang DPA GBI Banten 2018", image: "/png/cert-desktop.png" },
+    { title: "Orff-Schuulwerk Fundamental", image: "/png/cert-desktop.png" },
+    { title: "Juara 2 Christian Cover Song Competition FKH UGM ke-15", image: "/png/cert-desktop.png" },
+    { title: "Pemenang DPA GBI Banten 2018", image: "/png/cert-desktop.png" },
+    { title: "Orff-Schuulwerk Fundamental", image: "/png/cert-desktop.png" },
+  ];
+  const activitiesData = [
+    { title: "Activity 1", image: "/jpg/banner-1.png" },
+    { title: "Activity 2", image: "/jpg/banner-2.png" },
+    { title: "Activity 3", image: "/jpg/banner-3.png" },
+    { title: "Activity 4", image: "/jpg/banner-4.png" },
+  ];
+
   const fetchData = async () => {
     const errormsg = "Terjadi kesalahan saat memuat data. Mohon periksa koneksi internet anda dan coba lagi.";
     setIsLoading(true);
@@ -58,8 +73,12 @@ const TeacherPage = () => {
           bio={selectedData["teacher"] && selectedData["teacher"].description}
           location={selectedData["location"] && selectedData["location"]}
           rating={ratingData.length}
-          tags={selectedData["teacher"] && selectedData["teacher"].services}
+          // tags={selectedData["teacher"] && selectedData["teacher"].services}
+          tags="Gitar,Biola,Drum,Keyboard,Marcing Band,Saxophone,Cello"
           reviews={ratingData}
+          awards={awardsData}
+          activities={activitiesData}
+          certs={awardsData}
         />
       </Section>
     </PageLayout>

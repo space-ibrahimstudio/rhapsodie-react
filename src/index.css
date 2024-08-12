@@ -11,6 +11,7 @@
   --font-sm: 18px;
   --font-xsm: 16px;
   --font-tiny: 14px;
+  --font-ant: 12px;
 
   --theme-font: "Karla", sans-serif;
   --theme-color-base: var(--color-foreground);
@@ -91,6 +92,7 @@
     --font-sm: 15.5px;
     --font-xsm: 14px;
     --font-tiny: 12px;
+    --font-ant: 10px;
 
     --pixel-2: 1.7px;
     --pixel-5: 4px;
@@ -152,6 +154,7 @@
     --font-sm: 13px;
     --font-xsm: 11.5px;
     --font-tiny: 10px;
+    --font-ant: 8.5px;
 
     --pixel-2: 1.5px;
     --pixel-5: 3.5px;

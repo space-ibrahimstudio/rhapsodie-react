@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { useWindow, useFormat } from "@ibrahimstudio/react";
+import { useWindow, useFormat, useEvent } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
 import { lessonCategory } from "../../lib/dummy";
@@ -13,7 +13,30 @@ import ProductSm from "./product-sm";
 import PopupForm, { PopupBody, PopupFieldset, PopupFooter, PopupNote } from "../inputs/popup-form";
 import styles from "./styles/teacher-board.module.css";
 
-const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, location = [], rating, tags, reviews = [] }) => {
+const ActivitesCard = ({ image, title }) => {
+  return (
+    <section className={styles.activitesCard}>
+      <img className={styles.cardImageIcon} alt={title} src={image} />
+      <p className={styles.cardTitle}>{title}</p>
+    </section>
+  );
+};
+
+const GridContent = ({ children }) => {
+  return <section className={styles.gridContent}>{children}</section>;
+};
+
+const AwardsItem = ({ title }) => {
+  return (
+    <section className={styles.awardsItem}>
+      <img className={styles.itemIcon} alt={title} loading="lazy" src="/png/medal.png" />
+      <p className={styles.itemTitle}>{title}</p>
+    </section>
+  );
+};
+
+const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, location = [], awards = [], activities = [], certs = [], rating, tags, reviews = [] }) => {
+  const { scroll } = useEvent();
   const { width } = useWindow();
   const { newDate } = useFormat();
   const [step, setStep] = useState("1");
@@ -58,38 +81,49 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
           <Image className={styles.teacherAvatarIcon} alt={name} src={isLoading ? "/jpg/fallback.jpg" : avatar} />
         </header>
         <section className={styles.teacherDetails}>
-          <div className={styles.detailsContent}>
-            {isLoading ? (
-              <SkeGroup justifyC={width <= 700 ? "center" : "flex-start"} alignI={width <= 700 ? "center" : "flex-start"}>
-                <Skeleton w="40%" />
-                <Skeleton type="txt-xsm" w="70%" />
-              </SkeGroup>
-            ) : (
-              <Fragment>
-                <h1 className={styles.teacherName}>{(name && name) || "N/A"}</h1>
-                {shortBio && <p className={styles.teacherBio}>{shortBio}</p>}
-              </Fragment>
-            )}
-            <div className={styles.teacherLoc}>
+          <section className={styles.detailsContent}>
+            <section className={styles.detailsInfo}>
               {isLoading ? (
-                <Fragment>
-                  <Skeleton w="var(--pixel-20)" h="var(--pixel-20)" />
-                  <Skeleton type="txt-xsm" w="20%" />
-                </Fragment>
+                <SkeGroup justifyC={width <= 700 ? "center" : "flex-start"} alignI={width <= 700 ? "center" : "flex-start"}>
+                  <Skeleton w="40%" />
+                  <Skeleton type="txt-xsm" w="70%" />
+                </SkeGroup>
               ) : (
                 <Fragment>
-                  <Location size="var(--pixel-15)" />
-                  <b className={styles.locText}>{location.length > 0 ? location.map((loc, index) => (index + 1 === location.length ? loc.name : `${loc.name}, `)) : "N/A"}</b>
+                  <h1 className={styles.teacherName}>{(name && name) || "N/A"}</h1>
+                  {shortBio && <p className={styles.teacherBio}>{shortBio}</p>}
                 </Fragment>
               )}
-            </div>
-            {!isLoading && (
-              <div className={styles.teacherRating}>
-                {rating === 0 ? <Image width="auto" height="var(--pixel-15)" src="/svg/nostar.svg" /> : <Image width="auto" height="var(--pixel-15)" src="/svg/star.svg" />}
-                <b className={styles.locText}>{rating === 0 ? "(0)" : `(${rating} ulasan)`}</b>
+              <div className={styles.teacherLoc}>
+                {isLoading ? (
+                  <Fragment>
+                    <Skeleton w="var(--pixel-20)" h="var(--pixel-20)" />
+                    <Skeleton type="txt-xsm" w="20%" />
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <Location size="var(--pixel-15)" />
+                    <b className={styles.locText}>{location.length > 0 ? location.map((loc, index) => (index + 1 === location.length ? loc.name : `${loc.name}, `)) : "N/A"}</b>
+                  </Fragment>
+                )}
               </div>
+              {!isLoading && (
+                <div className={styles.teacherRating}>
+                  <Image width="auto" height="var(--pixel-15)" src="/svg/star.svg" />
+                  <b className={styles.locText}>{rating === 0 ? "(5)" : `(${rating} ulasan)`}</b>
+                </div>
+              )}
+            </section>
+            {!isLoading && awards.length > 0 && (
+              <section className={styles.detailsAwards}>
+                <h1 className={styles.awardsTitle}>Awards & Certificates</h1>
+                {awards.slice(0, 2).map((item, index) => (
+                  <AwardsItem key={index} title={item.title} />
+                ))}
+                {awards.length > 2 && <Button size="sm" bgColor="var(--color-primary-10)" color="var(--color-primary)" buttonText={`Lihat ${awards.length - 2} Lainnya`} onClick={() => scroll("awards-teacher", -90)} />}
+              </section>
             )}
-          </div>
+          </section>
           <div className={styles.detailsActions}>
             {isLoading ? (
               <Fragment>
@@ -124,17 +158,43 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
           )}
         </section>
         {!isLoading && (
-          <section className={styles.teacherReview}>
-            <h1 className={styles.reviewTitle}>
-              <span style={{ fontWeight: "800" }}>{`Ulasan `}</span>
-              <span style={{ fontWeight: "600", opacity: "0.5" }}>{`(${rating} ulasan)`}</span>
-            </h1>
-            <div className={styles.reviewContent}>
-              {reviews.map((review, index) => (
-                <ReviewCard key={index} isEven={index % 2 === 0 ? false : true} name={review.name} status={`Bergabung sejak ${newDate(review.created_at)}`} avatar="/jpg/avatar.jpg" content={review.description} />
-              ))}
-            </div>
-          </section>
+          <Fragment>
+            <section className={styles.teacherReview}>
+              <h1 className={styles.reviewTitle}>
+                <span style={{ fontWeight: "800" }}>Activities</span>
+              </h1>
+              {activities.length > 0 && (
+                <GridContent>
+                  {activities.map((item, index) => (
+                    <ActivitesCard key={index} title={item.title} image={item.image} />
+                  ))}
+                </GridContent>
+              )}
+            </section>
+            <section id="awards-teacher" className={styles.teacherReview}>
+              <h1 className={styles.reviewTitle}>
+                <span style={{ fontWeight: "800" }}>Awards & Certificates</span>
+              </h1>
+              {certs.length > 0 && (
+                <GridContent>
+                  {certs.map((item, index) => (
+                    <img key={index} alt={item.title} loading="lazy" src={width <= 700 ? "/png/cert-mobile.png" : "/png/cert-desktop.png"} style={{ position: "relative", width: "100%", height: "auto" }} />
+                  ))}
+                </GridContent>
+              )}
+            </section>
+            <section className={styles.teacherReview}>
+              <h1 className={styles.reviewTitle}>
+                <span style={{ fontWeight: "800" }}>{`Ulasan `}</span>
+                <span style={{ fontWeight: "600", opacity: "0.5" }}>{`(${rating} ulasan)`}</span>
+              </h1>
+              <div className={styles.reviewContent}>
+                {reviews.map((review, index) => (
+                  <ReviewCard key={index} isEven={index % 2 === 0 ? false : true} name={review.name} status={`Bergabung sejak ${newDate(review.created_at)}`} avatar="/jpg/avatar.jpg" content={review.description} />
+                ))}
+              </div>
+            </section>
+          </Fragment>
         )}
       </article>
       {reservOpen && (

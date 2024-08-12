@@ -23,13 +23,17 @@ const HomePage = () => {
   const [specTData, setSpecTData] = useState([]);
   const [privTData, setPrivTData] = useState([]);
 
+  const openLink = (link) => {
+    window.open(link, "_blank");
+  };
+
   const sliders = [
-    { label: "", image: "/jpg/banner-1.png" },
-    { label: "", image: "/jpg/banner-2.png" },
-    { label: "", image: "/jpg/banner-3.png" },
-    { label: "", image: "/jpg/banner-4.png" },
+    { label: "", image: "/jpg/banner-1.png", source: "https://example.com" },
+    { label: "", image: "/jpg/banner-2.png", source: "https://example.com" },
+    { label: "", image: "/jpg/banner-3.png", source: "https://example.com" },
+    { label: "", image: "/jpg/banner-4.png", source: "https://example.com" },
   ];
-  const renderSlider = (item) => <Image alt={item.label} src={item.image} width="100%" height="auto" style={width > 700 ? { borderRadius: "var(--pixel-10)" } : { borderRadius: "unset" }} />;
+  const renderSlider = (item) => <Image alt={item.label} src={item.image} width="100%" height="auto" style={width > 700 ? { borderRadius: "var(--pixel-10)" } : { borderRadius: "unset" }} onClick={() => openLink(item.source)} />;
 
   const fetchData = async () => {
     const errormsg = "Terjadi kesalahan saat memuat data. Mohon periksa koneksi internet anda dan coba lagi.";
@@ -82,7 +86,8 @@ const HomePage = () => {
             <SectionHead title={section.title} />
             <SectionBody>
               {section.arraydata.map((teacher, index) => (
-                <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"] && teacher["teacher"].image === null ? "/jpg/fallback.jpg" : teacher["teacher"] && `${imgURL}/${teacher["teacher"].image}`} name={teacher["teacher"] && teacher["teacher"].name} location={teacher["location"]} rating={teacher["review"] && teacher["review"].length} tags={teacher["teacher"] && teacher["teacher"].services} onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
+                // <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"] && teacher["teacher"].image === null ? "/jpg/fallback.jpg" : teacher["teacher"] && `${imgURL}/${teacher["teacher"].image}`} name={teacher["teacher"] && teacher["teacher"].name} location={teacher["location"]} rating={teacher["review"] && teacher["review"].length} tags={teacher["teacher"] && teacher["teacher"].services} onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
+                <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"] && teacher["teacher"].image === null ? "/jpg/fallback.jpg" : teacher["teacher"] && `${imgURL}/${teacher["teacher"].image}`} name={teacher["teacher"] && teacher["teacher"].name} location={teacher["location"]} rating={teacher["review"] && teacher["review"].length} tags="Gitar,Biola,Drum,Keyboard,Marcing Band,Saxophone,Cello" onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
               ))}
             </SectionBody>
           </TeacherSection>

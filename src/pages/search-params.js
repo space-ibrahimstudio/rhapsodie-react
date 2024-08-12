@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useWindow } from "@ibrahimstudio/react";
 import { Input } from "@ibrahimstudio/input";
-import { Button } from "@ibrahimstudio/button";
 import { SEO } from "../lib/seo";
 import { useApi } from "../lib/api";
 import { getCurrentDate } from "../lib/helper";
@@ -90,7 +89,8 @@ const SearchParamsPage = () => {
             )}
             <DrawerContent>
               {teacherData.map((teacher, index) => (
-                <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"].image === null ? "/jpg/fallback.jpg" : `${imgURL}/${teacher["teacher"].image}`} name={teacher["teacher"].name} location={teacher["location"]} rating={teacher["review"].length} tags={teacher["teacher"].services} onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
+                // <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"].image === null ? "/jpg/fallback.jpg" : `${imgURL}/${teacher["teacher"].image}`} name={teacher["teacher"].name} location={teacher["location"]} rating={teacher["review"].length} tags={teacher["teacher"].services} onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
+                <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"].image === null ? "/jpg/fallback.jpg" : `${imgURL}/${teacher["teacher"].image}`} name={teacher["teacher"].name} location={teacher["location"]} rating={teacher["review"].length} tags="Gitar,Biola,Drum,Keyboard,Marcing Band,Saxophone,Cello" onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
               ))}
             </DrawerContent>
           </Drawer>
