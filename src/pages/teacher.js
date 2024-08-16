@@ -73,12 +73,11 @@ const TeacherPage = () => {
           bio={selectedData["teacher"] && selectedData["teacher"].description}
           location={selectedData["location"] && selectedData["location"]}
           rating={ratingData.length}
-          // tags={selectedData["teacher"] && selectedData["teacher"].services}
-          tags="Gitar,Biola,Drum,Keyboard,Marcing Band,Saxophone,Cello"
+          tags={selectedData["instruments"]}
           reviews={ratingData}
-          awards={awardsData}
+          awards={selectedData["certificat"]}
           activities={activitiesData}
-          certs={awardsData}
+          certs={selectedData["certificat"]}
         />
       </Section>
     </PageLayout>

@@ -6,13 +6,6 @@ import styles from "./styles/about-tab.module.css";
 const AboutTab = ({ tags, content }) => {
   const [activeTab, setActiveTab] = useState("1");
   const { stripContent } = useContent();
-
-  const stringToArray = (tagsString) => {
-    if (!tagsString) return [];
-    return tagsString.split(",").map((tag) => tag.trim());
-  };
-
-  const convertedTags = stringToArray(tags);
   const strippedContent = (content && stripContent(content)) || "Tidak ada deskripsi.";
 
   return (
@@ -27,10 +20,10 @@ const AboutTab = ({ tags, content }) => {
       </nav>
       {activeTab === "1" && (
         <div className={styles.tabContent}>
-          {convertedTags.length > 0 && (
+          {tags.length > 0 && (
             <div className={styles.contentCat}>
-              {convertedTags.map((tag, index) => (
-                <Tag key={index} tagText={tag} />
+              {tags.map((tag, index) => (
+                <Tag key={index} tagText={tag.name} />
               ))}
             </div>
           )}

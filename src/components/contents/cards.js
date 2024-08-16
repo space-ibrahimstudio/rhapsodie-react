@@ -7,14 +7,7 @@ import tchrcss from "./styles/teacher-card.module.css";
 import ctgrcss from "./styles/cat-card.module.css";
 import rvewcss from "./styles/review-card.module.css";
 
-export const TeacherCard = ({ isLoading = false, image, name, location, rating, tags, onClick }) => {
-  const stringToArray = (tagsString) => {
-    if (!tagsString) return [];
-    return tagsString.split(",").map((tag) => tag.trim());
-  };
-
-  const convertedTags = stringToArray(tags);
-
+export const TeacherCard = ({ isLoading = false, image, name, location, rating, tags = [], onClick }) => {
   return (
     <section className={tchrcss.teacherCard} onClick={onClick}>
       {isLoading ? <Skeleton type="img" h="var(--pixel-150)" /> : <Image className={tchrcss.cardImageIcon} alt={name} src={image} />}
@@ -47,11 +40,11 @@ export const TeacherCard = ({ isLoading = false, image, name, location, rating, 
         </div>
         <div className={tchrcss.contentTag}>
           <div className={tchrcss.tagWrap}>
-            {convertedTags.slice(0, 2).map((tag, index) => (
-              <Tag key={index} tagText={tag} />
+            {tags.slice(0, 2).map((tag, index) => (
+              <Tag key={index} tagText={tag.name} />
             ))}
           </div>
-          {convertedTags.length > 2 && <Tag tagText={`+${convertedTags.length - 2} Lainnya`} />}
+          {tags.length > 2 && <Tag tagText={`+${tags.length - 2} Lainnya`} />}
         </div>
       </section>
     </section>

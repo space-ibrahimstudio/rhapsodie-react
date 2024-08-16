@@ -2,7 +2,6 @@ import React, { Fragment, useState } from "react";
 import { useWindow, useFormat, useEvent } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
-import { lessonCategory } from "../../lib/dummy";
 import AboutTab from "./about-tab";
 import { ReviewCard } from "./cards";
 import Image from "./image";
@@ -12,6 +11,8 @@ import InvoiceSm from "./invoice-sm";
 import ProductSm from "./product-sm";
 import PopupForm, { PopupBody, PopupFieldset, PopupFooter, PopupNote } from "../inputs/popup-form";
 import styles from "./styles/teacher-board.module.css";
+
+const imgURL = process.env.REACT_APP_IMGSRC_URL;
 
 const ActivitesCard = ({ image, title }) => {
   return (
@@ -35,7 +36,7 @@ const AwardsItem = ({ title }) => {
   );
 };
 
-const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, location = [], awards = [], activities = [], certs = [], rating, tags, reviews = [] }) => {
+const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, location = [], awards = [], activities = [], certs = [], rating, tags = [], reviews = [] }) => {
   const { scroll } = useEvent();
   const { width } = useWindow();
   const { newDate } = useFormat();
@@ -118,7 +119,7 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
               <section className={styles.detailsAwards}>
                 <h1 className={styles.awardsTitle}>Awards & Certificates</h1>
                 {awards.slice(0, 2).map((item, index) => (
-                  <AwardsItem key={index} title={item.title} />
+                  <AwardsItem key={index} title={item.name} />
                 ))}
                 {awards.length > 2 && <Button size="sm" bgColor="var(--color-primary-10)" color="var(--color-primary)" buttonText={`Lihat ${awards.length - 2} Lainnya`} onClick={() => scroll("awards-teacher", -90)} />}
               </section>
@@ -171,18 +172,18 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
                 </GridContent>
               )}
             </section>
-            <section id="awards-teacher" className={styles.teacherReview}>
-              <h1 className={styles.reviewTitle}>
-                <span style={{ fontWeight: "800" }}>Awards & Certificates</span>
-              </h1>
-              {certs.length > 0 && (
+            {certs.length > 0 && (
+              <section id="awards-teacher" className={styles.teacherReview}>
+                <h1 className={styles.reviewTitle}>
+                  <span style={{ fontWeight: "800" }}>Awards & Certificates</span>
+                </h1>
                 <GridContent>
                   {certs.map((item, index) => (
-                    <img key={index} alt={item.title} loading="lazy" src={width <= 700 ? "/png/cert-mobile.png" : "/png/cert-desktop.png"} style={{ position: "relative", width: "100%", height: "auto" }} />
+                    <img key={index} alt={item.name} loading="lazy" src={`${imgURL}/${item.image}`} style={{ position: "relative", width: "100%", height: "auto" }} />
                   ))}
                 </GridContent>
-              )}
-            </section>
+              </section>
+            )}
             <section className={styles.teacherReview}>
               <h1 className={styles.reviewTitle}>
                 <span style={{ fontWeight: "800" }}>{`Ulasan `}</span>
@@ -203,7 +204,7 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
             <Fragment>
               <PopupBody>
                 <Input variant="select" radius="full" labelText="Mau Belajar Dimana?" placeholder="Pilih tipe lokasi" name="location_type" value={inputData.location_type} options={locations.map((item) => ({ value: item.value, label: item.label }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "location_type", value: selectedValue } })} />
-                <Input variant="select" radius="full" labelText="Mau Belajar Apa?" placeholder="Pilih kategori" name="category" value={inputData.category} options={lessonCategory.map((item) => ({ value: item.value, label: item.label }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable />
+                <Input variant="select" radius="full" labelText="Mau Belajar Apa?" placeholder="Pilih kategori" name="category" value={inputData.category} options={tags.map((item) => ({ value: item.name, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable />
                 {inputData.category !== "" && <ProductSm items={products} />}
                 <PopupFieldset>
                   <Input radius="full" labelText="Hari dan Tanggal" placeholder="Atur tanggal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
