@@ -96,8 +96,7 @@ const CatSlugPage = () => {
             )}
             <DrawerContent>
               {teacherData.map((teacher, index) => (
-                // <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"].image === null ? "/jpg/fallback.jpg" : `${imgURL}/${teacher["teacher"].image}`} name={teacher["teacher"].name} location={teacher["location"]} rating={teacher["review"].length} tags={teacher["teacher"].services} onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
-                <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"].image === null ? "/jpg/fallback.jpg" : `${imgURL}/${teacher["teacher"].image}`} name={teacher["teacher"].name} location={teacher["location"]} rating={teacher["review"].length} tags="Gitar,Biola,Drum,Keyboard,Marcing Band,Saxophone,Cello" onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
+                <TeacherCard isLoading={isLoading} key={index} image={teacher["teacher"].image === null ? "/jpg/fallback.jpg" : `${imgURL}/${teacher["teacher"].image}`} name={teacher["teacher"].name} location={teacher["location"]} rating={teacher["review"].length} tags={teacher["instruments"]} onClick={() => navigate(`/guru/${teacher["teacher"].slug}`)} />
               ))}
             </DrawerContent>
           </Drawer>
