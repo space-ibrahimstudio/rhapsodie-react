@@ -3,8 +3,8 @@ import { useWindow, useFormat, useEvent } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
 import AboutTab from "./about-tab";
-import { ReviewCard } from "./cards";
-import Image from "./image";
+import { ReviewCard, CertCard } from "./cards";
+import Image, { OImage } from "./image";
 import { Location, Love, Share } from "./icons";
 import Skeleton, { SkeGroup } from "./skeleton";
 import InvoiceSm from "./invoice-sm";
@@ -79,7 +79,7 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
     <Fragment>
       <article className={styles.teacherBoard}>
         <header className={styles.teacherBanner} style={{ backgroundImage: `url(${isLoading ? "/jpg/fallback.jpg" : header})` }}>
-          <Image className={styles.teacherAvatarIcon} alt={name} src={isLoading ? "/jpg/fallback.jpg" : avatar} />
+          <OImage className={styles.teacherAvatarIcon} alt={name} src={isLoading ? "/jpg/fallback.jpg" : avatar} />
         </header>
         <section className={styles.teacherDetails}>
           <section className={styles.detailsContent}>
@@ -179,7 +179,7 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
                 </h1>
                 <GridContent>
                   {certs.map((item, index) => (
-                    <img key={index} alt={item.name} loading="lazy" src={`${imgURL}/${item.image}`} style={{ position: "relative", width: "100%", height: "auto" }} />
+                    <CertCard key={index} title={item.name} />
                   ))}
                 </GridContent>
               </section>

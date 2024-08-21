@@ -1,17 +1,19 @@
 import React, { Fragment } from "react";
+import { useWindow } from "@ibrahimstudio/react";
 import Tag from "./tag";
-import Image from "./image";
+import Image, { OImage } from "./image";
 import Skeleton from "./skeleton";
 import { Location } from "./icons";
 import tchrcss from "./styles/teacher-card.module.css";
 import ctgrcss from "./styles/cat-card.module.css";
 import rvewcss from "./styles/review-card.module.css";
+import certcss from "./styles/cert-card.module.css";
 
 export const TeacherCard = ({ isLoading = false, image, name, location, rating, tags = [], onClick }) => {
   return (
-    <section className={tchrcss.teacherCard} onClick={onClick}>
-      {isLoading ? <Skeleton type="img" h="var(--pixel-150)" /> : <Image className={tchrcss.cardImageIcon} alt={name} src={image} />}
-      <section className={tchrcss.cardContent}>
+    <section className={tchrcss.teacherCard}>
+      {isLoading ? <Skeleton type="img" h="var(--pixel-150)" /> : <OImage className={tchrcss.cardImageIcon} alt={name} src={image} />}
+      <section className={tchrcss.cardContent} onClick={onClick}>
         <header className={tchrcss.contentHead}>
           {isLoading ? <Skeleton /> : <h1 className={tchrcss.contentName}>{(name && name) || "N/A"}</h1>}
           <div className={tchrcss.contentDet}>
@@ -74,6 +76,19 @@ export const ReviewCard = ({ isLoading = false, name, status, avatar, content, i
       </header>
       <Image width="auto" height="var(--pixel-15)" src="/svg/star.svg" />
       <p className={rvewcss.cardContent}>{content}</p>
+    </section>
+  );
+};
+
+export const CertCard = ({ title }) => {
+  const { width } = useWindow();
+
+  return (
+    <section className={certcss.certCard}>
+      <header className={certcss.cardContent}>
+        <h1 className={`${certcss.contentText} ${width <= 700 ? certcss.mobile : ""}`}>{title}</h1>
+      </header>
+      <img className={certcss.cardImageIcon} alt={title} src={width <= 700 ? "/png/cert-mobile.png" : "/png/cert-desktop.png"} />
     </section>
   );
 };

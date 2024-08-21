@@ -1,0 +1,56 @@
+.contentText {
+  margin: 0;
+  flex: 1;
+  position: relative;
+  font-size: inherit;
+  font-weight: 900;
+  font-family: inherit;
+  text-overflow: ellipsis;
+  line-clamp: 4;
+  -webkit-line-clamp: 4;
+}
+
+.contentText.mobile {
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+}
+
+.cardContent {
+  width: 100%;
+  margin: 0 !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--pixel-45) var(--pixel-20) var(--pixel-20) var(--pixel-80);
+  box-sizing: border-box;
+  z-index: 1;
+  text-align: left;
+  font-size: var(--font-sm);
+  color: var(--color-foreground);
+  font-family: var(--font-mulish);
+}
+
+.cardImageIcon {
+  width: var(--pixel-300);
+  position: relative;
+  height: auto;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.certCard {
+  width: var(--pixel-300);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}

@@ -100,6 +100,7 @@
 }
 
 .cardContent {
+  cursor: pointer;
   align-self: stretch;
   align-items: flex-start;
   padding: var(--pixel-5) var(--pixel-10);
@@ -111,7 +112,6 @@
 }
 
 .teacherCard {
-  cursor: pointer;
   flex: 1;
   box-shadow: 0 31px 9px transparent, 0 20px 8px rgba(9, 29, 44, 0.01), 0 11px 7px rgba(9, 29, 44, 0.03), 0 5px 5px rgba(9, 29, 44, 0.04), 0 1px 3px rgba(9, 29, 44, 0.05);
   border-radius: var(--pixel-20);
