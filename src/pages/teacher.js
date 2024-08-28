@@ -14,14 +14,6 @@ const TeacherPage = () => {
   const [selectedData, setSelectedData] = useState([]);
   const [ratingData, setRatingData] = useState([]);
 
-  const awardsData = [
-    { title: "Juara 2 Christian Cover Song Competition FKH UGM ke-15", image: "/png/cert-desktop.png" },
-    { title: "Pemenang DPA GBI Banten 2018", image: "/png/cert-desktop.png" },
-    { title: "Orff-Schuulwerk Fundamental", image: "/png/cert-desktop.png" },
-    { title: "Juara 2 Christian Cover Song Competition FKH UGM ke-15", image: "/png/cert-desktop.png" },
-    { title: "Pemenang DPA GBI Banten 2018", image: "/png/cert-desktop.png" },
-    { title: "Orff-Schuulwerk Fundamental", image: "/png/cert-desktop.png" },
-  ];
   const activitiesData = [
     { title: "Activity 1", image: "/jpg/banner-1.png" },
     { title: "Activity 2", image: "/jpg/banner-2.png" },
@@ -66,6 +58,7 @@ const TeacherPage = () => {
       <Section>
         <TeacherBoard
           isLoading={isLoading}
+          id={selectedData["teacher"] && selectedData["teacher"].id}
           name={selectedData["teacher"] && selectedData["teacher"].name}
           avatar={selectedData["teacher"] && selectedData["teacher"].image === null ? "/jpg/fallback.jpg" : `${imgURL}/${selectedData["teacher"] && selectedData["teacher"].image}`}
           header={selectedData["teacher"] && selectedData["teacher"].cover === null ? "/jpg/fallback.jpg" : `${imgURL}/${selectedData["teacher"] && selectedData["teacher"].cover}`}

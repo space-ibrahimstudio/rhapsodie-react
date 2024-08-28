@@ -1,18 +1,18 @@
-import React, { Fragment, useState } from "react";
-import { useWindow, useFormat, useEvent } from "@ibrahimstudio/react";
+import React, { Fragment, useState, useEffect } from "react";
+import { useWindow, useFormat, useEvent, useContent } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
-import AboutTab from "./about-tab";
+import { useApi } from "../../lib/api";
+import Tag from "./tag";
 import { ReviewCard, CertCard } from "./cards";
-import Image, { OImage } from "./image";
+import Image from "./image";
 import { Location, Love, Share } from "./icons";
 import Skeleton, { SkeGroup } from "./skeleton";
 import InvoiceSm from "./invoice-sm";
 import ProductSm from "./product-sm";
+import WeeklyCalendar, { CalendarTime, TimeHeader, TimeList, TimeBody, CalendarDays, CalendarDay, DayHeader, DayList, DayBody } from "./weekly-calendar";
 import PopupForm, { PopupBody, PopupFieldset, PopupFooter, PopupNote } from "../inputs/popup-form";
 import styles from "./styles/teacher-board.module.css";
-
-const imgURL = process.env.REACT_APP_IMGSRC_URL;
 
 const ActivitesCard = ({ image, title }) => {
   return (
@@ -36,29 +36,24 @@ const AwardsItem = ({ title }) => {
   );
 };
 
-const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, location = [], awards = [], activities = [], certs = [], rating, tags = [], reviews = [] }) => {
+const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, bio, location = [], awards = [], activities = [], certs = [], rating, tags = [], reviews = [] }) => {
   const { scroll } = useEvent();
   const { width } = useWindow();
   const { newDate } = useFormat();
+  const { stripContent, toTitleCase } = useContent();
+  const { apiRead } = useApi();
   const [step, setStep] = useState("1");
   const [reservOpen, setReservOpen] = useState(false);
   const [inputData, setInputData] = useState({ location_type: "", category: "", date: "", time: "", payment_type: "" });
+  const [scheduleData, setScheduleData] = useState([]);
+  const [availSchedule, setAvailSchedule] = useState([]);
+  const [availLesson, setAvailLesson] = useState([]);
+  const [totalPrice, setTotalPrice] = useState("0");
+  const [activeTab, setActiveTab] = useState("1");
+  const [selectedRange, setSelectedRange] = useState("06:00-12:00");
 
+  const strippedContent = (bio && stripContent(bio)) || "Tidak ada deskripsi.";
   const formtitle = step === "1" ? "Formulir Reservasi" : step === "2" ? "Konfirmasi Pembayaran" : "Pembayaran Berhasil!";
-  const hours = ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"];
-  const locations = [
-    { label: "Belajar di tempat Murid", value: "murid" },
-    { label: "Belajar di tempat Guru", value: "guru" },
-  ];
-
-  const products = [
-    { label: "Lesson 1", value: "Rp 500.000/45 menit" },
-    { label: "Lesson 1", value: "Rp 500.000/45 menit" },
-    { label: "Lesson 1", value: "Rp 500.000/45 menit" },
-    { label: "Lesson 1", value: "Rp 500.000/45 menit" },
-    { label: "Lesson 1", value: "Rp 500.000/45 menit" },
-    { label: "Lesson 1", value: "Rp 500.000/45 menit" },
-  ];
 
   const payments = [
     { label: "OVO", value: "ovo" },
@@ -68,18 +63,130 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
     { label: "Virtual Account", value: "va" },
   ];
 
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const timeRanges = [
+    { value: "00:00-06:00", label: "00:00-06:00", item: { start: "00:00", end: "06:00" } },
+    { value: "06:00-12:00", label: "06:00-12:00", item: { start: "06:00", end: "12:00" } },
+    { value: "12:00-18:00", label: "12:00-18:00", item: { start: "12:00", end: "18:00" } },
+    { value: "18:00-24:00", label: "18:00-24:00", item: { start: "18:00", end: "24:00" } },
+  ];
+
+  const generateTimeSlots = (start, end) => {
+    const slots = [];
+    let [startHour, startMinutes] = start.split(":").map(Number);
+    const [endHour, endMinutes] = end.split(":").map(Number);
+    while (startHour < endHour || (startHour === endHour && startMinutes < endMinutes)) {
+      const formattedHour = startHour < 10 ? `0${startHour}` : startHour;
+      const formattedMinutes = startMinutes < 10 ? `0${startMinutes}` : startMinutes;
+      slots.push(`${formattedHour}:${formattedMinutes}`);
+      startMinutes += 15;
+      if (startMinutes >= 60) {
+        startMinutes = 0;
+        startHour += 1;
+      }
+    }
+    return slots;
+  };
+
+  const handleRangeChange = (value) => {
+    setSelectedRange(value);
+  };
+
+  const selectedTimeRange = timeRanges.find((range) => range.value === selectedRange);
+  const timeSlots = generateTimeSlots(selectedTimeRange.item.start, selectedTimeRange.item.end);
+
+  const getDayOfWeek = (dateString) => {
+    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    const date = new Date(dateString);
+    return days[date.getDay()];
+  };
+
+  const getCurrentWeekDates = () => {
+    const today = new Date();
+    const firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+    return Array.from({ length: 7 }).map((_, i) => {
+      const day = new Date(firstDayOfWeek);
+      day.setDate(firstDayOfWeek.getDate() + i);
+      return day;
+    });
+  };
+
+  const formatDate = (date, type) => {
+    const dayName = daysOfWeek[date.getDay()];
+    const day = date.getDate();
+    const monthName = date.toLocaleString("default", { month: "short" });
+    return type === "day" ? dayName : `${day} ${monthName}`;
+  };
+
+  const currentWeekDates = getCurrentWeekDates();
+  const today = new Date();
+
+  const closeForm = () => {
+    setReservOpen(false);
+    setInputData({ ...inputData, date: "", time: "", payment_type: "" });
+    setAvailLesson([]);
+    setTotalPrice("");
+  };
+
+  const getScheduleData = async (locationid, instrumentid) => {
+    const formData = new FormData();
+    formData.append("data", JSON.stringify({ idteacher: id, iddistrict: locationid, idinstruments: instrumentid }));
+    try {
+      const response = await apiRead(formData, "main", "scheduleview");
+      if (response && response.data && response.data.length > 0) {
+        setScheduleData(response.data);
+      } else {
+        setScheduleData([]);
+      }
+    } catch (error) {
+      console.error("error:", error);
+    }
+  };
+
+  const handleDirectBooking = (date, time) => {
+    setReservOpen(true);
+    const formattedDate = date.toISOString().split("T")[0];
+    setInputData((prevState) => ({ ...prevState, date: formattedDate, time }));
+  };
+
+  const handleNextStep = (step) => setStep(step);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleNextStep = (step) => setStep(step);
+  useEffect(() => {
+    if (inputData.location_type !== "" && inputData.category !== "") {
+      getScheduleData(inputData.location_type, inputData.category);
+    }
+  }, [inputData.location_type, inputData.category]);
+
+  useEffect(() => {
+    if (inputData.date !== "") {
+      const dayOfWeek = getDayOfWeek(inputData.date);
+      const availableSlots = scheduleData.filter((item) => item.day === dayOfWeek && item.is_booked === "0");
+      setAvailSchedule(availableSlots);
+      console.log("available time:", availableSlots);
+    }
+  }, [inputData.date, scheduleData]);
+
+  useEffect(() => {
+    if (inputData.time !== "" && availSchedule.length > 0) {
+      const availableTimes = availSchedule.filter((item) => item.id === inputData.time);
+      if (availableTimes.length > 0) {
+        setAvailLesson(availableTimes);
+        const totalPrice = availableTimes.reduce((total, schedule) => total + parseInt(schedule.tuition_fee, 10), 0);
+        const formattedTotal = `${totalPrice.toLocaleString("id-ID")}`;
+        setTotalPrice(formattedTotal);
+      }
+    }
+  }, [inputData.time, availSchedule]);
 
   return (
     <Fragment>
       <article className={styles.teacherBoard}>
         <header className={styles.teacherBanner} style={{ backgroundImage: `url(${isLoading ? "/jpg/fallback.jpg" : header})` }}>
-          <OImage className={styles.teacherAvatarIcon} alt={name} src={isLoading ? "/jpg/fallback.jpg" : avatar} />
+          <Image className={styles.teacherAvatarIcon} alt={name} src={isLoading ? "/jpg/fallback.jpg" : avatar} />
         </header>
         <section className={styles.teacherDetails}>
           <section className={styles.detailsContent}>
@@ -155,7 +262,78 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
               </SkeGroup>
             </SkeGroup>
           ) : (
-            <AboutTab tags={tags} content={bio} />
+            <section className={styles.aboutTab}>
+              <nav className={styles.tabSwitch}>
+                <button className={`${styles.switchButton} ${activeTab === "1" ? styles.active : ""}`} onClick={() => setActiveTab("1")}>
+                  <b className={styles.buttonText}>Tentang Guru</b>
+                </button>
+                <button className={`${styles.switchButton} ${activeTab === "2" ? styles.active : ""}`} onClick={() => setActiveTab("2")}>
+                  <b className={styles.buttonText}>Jadwal Guru</b>
+                </button>
+              </nav>
+              {activeTab === "1" && (
+                <div className={styles.tabContent}>
+                  {tags.length > 0 && (
+                    <div className={styles.contentCat}>
+                      {tags.map((tag, index) => (
+                        <Tag key={index} tagText={tag.name} />
+                      ))}
+                    </div>
+                  )}
+                  <p className={styles.contentText}>{strippedContent}</p>
+                </div>
+              )}
+              {activeTab === "2" && (
+                <div className={styles.tabContent}>
+                  <PopupFieldset>
+                    <Input variant="select" radius="full" labelText="Lokasi Belajar" placeholder="Pilih lokasi" name="location_type" value={inputData.location_type} options={location.map((item) => ({ value: item.iddistrict, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "location_type", value: selectedValue } })} isSearchable={location.length > 10} />
+                    <Input variant="select" radius="full" labelText="Pilih Instrument" placeholder="Lihat pilihan instrument" name="category" value={inputData.category} options={tags.map((item) => ({ value: item.idinstruments, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable={location.length > 10} />
+                    <Input variant="select" noEmptyValue radius="full" labelText="Pilih Jam" value={selectedRange} options={timeRanges} onSelect={handleRangeChange} />
+                  </PopupFieldset>
+                  <WeeklyCalendar>
+                    <CalendarTime>
+                      <TimeHeader>UTC+7</TimeHeader>
+                      <TimeList>
+                        {timeSlots.map((time) => (
+                          <TimeBody key={time}>{time}</TimeBody>
+                        ))}
+                      </TimeList>
+                    </CalendarTime>
+                    <CalendarDays>
+                      {currentWeekDates.map((day, index) => {
+                        const isToday = day.toDateString() === today.toDateString();
+                        return (
+                          <CalendarDay key={index} isActive={isToday}>
+                            <DayHeader day={toTitleCase(formatDate(day, "day"))} date={formatDate(day, "date")} isActive={isToday} />
+                            <DayList>
+                              {timeSlots.map((time, idx) => {
+                                const dayName = daysOfWeek[index].toLowerCase();
+                                const slot = scheduleData.find((sch) => {
+                                  return sch.day.toLowerCase() === dayName && time >= sch.start_time.slice(0, 5) && time < sch.end_time.slice(0, 5);
+                                });
+                                let status = "";
+                                let isClickable = false;
+                                if (slot) {
+                                  if (slot.is_booked === "0") {
+                                    status = "available";
+                                    isClickable = true;
+                                  } else {
+                                    status = "booked";
+                                  }
+                                } else {
+                                  status = "unavailable";
+                                }
+                                return <DayBody key={idx} status={status} onClick={isClickable ? () => handleDirectBooking(day, time) : () => {}} />;
+                              })}
+                            </DayList>
+                          </CalendarDay>
+                        );
+                      })}
+                    </CalendarDays>
+                  </WeeklyCalendar>
+                </div>
+              )}
+            </section>
           )}
         </section>
         {!isLoading && (
@@ -199,17 +377,28 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
         )}
       </article>
       {reservOpen && (
-        <PopupForm title={formtitle} onClose={() => setReservOpen(false)} onSubmit={() => {}}>
+        <PopupForm title={formtitle} onClose={closeForm} onSubmit={() => {}}>
           {step === "1" && (
             <Fragment>
               <PopupBody>
-                <Input variant="select" radius="full" labelText="Mau Belajar Dimana?" placeholder="Pilih tipe lokasi" name="location_type" value={inputData.location_type} options={locations.map((item) => ({ value: item.value, label: item.label }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "location_type", value: selectedValue } })} />
-                <Input variant="select" radius="full" labelText="Mau Belajar Apa?" placeholder="Pilih kategori" name="category" value={inputData.category} options={tags.map((item) => ({ value: item.name, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable />
-                {inputData.category !== "" && <ProductSm items={products} />}
+                <Input variant="select" radius="full" labelText="Lokasi Belajar" placeholder="Pilih lokasi" name="location_type" value={inputData.location_type} options={location.map((item) => ({ value: item.iddistrict, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "location_type", value: selectedValue } })} isSearchable={location.length > 10} />
+                <Input variant="select" radius="full" labelText="Pilih Instrument" placeholder="Lihat pilihan instrument" name="category" value={inputData.category} options={tags.map((item) => ({ value: item.idinstruments, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable={location.length > 10} />
                 <PopupFieldset>
                   <Input radius="full" labelText="Hari dan Tanggal" placeholder="Atur tanggal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
-                  <Input variant="select" isSearchable radius="full" labelText="Jam Belajar" placeholder="Pilih jadwal tersedia" name="time" value={inputData.time} options={hours.map((hour) => ({ value: hour, label: hour }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "time", value: selectedValue } })} />
+                  <Input
+                    variant="select"
+                    isSearchable={inputData.date !== "" ? (availSchedule.length > 10 ? true : false) : false}
+                    radius="full"
+                    labelText="Jam Belajar"
+                    placeholder={inputData.date === "" ? "Mohon pilih tanggal dulu" : "Pilih jadwal tersedia"}
+                    name="time"
+                    value={inputData.time}
+                    options={inputData.date === "" ? [] : availSchedule.map((item) => ({ value: item.id, label: `${item.start_time} - ${item.end_time}` }))}
+                    onSelect={(selectedValue) => handleInputChange({ target: { name: "time", value: selectedValue } })}
+                    isDisabled={inputData.date === ""}
+                  />
                 </PopupFieldset>
+                {availLesson.length > 0 && <ProductSm items={availLesson} />}
               </PopupBody>
               <PopupFooter>
                 <Button isFullwidth radius="full" buttonText="Reservasi Sekarang" onClick={() => handleNextStep("2")} />
@@ -219,24 +408,13 @@ const TeacherBoard = ({ isLoading = false, avatar, header, name, shortBio, bio, 
           {step === "2" && (
             <Fragment>
               <PopupBody>
-                <InvoiceSm items={products} total="1.500.000" />
+                <InvoiceSm items={availLesson} total={totalPrice} />
                 <PopupNote text="Tagihan pembayaran untuk 1 bulan" />
                 <Input variant="select" radius="full" labelText="Metode Pembayaran" placeholder="Pilih metode pembayaran" name="payment_type" value={inputData.payment_type} options={payments.map((item) => ({ value: item.value, label: item.label }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "payment_type", value: selectedValue } })} />
               </PopupBody>
               <PopupFooter>
                 <Button isFullwidth variant="line" color="var(--color-primary)" radius="full" buttonText="Kembali" onClick={() => handleNextStep("1")} />
                 <Button isFullwidth radius="full" buttonText="Bayar Sekarang" onClick={() => handleNextStep("3")} />
-              </PopupFooter>
-            </Fragment>
-          )}
-          {step === "3" && (
-            <Fragment>
-              <PopupBody>
-                <InvoiceSm items={products} total="1.500.000" />
-                <PopupNote text="Tagihan pembayaran untuk 1 bulan" />
-              </PopupBody>
-              <PopupFooter>
-                <Button isFullwidth radius="full" buttonText="Tutup" onClick={() => setReservOpen(false)} />
               </PopupFooter>
             </Fragment>
           )}

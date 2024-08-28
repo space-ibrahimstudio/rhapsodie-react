@@ -1,3 +1,102 @@
+.buttonText {
+  position: relative;
+  font-size: var(--font-xsm);
+  font-family: var(--font-karla);
+  color: inherit;
+  text-align: center;
+}
+
+.contentCat,
+.switchButton,
+.tabSwitch {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.switchButton {
+  cursor: pointer;
+  border: 0;
+  padding: 0 var(--pixel-20);
+  background-color: transparent;
+  height: var(--pixel-50);
+  justify-content: center;
+  box-sizing: border-box;
+  color: var(--color-secondary-50);
+  transition: all 0.3s ease-in-out;
+}
+
+.switchButton:hover {
+  color: var(--color-secondary);
+}
+
+.switchButton.active {
+  color: var(--color-primary);
+  background-color: var(--color-foreground);
+  border-radius: var(--pixel-15) var(--pixel-15) 0 0;
+}
+
+.contentCat,
+.tabSwitch {
+  align-self: stretch;
+  overflow: hidden;
+  justify-content: flex-start;
+}
+
+.tabSwitch {
+  margin: 0;
+  height: var(--pixel-50);
+  flex-shrink: 0;
+}
+
+.contentCat {
+  flex-wrap: wrap;
+  gap: var(--pixel-5);
+}
+
+.contentText {
+  margin: 0;
+  white-space: pre-wrap;
+  align-self: stretch;
+  position: relative;
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: var(--color-secondary);
+  text-align: left;
+}
+
+.aboutTab {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.tabContent {
+  width: 100%;
+  gap: var(--pixel-10);
+  position: relative;
+  border-radius: 0 0 var(--pixel-15) var(--pixel-15);
+  background-color: var(--color-foreground);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--pixel-20);
+  box-sizing: border-box;
+}
+
+.aboutTab {
+  border-radius: var(--pixel-20);
+  background-color: var(--color-secondary-10);
+  padding: var(--pixel-5);
+  text-align: center;
+  font-size: var(--font-tiny);
+  color: var(--color-primary);
+  font-family: var(--font-karla);
+}
+
 .cardImageIcon,
 .cardTitle {
   align-self: stretch;
@@ -211,7 +310,6 @@
   gap: var(--pixel-10);
 }
 
-.teacherAbout,
 .teacherDetails {
   overflow: hidden;
   flex-direction: column;
@@ -229,8 +327,10 @@
 }
 
 .teacherAbout {
+  flex-direction: column;
+  align-items: flex-start;
   padding: var(--pixel-30);
-  z-index: 1;
+  z-index: 3;
 }
 
 .reviewTitle {
