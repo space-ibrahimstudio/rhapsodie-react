@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useLocation, Navigate, useNavigate } from "react-router-dom";
 import { useFormat } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
 import { useAuth } from "../lib/auth";
+import { SEO } from "../lib/seo";
 import PageLayout from "../components/frames/pages";
 import Section from "../components/frames/section";
 import PaymentForm, { PaymentOption, PaymentSummary, OptionList, PlanButton, MethodButton, SummaryDetail, SummaryInvoice } from "../components/contents/payment-form";
@@ -92,40 +93,43 @@ const PaymentPage = () => {
   }
 
   return (
-    <PageLayout>
-      <Section>
-        <PaymentForm>
-          <PaymentOption>
-            <OptionList title="Choose Your Lesson Plan">
-              {plans.map((item, index) => (
-                <PlanButton key={index} onClick={item.onCLick} isActive={item.value === activePlan}>
-                  {item.label}
-                </PlanButton>
-              ))}
-            </OptionList>
-            <OptionList title="Choose Payment Method">
-              {methods.map((item, index) => (
-                <MethodButton key={index} onClick={item.onCLick} isActive={item.value === activeMethod}>
-                  <Image width="auto" height="var(--pixel-35)" alt={item.label} src={item.iconsrc} />
-                </MethodButton>
-              ))}
-            </OptionList>
-            <OptionList title="Voucher">
-              <Input id="voucher-code" isLabeled={false} name="voucher_code" placeholder="Masukkan kode voucher" value={inputData.voucher_code} onChange={handleInputChange} />
-              <Button buttonText="Submit" onClick={() => {}} />
-            </OptionList>
-          </PaymentOption>
-          <PaymentSummary>
-            <SummaryDetail title="Your Booking Detail" items={bookingdata} />
-            <SummaryInvoice title="Order Summary" items={invoicedata} />
-            <PopupFieldset>
-              <Button isFullwidth radius="full" bgColor="var(--color-hint)" buttonText="Continue to Payment" onClick={() => {}} />
-              <Button isFullwidth variant="line" radius="full" color="var(--color-hint)" buttonText="Cancel" onClick={handleCancel} />
-            </PopupFieldset>
-          </PaymentSummary>
-        </PaymentForm>
-      </Section>
-    </PageLayout>
+    <Fragment>
+      <SEO title={reservation_data ? `Booking ${reservation_data.lesson} by ${reservation_data.teacher}` : "Booking guru musik"} route="/payment" />
+      <PageLayout>
+        <Section>
+          <PaymentForm>
+            <PaymentOption>
+              <OptionList title="Choose Your Lesson Plan">
+                {plans.map((item, index) => (
+                  <PlanButton key={index} onClick={item.onCLick} isActive={item.value === activePlan}>
+                    {item.label}
+                  </PlanButton>
+                ))}
+              </OptionList>
+              <OptionList title="Choose Payment Method">
+                {methods.map((item, index) => (
+                  <MethodButton key={index} onClick={item.onCLick} isActive={item.value === activeMethod}>
+                    <Image width="auto" height="var(--pixel-35)" alt={item.label} src={item.iconsrc} />
+                  </MethodButton>
+                ))}
+              </OptionList>
+              <OptionList title="Voucher">
+                <Input id="voucher-code" isLabeled={false} name="voucher_code" placeholder="Masukkan kode voucher" value={inputData.voucher_code} onChange={handleInputChange} />
+                <Button buttonText="Submit" onClick={() => {}} />
+              </OptionList>
+            </PaymentOption>
+            <PaymentSummary>
+              <SummaryDetail title="Your Booking Detail" items={bookingdata} />
+              <SummaryInvoice title="Order Summary" items={invoicedata} />
+              <PopupFieldset>
+                <Button isFullwidth radius="full" bgColor="var(--color-hint)" buttonText="Continue to Payment" onClick={() => {}} />
+                <Button isFullwidth variant="line" radius="full" color="var(--color-hint)" buttonText="Cancel" onClick={handleCancel} />
+              </PopupFieldset>
+            </PaymentSummary>
+          </PaymentForm>
+        </Section>
+      </PageLayout>
+    </Fragment>
   );
 };
 
