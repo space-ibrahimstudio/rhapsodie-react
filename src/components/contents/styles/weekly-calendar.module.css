@@ -175,10 +175,10 @@
 }
 
 .weeklyCalendar {
+  overflow-x: auto;
   border-radius: var(--pixel-20);
   align-self: stretch;
   box-shadow: 0 0 0 0.5px var(--color-secondary-20);
-  overflow: hidden;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
