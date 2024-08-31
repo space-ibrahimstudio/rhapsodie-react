@@ -10,10 +10,9 @@ import { ReviewCard, CertCard } from "./cards";
 import Image from "./image";
 import { Location, Love, Share } from "./icons";
 import Skeleton, { SkeGroup } from "./skeleton";
-import InvoiceSm from "./invoice-sm";
 import ProductSm from "./product-sm";
 import WeeklyCalendar, { CalendarTime, TimeHeader, TimeList, TimeBody, CalendarDays, CalendarDay, DayHeader, DayList, DayBody } from "./weekly-calendar";
-import PopupForm, { PopupBody, PopupFieldset, PopupFooter, PopupNote } from "../inputs/popup-form";
+import PopupForm, { PopupBody, PopupFieldset, PopupFooter } from "../inputs/popup-form";
 import styles from "./styles/teacher-board.module.css";
 
 const ActivitesCard = ({ image, title }) => {
@@ -54,6 +53,7 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
   const [totalPrice, setTotalPrice] = useState("0");
   const [activeTab, setActiveTab] = useState("1");
   const [selectedRange, setSelectedRange] = useState("06:00-12:00");
+  const [selectedLesson, setSelectedLesson] = useState("");
 
   const strippedContent = (bio && stripContent(bio)) || "Tidak ada deskripsi.";
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -145,16 +145,24 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputData((prevState) => ({ ...prevState, [name]: value }));
+    if (name === "category" && value !== "") {
+      const selectedlesson = tags.find((item) => item.idinstruments === value);
+      if (selectedlesson) {
+        setSelectedLesson(selectedlesson.name);
+      } else {
+        setSelectedLesson("");
+      }
+    }
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const reservdata = { teacher: name, location: inputData.location_type, lesson: inputData.category, date: inputData.date, time: inputData.time, price: totalPrice };
+    const reservdata = { teacher: name, location: inputData.location_type, lesson_id: inputData.category, lesson: selectedLesson, date: inputData.date, price: totalPrice };
     localStorage.setItem("reservation_data", JSON.stringify(reservdata));
     if (!isLoggedin) {
       navigate("/login");
     } else {
-      navigate("/payment");
+      navigate("/payment", { state: { reservation_data: reservdata } });
     }
   };
 
@@ -179,8 +187,7 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
       if (availableTimes.length > 0) {
         setAvailLesson(availableTimes);
         const totalPrice = availableTimes.reduce((total, schedule) => total + parseInt(schedule.tuition_fee, 10), 0);
-        const formattedTotal = `${totalPrice.toLocaleString("id-ID")}`;
-        setTotalPrice(formattedTotal);
+        setTotalPrice(totalPrice);
       }
     }
   }, [inputData.time, availSchedule]);

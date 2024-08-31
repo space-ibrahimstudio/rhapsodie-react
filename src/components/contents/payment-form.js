@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormat } from "@ibrahimstudio/react";
-import styles from "./payment-form.module.css";
+import styles from "./styles/payment-form.module.css";
 
 export const SummaryInvoice = ({ title, items = [] }) => {
   const { newPrice } = useFormat();
@@ -12,7 +12,9 @@ export const SummaryInvoice = ({ title, items = [] }) => {
         {items.map((item, index) => (
           <div key={index} className={`${styles.contentList} ${index + 1 === items.length ? styles.total : ""}`}>
             <div className={styles.listLabel}>
-              <b className={styles.labelText}>{item.label}</b>
+              <b className={styles.labelText} style={{ fontWeight: "500" }}>
+                {item.label}
+              </b>
             </div>
             <b className={styles.listSepar}>:</b>
             <div className={styles.listValue}>
@@ -33,7 +35,9 @@ export const SummaryDetail = ({ title, items = [] }) => {
         {items.map((item, index) => (
           <div key={index} className={styles.contentList}>
             <div className={styles.listLabel}>
-              <b className={styles.labelText}>{item.label}</b>
+              <b className={styles.labelText} style={{ fontWeight: "500" }}>
+                {item.label}
+              </b>
             </div>
             <b className={styles.listSepar}>:</b>
             <div className={styles.listLabel}>

@@ -19,6 +19,7 @@
   --theme-color-secondary: var(--color-secondary);
 
   --color-foreground: #fffefe;
+  --color-foreground-10: rgba(255, 254, 254, 0.1);
   --color-foreground-50: rgba(255, 254, 254, 0.5);
   --color-foreground-70: rgba(255, 254, 254, 0.7);
   --color-primary: #2689c7;
