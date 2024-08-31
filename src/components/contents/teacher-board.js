@@ -1,8 +1,10 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useWindow, useFormat, useEvent, useContent } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
 import { useApi } from "../../lib/api";
+import { useAuth } from "../../lib/auth";
 import Tag from "./tag";
 import { ReviewCard, CertCard } from "./cards";
 import Image from "./image";
@@ -37,12 +39,13 @@ const AwardsItem = ({ title }) => {
 };
 
 const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, bio, location = [], awards = [], activities = [], certs = [], rating, tags = [], reviews = [] }) => {
+  const navigate = useNavigate();
   const { scroll } = useEvent();
   const { width } = useWindow();
   const { newDate } = useFormat();
+  const { isLoggedin } = useAuth();
   const { stripContent, toTitleCase } = useContent();
   const { apiRead } = useApi();
-  const [step, setStep] = useState("1");
   const [reservOpen, setReservOpen] = useState(false);
   const [inputData, setInputData] = useState({ location_type: "", category: "", date: "", time: "", payment_type: "" });
   const [scheduleData, setScheduleData] = useState([]);
@@ -53,16 +56,6 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
   const [selectedRange, setSelectedRange] = useState("06:00-12:00");
 
   const strippedContent = (bio && stripContent(bio)) || "Tidak ada deskripsi.";
-  const formtitle = step === "1" ? "Formulir Reservasi" : step === "2" ? "Konfirmasi Pembayaran" : "Pembayaran Berhasil!";
-
-  const payments = [
-    { label: "OVO", value: "ovo" },
-    { label: "ShopeePay", value: "spay" },
-    { label: "GoPay", value: "gopay" },
-    { label: "Bank Transfer", value: "bank" },
-    { label: "Virtual Account", value: "va" },
-  ];
-
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const timeRanges = [
     { value: "00:00-06:00", label: "00:00-06:00", item: { start: "00:00", end: "06:00" } },
@@ -149,10 +142,20 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
     setInputData((prevState) => ({ ...prevState, date: formattedDate, time }));
   };
 
-  const handleNextStep = (step) => setStep(step);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const reservdata = { teacher: name, location: inputData.location_type, lesson: inputData.category, date: inputData.date, time: inputData.time, price: totalPrice };
+    localStorage.setItem("reservation_data", JSON.stringify(reservdata));
+    if (!isLoggedin) {
+      navigate("/login");
+    } else {
+      navigate("/payment");
+    }
   };
 
   useEffect(() => {
@@ -377,47 +380,30 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
         )}
       </article>
       {reservOpen && (
-        <PopupForm title={formtitle} onClose={closeForm} onSubmit={() => {}}>
-          {step === "1" && (
-            <Fragment>
-              <PopupBody>
-                <Input variant="select" radius="full" labelText="Lokasi Belajar" placeholder="Pilih lokasi" name="location_type" value={inputData.location_type} options={location.map((item) => ({ value: item.iddistrict, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "location_type", value: selectedValue } })} isSearchable={location.length > 10} />
-                <Input variant="select" radius="full" labelText="Pilih Instrument" placeholder="Lihat pilihan instrument" name="category" value={inputData.category} options={tags.map((item) => ({ value: item.idinstruments, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable={location.length > 10} />
-                <PopupFieldset>
-                  <Input radius="full" labelText="Hari dan Tanggal" placeholder="Atur tanggal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
-                  <Input
-                    variant="select"
-                    isSearchable={inputData.date !== "" ? (availSchedule.length > 10 ? true : false) : false}
-                    radius="full"
-                    labelText="Jam Belajar"
-                    placeholder={inputData.date === "" ? "Mohon pilih tanggal dulu" : "Pilih jadwal tersedia"}
-                    name="time"
-                    value={inputData.time}
-                    options={inputData.date === "" ? [] : availSchedule.map((item) => ({ value: item.id, label: `${item.start_time} - ${item.end_time}` }))}
-                    onSelect={(selectedValue) => handleInputChange({ target: { name: "time", value: selectedValue } })}
-                    isDisabled={inputData.date === ""}
-                  />
-                </PopupFieldset>
-                {availLesson.length > 0 && <ProductSm items={availLesson} />}
-              </PopupBody>
-              <PopupFooter>
-                <Button isFullwidth radius="full" buttonText="Reservasi Sekarang" onClick={() => handleNextStep("2")} />
-              </PopupFooter>
-            </Fragment>
-          )}
-          {step === "2" && (
-            <Fragment>
-              <PopupBody>
-                <InvoiceSm items={availLesson} total={totalPrice} />
-                <PopupNote text="Tagihan pembayaran untuk 1 bulan" />
-                <Input variant="select" radius="full" labelText="Metode Pembayaran" placeholder="Pilih metode pembayaran" name="payment_type" value={inputData.payment_type} options={payments.map((item) => ({ value: item.value, label: item.label }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "payment_type", value: selectedValue } })} />
-              </PopupBody>
-              <PopupFooter>
-                <Button isFullwidth variant="line" color="var(--color-primary)" radius="full" buttonText="Kembali" onClick={() => handleNextStep("1")} />
-                <Button isFullwidth radius="full" buttonText="Bayar Sekarang" onClick={() => handleNextStep("3")} />
-              </PopupFooter>
-            </Fragment>
-          )}
+        <PopupForm title="Formulir Reservasi" onClose={closeForm} onSubmit={handleFormSubmit}>
+          <PopupBody>
+            <Input variant="select" radius="full" labelText="Lokasi Belajar" placeholder="Pilih lokasi" name="location_type" value={inputData.location_type} options={location.map((item) => ({ value: item.iddistrict, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "location_type", value: selectedValue } })} isSearchable={location.length > 10} />
+            <Input variant="select" radius="full" labelText="Pilih Instrument" placeholder="Lihat pilihan instrument" name="category" value={inputData.category} options={tags.map((item) => ({ value: item.idinstruments, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable={location.length > 10} />
+            <PopupFieldset>
+              <Input radius="full" labelText="Hari dan Tanggal" placeholder="Atur tanggal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
+              <Input
+                variant="select"
+                isSearchable={inputData.date !== "" ? (availSchedule.length > 10 ? true : false) : false}
+                radius="full"
+                labelText="Jam Belajar"
+                placeholder={inputData.date === "" ? "Mohon pilih tanggal dulu" : "Pilih jadwal tersedia"}
+                name="time"
+                value={inputData.time}
+                options={inputData.date === "" ? [] : availSchedule.map((item) => ({ value: item.id, label: `${item.start_time} - ${item.end_time}` }))}
+                onSelect={(selectedValue) => handleInputChange({ target: { name: "time", value: selectedValue } })}
+                isDisabled={inputData.date === ""}
+              />
+            </PopupFieldset>
+            {availLesson.length > 0 && <ProductSm items={availLesson} />}
+          </PopupBody>
+          <PopupFooter>
+            <Button isFullwidth type="submit" radius="full" buttonText="Reservasi Sekarang" />
+          </PopupFooter>
         </PopupForm>
       )}
     </Fragment>

@@ -26,8 +26,14 @@ const LoginPage = () => {
 
   const handleOAuthLogin = async (provider) => {
     setLoading(true);
+    const savedReservationData = JSON.parse(localStorage.getItem("reservation_data"));
     try {
       await oAuthLogin(provider);
+      if (savedReservationData) {
+        navigate("/payment", { state: { reservation_data: savedReservationData } });
+      } else {
+        navigate("/profil");
+      }
     } catch (error) {
       console.error("error when trying to login:", error);
     } finally {
@@ -38,6 +44,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const requiredFields = ["username", "password"];
+    const savedReservationData = JSON.parse(localStorage.getItem("reservation_data"));
     const validationErrors = inputValidator(inputData, requiredFields);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -46,6 +53,11 @@ const LoginPage = () => {
     setLoading(true);
     try {
       await login(inputData, "origin");
+      if (savedReservationData) {
+        navigate("/payment", { state: { reservation_data: savedReservationData } });
+      } else {
+        navigate("/profil");
+      }
     } catch (error) {
       console.error("error when trying to login:", error);
     } finally {
