@@ -80,7 +80,7 @@ const Footer = () => {
 
   const socials = [
     { icon: "/svg/insta.svg", label: "@officialrhapsodie.co", source: "https://www.instagram.com/officialrhapsodie.co" },
-    { icon: "/svg/wa.svg", label: "+62 8231 0135 613", source: "https://wa.me/6282310135613" },
+    { icon: "/svg/wa.svg", label: "+62811-1379-279", source: "https://wa.me/628111379279" },
     { icon: "/svg/yt.svg", label: "Rhapsodie.co", source: "https://www.youtube.com/@rhapsodie5686" },
     { icon: "/svg/fb.svg", label: "Rhapsodie.co", source: "https://www.facebook.com/profile.php?id=61562585294924" },
     { icon: "/svg/tt.svg", label: "Officialrhapsodie.co", source: "https://www.tiktok.com/@officialrhapsodie.co" },

@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }) => {
         alert(`Kamu berhasil login. Selamat datang kembali, ${userdata.name}!`);
         log("login credential:", userdata);
         console.log("successfully logged in.");
+        return loginresponse;
       } else if (!loginresponse.status) {
         setIsLoggedin(false);
         alert("Username atau Password yang kamu masukkan salah.");
@@ -140,6 +141,8 @@ export const AuthProvider = ({ children }) => {
       sessionStorage.removeItem("userdata");
       sessionStorage.removeItem("logged-in");
       sessionStorage.removeItem("username");
+      localStorage.removeItem("reservation_data");
+      localStorage.removeItem("booking_id");
       setIsLoggedin(false);
       alert("Kamu berhasil logout. Mohon login ulang untuk mengakses Dashboard.");
       log("successfully logged out");
@@ -157,6 +160,8 @@ export const AuthProvider = ({ children }) => {
       sessionStorage.removeItem("userdata");
       sessionStorage.removeItem("logged-in");
       sessionStorage.removeItem("username");
+      localStorage.removeItem("reservation_data");
+      localStorage.removeItem("booking_id");
       setIsLoggedin(false);
       alert("Kamu berhasil logout. Mohon login ulang untuk mengakses Dashboard.");
       log("successfully logged out");

@@ -52,7 +52,7 @@ export const SummaryDetail = ({ title, items = [] }) => {
 
 export const MethodButton = ({ onClick = () => {}, isActive = false, children }) => {
   return (
-    <button className={`${styles.methodButton} ${isActive ? styles.active : ""}`} onClick={onClick}>
+    <button type="button" className={`${styles.methodButton} ${isActive ? styles.active : ""}`} onClick={onClick}>
       {children}
     </button>
   );
@@ -60,7 +60,7 @@ export const MethodButton = ({ onClick = () => {}, isActive = false, children })
 
 export const PlanButton = ({ onClick = () => {}, isActive = false, children }) => {
   return (
-    <button className={`${styles.planButton} ${isActive ? styles.active : ""}`} onClick={onClick}>
+    <button type="button" className={`${styles.planButton} ${isActive ? styles.active : ""}`} onClick={onClick}>
       <b className={styles.buttonText}>{children}</b>
     </button>
   );
@@ -83,8 +83,12 @@ export const PaymentOption = ({ children }) => {
   return <section className={styles.paymentOption}>{children}</section>;
 };
 
-const PaymentForm = ({ children }) => {
-  return <section className={styles.paymentForm}>{children}</section>;
+const PaymentForm = ({ onSubmit, children }) => {
+  return (
+    <form className={styles.paymentForm} onSubmit={onSubmit}>
+      {children}
+    </form>
+  );
 };
 
 export default PaymentForm;

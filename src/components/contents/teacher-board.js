@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useWindow, useFormat, useEvent, useContent } from "@ibrahimstudio/react";
+import { useWindow, useFormat, useEvent, useContent, useDevmode, useStatus } from "@ibrahimstudio/react";
 import { Button } from "@ibrahimstudio/button";
 import { Input } from "@ibrahimstudio/input";
 import { useApi } from "../../lib/api";
@@ -41,10 +41,12 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
   const navigate = useNavigate();
   const { scroll } = useEvent();
   const { width } = useWindow();
+  const { log } = useDevmode();
   const { newDate } = useFormat();
-  const { isLoggedin } = useAuth();
+  const { isLoggedin, userData } = useAuth();
   const { stripContent, toTitleCase } = useContent();
-  const { apiRead } = useApi();
+  const { apiRead, apiCrud } = useApi();
+  const [submitting, setSubmitting] = useState(false);
   const [reservOpen, setReservOpen] = useState(false);
   const [inputData, setInputData] = useState({ location_type: "", category: "", date: "", time: "", payment_type: "" });
   const [scheduleData, setScheduleData] = useState([]);
@@ -52,8 +54,10 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
   const [availLesson, setAvailLesson] = useState([]);
   const [totalPrice, setTotalPrice] = useState("0");
   const [activeTab, setActiveTab] = useState("1");
+  const [selectedDay, setSelectedDay] = useState("");
   const [selectedRange, setSelectedRange] = useState("06:00-12:00");
   const [selectedLesson, setSelectedLesson] = useState("");
+  const [selectedSchedule, setSelectedSchedule] = useState(null);
 
   const strippedContent = (bio && stripContent(bio)) || "Tidak ada deskripsi.";
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -152,17 +156,41 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
       } else {
         setSelectedLesson("");
       }
+    } else if (name === "time" && value !== "") {
+      const selectedtime = availSchedule.find((item) => item.id === value);
+      if (selectedtime) {
+        setSelectedSchedule(selectedtime);
+      } else {
+        setSelectedSchedule(null);
+      }
     }
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const reservdata = { teacher: name, location: inputData.location_type, lesson_id: inputData.category, lesson: selectedLesson, date: inputData.date, price: totalPrice };
+    const formData = new FormData();
+    const reservdata = { teacher: name, location_type: inputData.location_type, secret: "", iduser: "", idschedule: inputData.time, idteacher: id, idinstruments: inputData.category, instruments: selectedLesson, day: selectedDay, location: "1", totalmonth: "", date: inputData.date, starttime: selectedSchedule.start_time, classtype: selectedSchedule.type, payment: "", price: totalPrice, totalprice: "" };
     localStorage.setItem("reservation_data", JSON.stringify(reservdata));
     if (!isLoggedin) {
       navigate("/login");
     } else {
-      navigate("/payment", { state: { reservation_data: reservdata } });
+      const submittedData = { secret: userData.socialite_token, iduser: userData.id, idschedule: inputData.time, idteacher: id, idinstruments: inputData.category, day: selectedDay, location: "1", totalmonth: "", startdate: inputData.date, starttime: selectedSchedule.start_time, classtype: selectedSchedule.type, payment: "", price: totalPrice, totalprice: "" };
+      formData.append("data", JSON.stringify(submittedData));
+      setSubmitting(true);
+      try {
+        const response = await apiCrud(formData, "main", "orderstudent");
+        if (!response.error) {
+          log("submitted data:", submittedData);
+          localStorage.setItem("booking_id", response.data[0].order_code);
+          navigate("/payment", { state: { reservation_data: reservdata } });
+        } else {
+          return;
+        }
+      } catch (error) {
+        console.error("error:", error);
+      } finally {
+        setSubmitting(false);
+      }
     }
   };
 
@@ -177,6 +205,7 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
       const dayOfWeek = getDayOfWeek(inputData.date);
       const availableSlots = scheduleData.filter((item) => item.day === dayOfWeek && item.is_booked === "0");
       setAvailSchedule(availableSlots);
+      setSelectedDay(dayOfWeek);
       console.log("available time:", availableSlots);
     }
   }, [inputData.date, scheduleData]);
@@ -186,6 +215,7 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
       const availableTimes = availSchedule.filter((item) => item.id === inputData.time);
       if (availableTimes.length > 0) {
         setAvailLesson(availableTimes);
+        log("available times:", availableTimes);
         const totalPrice = availableTimes.reduce((total, schedule) => total + parseInt(schedule.tuition_fee, 10), 0);
         setTotalPrice(totalPrice);
       }
@@ -409,7 +439,7 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
             {availLesson.length > 0 && <ProductSm items={availLesson} />}
           </PopupBody>
           <PopupFooter>
-            <Button isFullwidth type="submit" radius="full" buttonText="Reservasi Sekarang" />
+            <Button isFullwidth type="submit" radius="full" buttonText="Reservasi Sekarang" isLoading={submitting} />
           </PopupFooter>
         </PopupForm>
       )}

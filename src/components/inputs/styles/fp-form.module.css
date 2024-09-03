@@ -1,0 +1,162 @@
+.formLabel {
+  align-self: stretch;
+  position: relative;
+}
+
+.noteIcon {
+  width: auto;
+  border-radius: var(--pixel-10);
+  height: var(--pixel-60);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.formNote,
+.noteContent {
+  overflow: hidden;
+  display: flex;
+}
+
+.noteContent {
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--pixel-5);
+}
+
+.formNote {
+  align-self: stretch;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--pixel-15);
+  text-align: left;
+  font-size: var(--color-sm);
+  color: var(--color-secondary);
+  font-family: var(--font-karla);
+}
+
+.valueText {
+  flex: 1;
+  position: relative;
+}
+
+.fieldValue {
+  flex: 1;
+  height: var(--pixel-60);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--pixel-15);
+  box-sizing: border-box;
+}
+
+.copyIcon {
+  width: auto;
+  position: relative;
+  height: var(--pixel-20);
+}
+
+.fieldAction {
+  cursor: pointer;
+  border: 0;
+  padding: var(--pixel-15);
+  background-color: var(--color-primary-10);
+  width: var(--pixel-60);
+  height: var(--pixel-60);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.formBody,
+.formField {
+  align-self: stretch;
+  display: flex;
+  justify-content: flex-start;
+  text-align: left;
+  color: var(--color-secondary);
+  font-family: var(--font-karla);
+}
+
+.formField {
+  border-radius: var(--pixel-10);
+  border: 1px solid var(--color-primary-30);
+  overflow: hidden;
+  flex-direction: row;
+  align-items: center;
+  font-size: var(--font-md);
+}
+
+.formBody {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pixel-15);
+  font-size: var(--font-sm);
+}
+
+.formDesc,
+.formTitle {
+  position: relative;
+  color: var(--color-secondary);
+  text-align: left;
+}
+
+.formTitle {
+  margin: 0;
+  align-self: stretch;
+  font-size: var(--font-md);
+  font-weight: 800;
+  font-family: var(--font-mulish);
+  display: flex;
+  align-items: center;
+}
+
+.formDesc {
+  align-self: stretch;
+  font-size: var(--font-sm);
+  font-family: var(--font-karla);
+}
+
+.formHead {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--pixel-10);
+}
+
+.formNotes {
+  align-self: stretch;
+  position: relative;
+  margin: 0;
+  font-size: var(--font-xsm);
+  font-weight: 500;
+  font-family: var(--font-karla);
+  color: var(--color-secondary-50);
+  text-align: left;
+}
+
+.paymentForm {
+  margin: 0;
+  width: 100%;
+  border-radius: var(--pixel-20);
+  border: 1px solid var(--color-primary-30);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--pixel-30);
+  gap: var(--pixel-30);
+  max-width: var(--pixel-600);
+}

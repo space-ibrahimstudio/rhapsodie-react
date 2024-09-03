@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
+import { useDevmode } from "@ibrahimstudio/react";
 import { Input } from "@ibrahimstudio/input";
 import { Button } from "@ibrahimstudio/button";
 import { facebook, google } from "../lib/firebaseConfig";
 import { useAuth } from "../lib/auth";
+import { useApi } from "../lib/api";
 import { SEO } from "../lib/seo";
 import { inputValidator } from "../lib/controller";
 import PageLayout from "../components/frames/pages";
@@ -13,6 +15,8 @@ import PortalForm, { FormFieldset } from "../components/inputs/portal-form";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { apiCrud } = useApi();
+  const { log } = useDevmode();
   const { isLoggedin, login, oAuthLogin } = useAuth();
   const [loading, setLoading] = useState(false);
   const [inputData, setInputData] = useState({ username: "", password: "" });
@@ -43,6 +47,7 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
     const requiredFields = ["username", "password"];
     const savedReservationData = JSON.parse(localStorage.getItem("reservation_data"));
     const validationErrors = inputValidator(inputData, requiredFields);
@@ -52,11 +57,26 @@ const LoginPage = () => {
     }
     setLoading(true);
     try {
-      await login(inputData, "origin");
-      if (savedReservationData) {
-        navigate("/payment", { state: { reservation_data: savedReservationData } });
+      const response = await login(inputData, "origin");
+      if (response.status) {
+        const userdata = response.data[0];
+        if (savedReservationData) {
+          const { idschedule, idteacher, idinstruments, day, location, date, starttime, classtype, price } = savedReservationData;
+          const submittedData = { secret: userdata.socialite_token, iduser: userdata.id, idschedule, idteacher, idinstruments, day, location, totalmonth: "", startdate: date, starttime, classtype, payment: "", price: price, totalprice: "" };
+          formData.append("data", JSON.stringify(submittedData));
+          const getbooking = await apiCrud(formData, "main", "orderstudent");
+          if (!getbooking.error) {
+            log("submitted data:", submittedData);
+            localStorage.setItem("booking_id", getbooking.data[0].order_code);
+            navigate("/payment", { state: { reservation_data: savedReservationData } });
+          } else {
+            return;
+          }
+        } else {
+          navigate("/profil");
+        }
       } else {
-        navigate("/profil");
+        return;
       }
     } catch (error) {
       console.error("error when trying to login:", error);

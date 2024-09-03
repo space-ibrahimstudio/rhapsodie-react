@@ -3,7 +3,7 @@ import styles from "./styles/whatsapp-button.module.css";
 
 const WhatsappButton = () => {
   const openLink = () => {
-    window.open("https://wa.me/6282310135613", "_blank");
+    window.open("https://wa.me/628111379279", "_blank");
   };
 
   return (
