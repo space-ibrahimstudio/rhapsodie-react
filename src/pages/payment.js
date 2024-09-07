@@ -10,7 +10,7 @@ import PageLayout from "../components/frames/pages";
 import Section from "../components/frames/section";
 import PaymentForm, { PaymentOption, PaymentSummary, OptionList, PlanButton, MethodButton, SummaryDetail, SummaryInvoice } from "../components/contents/payment-form";
 import FPForm, { FPBody, FPLabel, FPNote, FPValue } from "../components/inputs/fp-form";
-import { PopupFieldset } from "../components/inputs/popup-form";
+import PopupForm, { PopupBody, PopupFieldset, PopupFooter } from "../components/inputs/popup-form";
 import Image from "../components/contents/image";
 
 const PaymentPage = () => {
@@ -24,8 +24,10 @@ const PaymentPage = () => {
   const [activePlan, setActivePlan] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [activeMethod, setActiveMethod] = useState("card");
-  const [inputData, setInputData] = useState({ voucher_code: "", name: "", lesson: "", teacher_name: "", exp_date: "", price: 0, tr_fee: 0, voucher_fee: 0, adm_fee: 10000, regist_fee: 0, penalty_fee: 0, total_price: 0, total_pay: 0 });
+  const [inputData, setInputData] = useState({ voucher_code: "", name: "", phone: "", email: "", lesson: "", teacher_name: "", exp_date: "", price: 0, tr_fee: 0, voucher_fee: 0, adm_fee: 10000, regist_fee: 0, penalty_fee: 0, total_price: 0, total_pay: 0 });
   const [paymentStep, setPaymentStep] = useState("1");
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const plans = [
     { label: "1 BULAN", value: 1, onCLick: () => setActivePlan(1) },
@@ -73,6 +75,10 @@ const PaymentPage = () => {
     setPaymentStep(step);
   };
 
+  const handleImageSelect = (file) => setSelectedImage(file);
+  const openConfirm = () => setConfirmOpen(true);
+  const closeConfirm = () => setConfirmOpen(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -105,6 +111,30 @@ const PaymentPage = () => {
       localStorage.removeItem("reservation_data");
       localStorage.removeItem("booking_id");
       navigate(-1);
+    }
+  };
+
+  const handleConfirm = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    const ordercode = localStorage.getItem("booking_id");
+    formData.append("fileimg", selectedImage);
+    formData.append("idbooking", ordercode);
+    setSubmitting(true);
+    try {
+      const response = await apiCrud(formData, "main", "buktibayar");
+      if (!response.error) {
+        localStorage.removeItem("reservation_data");
+        localStorage.removeItem("booking_id");
+        alert("Selamat, pembayaran telah berhasil dikonfirmasi. Mohon periksa status boooking anda di panel Transaction pada halaman Profil.");
+        navigate("/profil");
+      } else {
+        return;
+      }
+    } catch (error) {
+      console.error("error:", error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -165,19 +195,34 @@ const PaymentPage = () => {
         );
       case "2":
         return (
-          <Section>
-            <FPForm title={activeMethod === "bank" ? "Bayar Menggunakan Transfer Bank" : "Bayar Menggunakan QRIS"} desc="Untuk melanjutkan proses reservasi." note="Jika sudah melakukan pembayaran, mohon klik tombol “Konfirmasi Pembayaran” dibawah ini agar kami dapat memproses pembayaranmu." onSubmit={() => {}} onCancel={() => handleChangeStep("1")}>
-              <FPBody>
-                <FPNote icon={activeMethod === "bank" ? "/svg/bca-l.svg" : "/svg/qris-l.svg"} title={activeMethod === "bank" ? "Bank BCA" : "RHAPSODIE.CO"} desc={activeMethod === "bank" ? "PT Jaya Karya Poernama" : "NMID: ID2021130795812"} />
-                {activeMethod === "bank" && <FPValue value="0699 0787 88" />}
-              </FPBody>
-              <FPBody>
-                <FPLabel>Jumlah Transfer</FPLabel>
-                <FPValue value={newPrice(inputData.total_pay)} />
-              </FPBody>
-              {activeMethod === "qris" && <Image width="100%" height="auto" src="/jpg/qr.jpg" />}
-            </FPForm>
-          </Section>
+          <Fragment>
+            <Section>
+              <FPForm title={activeMethod === "bank" ? "Bayar Menggunakan Transfer Bank" : "Bayar Menggunakan QRIS"} desc="Untuk melanjutkan proses reservasi." note="Jika sudah melakukan pembayaran, mohon klik tombol “Konfirmasi Pembayaran” dibawah ini agar kami dapat memproses pembayaranmu." onSubmit={openConfirm} onCancel={() => handleChangeStep("1")}>
+                <FPBody>
+                  <FPNote icon={activeMethod === "bank" ? "/svg/bca-l.svg" : "/svg/qris-l.svg"} title={activeMethod === "bank" ? "Bank BCA" : "RHAPSODIE.CO"} desc={activeMethod === "bank" ? "PT Jaya Karya Poernama" : "NMID: ID2021130795812"} />
+                  {activeMethod === "bank" && <FPValue value="0699 0787 88" />}
+                </FPBody>
+                <FPBody>
+                  <FPLabel>Jumlah Transfer</FPLabel>
+                  <FPValue value={newPrice(inputData.total_pay)} />
+                </FPBody>
+                {activeMethod === "qris" && <Image width="100%" height="auto" src="/jpg/qr.jpg" />}
+              </FPForm>
+            </Section>
+            {confirmOpen && (
+              <PopupForm title="Konfirmasi Pembayaran" onClose={closeConfirm} onSubmit={handleConfirm}>
+                <PopupBody>
+                  <Input radius="full" labelText="Nama Lengkap" placeholder="John Doe" type="text" name="name" value={inputData.name} onChange={handleInputChange} isRequired />
+                  <Input radius="full" labelText="Nomor Telepon" placeholder="0882xxx" type="tel" name="phone" value={inputData.phone} onChange={handleInputChange} isRequired />
+                  <Input radius="full" labelText="Email" placeholder="your@email.com" type="email" name="email" value={inputData.email} onChange={handleInputChange} />
+                  <Input variant="upload" accept="image/*" isPreview={false} radius="full" labelText="Bukti Bayar" initialFile={selectedImage} onSelect={handleImageSelect} />
+                </PopupBody>
+                <PopupFooter>
+                  <Button type="submit" isFullwidth radius="full" buttonText="Selesaikan Pembayaran" isLoading={submitting} />
+                </PopupFooter>
+              </PopupForm>
+            )}
+          </Fragment>
         );
       default:
         return null;
