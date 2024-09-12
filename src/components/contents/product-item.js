@@ -1,11 +1,12 @@
 import React from "react";
+import { Button } from "@ibrahimstudio/button";
 import styles from "./styles/product-item.module.css";
 
-const ProductItem = ({ label, value }) => {
+const ProductItem = ({ isActive = false, setSelectedItem, value }) => {
   return (
     <section className={styles.productItem}>
-      <b className={styles.itemLabel}>{label}</b>
-      <i className={styles.itemValue}>{value}</i>
+      <b className={styles.itemLabel}>{value}</b>
+      <Button type="button" size="sm" variant={isActive ? "line" : "fill"} color={isActive ? "var(--color-primary)" : "var(--color-foreground)"} bgColor={isActive ? "transparent" : "var(--color-primary)"} buttonText={isActive ? "Terpilih" : "Pilih"} onClick={() => setSelectedItem(value)} />
     </section>
   );
 };

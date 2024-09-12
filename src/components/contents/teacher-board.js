@@ -52,12 +52,12 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
   const [scheduleData, setScheduleData] = useState([]);
   const [availSchedule, setAvailSchedule] = useState([]);
   const [availLesson, setAvailLesson] = useState([]);
-  const [totalPrice, setTotalPrice] = useState("0");
   const [activeTab, setActiveTab] = useState("1");
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedRange, setSelectedRange] = useState("06:00-12:00");
   const [selectedLesson, setSelectedLesson] = useState("");
   const [selectedSchedule, setSelectedSchedule] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const strippedContent = (bio && stripContent(bio)) || "Tidak ada deskripsi.";
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -122,14 +122,14 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
     setReservOpen(false);
     setInputData({ ...inputData, date: "", time: "", payment_type: "" });
     setAvailLesson([]);
-    setTotalPrice("");
+    setSelectedItem(null);
   };
 
   const getScheduleData = async (locationid, instrumentid) => {
     const formData = new FormData();
     formData.append("data", JSON.stringify({ idteacher: id, iddistrict: locationid, idinstruments: instrumentid }));
     try {
-      const response = await apiRead(formData, "main", "scheduleview");
+      const response = await apiRead(formData, "main", "scheduleview2");
       if (response && response.data && response.data.length > 0) {
         setScheduleData(response.data);
       } else {
@@ -157,7 +157,7 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
         setSelectedLesson("");
       }
     } else if (name === "time" && value !== "") {
-      const selectedtime = availSchedule.find((item) => item.id === value);
+      const selectedtime = availSchedule.find((item) => item["schedule"].id === value);
       if (selectedtime) {
         setSelectedSchedule(selectedtime);
       } else {
@@ -169,12 +169,12 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    const reservdata = { teacher: name, location_type: inputData.location_type, secret: "", iduser: "", idschedule: inputData.time, idteacher: id, idinstruments: inputData.category, instruments: selectedLesson, day: selectedDay, location: "1", totalmonth: "", date: inputData.date, starttime: selectedSchedule.start_time, classtype: selectedSchedule.type, payment: "", price: totalPrice, totalprice: "" };
+    const reservdata = { teacher: name, location_type: inputData.location_type, secret: "", iduser: "", idschedule: inputData.time, idteacher: id, idinstruments: inputData.category, instruments: selectedLesson, day: selectedDay, location: "1", totalmonth: "", date: inputData.date, starttime: selectedSchedule["schedule"].start_time, classtype: selectedSchedule["schedule"].type, payment: "", price: selectedItem, totalprice: "" };
     localStorage.setItem("reservation_data", JSON.stringify(reservdata));
     if (!isLoggedin) {
       navigate("/login");
     } else {
-      const submittedData = { secret: userData.socialite_token, iduser: userData.id, idschedule: inputData.time, idteacher: id, idinstruments: inputData.category, day: selectedDay, location: "1", totalmonth: "", startdate: inputData.date, starttime: selectedSchedule.start_time, classtype: selectedSchedule.type, payment: "", price: totalPrice, totalprice: "" };
+      const submittedData = { secret: userData.socialite_token, iduser: userData.id, idschedule: inputData.time, idteacher: id, idinstruments: inputData.category, day: selectedDay, location: "1", totalmonth: "", startdate: inputData.date, starttime: selectedSchedule["schedule"].start_time, classtype: selectedSchedule["schedule"].type, payment: "", price: selectedItem, totalprice: "" };
       formData.append("data", JSON.stringify(submittedData));
       setSubmitting(true);
       try {
@@ -203,21 +203,22 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
   useEffect(() => {
     if (inputData.date !== "") {
       const dayOfWeek = getDayOfWeek(inputData.date);
-      const availableSlots = scheduleData.filter((item) => item.day === dayOfWeek && item.is_booked === "0");
+      const availableSlots = scheduleData.filter((item) => item["schedule"].day === dayOfWeek && item["schedule"].is_booked === "0");
       setAvailSchedule(availableSlots);
       setSelectedDay(dayOfWeek);
-      console.log("available time:", availableSlots);
+      log("available slots:", availableSlots);
     }
   }, [inputData.date, scheduleData]);
 
   useEffect(() => {
     if (inputData.time !== "" && availSchedule.length > 0) {
-      const availableTimes = availSchedule.filter((item) => item.id === inputData.time);
+      const availableTimes = availSchedule.filter((item) => item["schedule"].id === inputData.time);
       if (availableTimes.length > 0) {
-        setAvailLesson(availableTimes);
-        log("available times:", availableTimes);
-        const totalPrice = availableTimes.reduce((total, schedule) => total + parseInt(schedule.tuition_fee, 10), 0);
-        setTotalPrice(totalPrice);
+        const aliaseddata = availableTimes[0]["scheduledetail"];
+        setAvailLesson(aliaseddata);
+        log("available times:", aliaseddata);
+        setSelectedItem(aliaseddata[0].tuition_fee);
+        log("selected item:", aliaseddata[0].tuition_fee);
       }
     }
   }, [inputData.time, availSchedule]);
@@ -349,12 +350,12 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
                               {timeSlots.map((time, idx) => {
                                 const dayName = daysOfWeek[index].toLowerCase();
                                 const slot = scheduleData.find((sch) => {
-                                  return sch.day.toLowerCase() === dayName && time >= sch.start_time.slice(0, 5) && time < sch.end_time.slice(0, 5);
+                                  return sch["schedule"].day.toLowerCase() === dayName && time >= sch["schedule"].start_time.slice(0, 5) && time < sch["schedule"].end_time.slice(0, 5);
                                 });
                                 let status = "";
                                 let isClickable = false;
                                 if (slot) {
-                                  if (slot.is_booked === "0") {
+                                  if (slot["schedule"].is_booked === "0") {
                                     status = "available";
                                     isClickable = true;
                                   } else {
@@ -431,12 +432,12 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
                 placeholder={inputData.date === "" ? "Mohon pilih tanggal dulu" : "Pilih jadwal tersedia"}
                 name="time"
                 value={inputData.time}
-                options={inputData.date === "" ? [] : availSchedule.map((item) => ({ value: item.id, label: `${item.start_time} - ${item.end_time}` }))}
+                options={inputData.date === "" ? [] : availSchedule.map((item) => ({ value: item["schedule"].id, label: `${item["schedule"].start_time} - ${item["schedule"].end_time}` }))}
                 onSelect={(selectedValue) => handleInputChange({ target: { name: "time", value: selectedValue } })}
                 isDisabled={inputData.date === ""}
               />
             </PopupFieldset>
-            {availLesson.length > 0 && <ProductSm items={availLesson} />}
+            {availLesson.length > 0 && <ProductSm items={availLesson} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />}
           </PopupBody>
           <PopupFooter>
             <Button isFullwidth type="submit" radius="full" buttonText="Reservasi Sekarang" isLoading={submitting} />

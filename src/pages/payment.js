@@ -129,6 +129,7 @@ const PaymentPage = () => {
         alert("Selamat, pembayaran telah berhasil dikonfirmasi. Mohon periksa status boooking anda di panel Transaction pada halaman Profil.");
         navigate("/profil");
       } else {
+        alert("Terjadi kesalahan saat mengirim bukti pembayaran.");
         return;
       }
     } catch (error) {
