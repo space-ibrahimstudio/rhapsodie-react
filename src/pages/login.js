@@ -96,19 +96,19 @@ const LoginPage = () => {
         <PortalSection>
           <PortalForm onSubmit={handleLogin}>
             <FormFieldset>
-              <Input isLabeled={false} type="text" radius="full" name="username" value={inputData.username} placeholder="Telepon atau Email" isRequired onChange={handleInputChange} errorContent={errors.username} />
-              <Input isLabeled={false} type="password" radius="full" name="password" value={inputData.password} placeholder="Password" isRequired onChange={handleInputChange} errorContent={errors.password} />
+              <Input id="auth-username" isLabeled={false} type="text" radius="full" name="username" value={inputData.username} placeholder="Telepon atau Email" isRequired onChange={handleInputChange} errorContent={errors.username} />
+              <Input id="auth-password" isLabeled={false} type="password" radius="full" name="password" value={inputData.password} placeholder="Password" isRequired onChange={handleInputChange} errorContent={errors.password} />
             </FormFieldset>
             <FormFieldset>
-              <Button type="submit" isFullwidth radius="full" buttonText="Masuk" isLoading={loading} />
-              <Button isFullwidth variant="hollow" radius="full" color="var(--color-primary)" buttonText="Lupa Password?" />
+              <Button id="action-submit" type="submit" isFullwidth radius="full" buttonText="Masuk" isLoading={loading} />
+              <Button id="action-forgot" isFullwidth variant="hollow" radius="full" color="var(--color-primary)" buttonText="Lupa Password?" />
             </FormFieldset>
             <FormFieldset>
-              <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Masuk dengan Facebook" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/fb-auth.svg" />} onClick={() => handleOAuthLogin(facebook)} />
-              <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Masuk dengan Google" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/gm-auth.svg" />} onClick={() => handleOAuthLogin(google)} />
+              <Button id="action-fb-auth" isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Masuk dengan Facebook" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/fb-auth.svg" />} onClick={() => handleOAuthLogin(facebook)} />
+              <Button id="action-gm-auth" isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Masuk dengan Google" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/gm-auth.svg" />} onClick={() => handleOAuthLogin(google)} />
             </FormFieldset>
             <FormFieldset startAlt="Belum Punya Akun?">
-              <Button isFullwidth variant="line" radius="full" color="var(--color-primary)" buttonText="Daftar Sekarang" onClick={() => navigate("/signup")} />
+              <Button id="action-signup-fu" isFullwidth variant="line" radius="full" color="var(--color-primary)" buttonText="Daftar Sekarang" onClick={() => navigate("/signup")} />
             </FormFieldset>
           </PortalForm>
         </PortalSection>

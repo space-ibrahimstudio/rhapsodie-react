@@ -63,21 +63,21 @@ const MenuDrawer = ({ onClose }) => {
         <div className={styles.drawerItems}>
           {isLoggedin ? (
             <Fragment>
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="My Profile" onClick={() => navigate("/profil")} />
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="My Member List" onClick={() => {}} />
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Schedule" onClick={() => {}} />
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Reviews" onClick={() => {}} />
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Favourites" onClick={() => {}} />
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Transaction" onClick={() => {}} />
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Point Rewards" onClick={() => {}} />
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Notifications" onClick={() => {}} />
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Help Center" onClick={() => {}} />
-              <Button isFullwidth radius="full" buttonText="Keluar" onClick={handleLogout} />
+              <Button id="user-nav-profile" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="My Profile" onClick={() => navigate("/profil")} />
+              <Button id="user-nav-memberlist" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="My Member List" onClick={() => {}} />
+              <Button id="user-nav-schedule" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Schedule" onClick={() => {}} />
+              <Button id="user-nav-reviews" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Reviews" onClick={() => {}} />
+              <Button id="user-nav-favourites" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Favourites" onClick={() => {}} />
+              <Button id="user-nav-transaction" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Transaction" onClick={() => {}} />
+              <Button id="user-nav-point" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Point Rewards" onClick={() => {}} />
+              <Button id="user-nav-notification" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Notifications" onClick={() => {}} />
+              <Button id="user-nav-help" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Help Center" onClick={() => {}} />
+              <Button id="user-nav-logout" isFullwidth radius="full" buttonText="Keluar" onClick={handleLogout} />
             </Fragment>
           ) : (
             <Fragment>
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Masuk" onClick={() => navigate("/login")} />
-              <Button variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Daftar Sekarang" onClick={() => navigate("/signup")} />
+              <Button id="nav-login" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Masuk" onClick={() => navigate("/login")} />
+              <Button id="nav-signup" variant="hollow" isFullwidth radius="full" color="var(--color-secondary)" buttonText="Daftar Sekarang" onClick={() => navigate("/signup")} />
             </Fragment>
           )}
         </div>

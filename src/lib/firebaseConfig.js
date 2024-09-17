@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth, FacebookAuthProvider, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDaEoS1jAe5hk2dU9URv_zZBHqt5eCclvU",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "rhapsodie-react.firebaseapp.com",
   projectId: "rhapsodie-react",
   storageBucket: "rhapsodie-react.appspot.com",
-  messagingSenderId: "492530637227",
-  appId: "1:492530637227:web:07df55c536e5a838e79aee",
-  measurementId: "G-HNML3FFYPL",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MS_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_M_ID,
 };
 
 initializeApp(firebaseConfig);

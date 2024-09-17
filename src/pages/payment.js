@@ -180,15 +180,15 @@ const PaymentPage = () => {
                 </OptionList>
                 <OptionList title="Voucher">
                   <Input id="voucher-code" isLabeled={false} name="voucher_code" placeholder="Masukkan kode voucher" value={inputData.voucher_code} onChange={handleInputChange} />
-                  <Button type="button" buttonText="Submit" onClick={() => {}} />
+                  <Button id="submit-voucher-code" type="button" buttonText="Submit" onClick={() => {}} />
                 </OptionList>
               </PaymentOption>
               <PaymentSummary>
                 <SummaryDetail title="Your Booking Detail" items={bookingdata} />
                 <SummaryInvoice title="Order Summary" items={invoicedata} />
                 <PopupFieldset>
-                  <Button isFullwidth type="submit" radius="full" bgColor="var(--color-hint)" buttonText="Continue to Payment" isLoading={submitting} />
-                  <Button isFullwidth variant="line" radius="full" color="var(--color-hint)" buttonText="Cancel" onClick={handleCancel} />
+                  <Button id="submit-next" isFullwidth type="submit" radius="full" bgColor="var(--color-hint)" buttonText="Continue to Payment" isLoading={submitting} />
+                  <Button id="submit-prev" isFullwidth variant="line" radius="full" color="var(--color-hint)" buttonText="Cancel" onClick={handleCancel} />
                 </PopupFieldset>
               </PaymentSummary>
             </PaymentForm>
@@ -213,13 +213,13 @@ const PaymentPage = () => {
             {confirmOpen && (
               <PopupForm title="Konfirmasi Pembayaran" onClose={closeConfirm} onSubmit={handleConfirm}>
                 <PopupBody>
-                  <Input radius="full" labelText="Nama Lengkap" placeholder="John Doe" type="text" name="name" value={inputData.name} onChange={handleInputChange} isRequired />
-                  <Input radius="full" labelText="Nomor Telepon" placeholder="0882xxx" type="tel" name="phone" value={inputData.phone} onChange={handleInputChange} isRequired />
-                  <Input radius="full" labelText="Email" placeholder="your@email.com" type="email" name="email" value={inputData.email} onChange={handleInputChange} />
-                  <Input variant="upload" accept="image/*" isPreview={false} radius="full" labelText="Bukti Bayar" initialFile={selectedImage} onSelect={handleImageSelect} />
+                  <Input id="pay-fullname" radius="full" labelText="Nama Lengkap" placeholder="John Doe" type="text" name="name" value={inputData.name} onChange={handleInputChange} isRequired />
+                  <Input id="pay-phone" radius="full" labelText="Nomor Telepon" placeholder="0882xxx" type="tel" name="phone" value={inputData.phone} onChange={handleInputChange} isRequired />
+                  <Input id="pay-email" radius="full" labelText="Email" placeholder="your@email.com" type="email" name="email" value={inputData.email} onChange={handleInputChange} />
+                  <Input id="pay-bill-upload" variant="upload" accept="image/*" isPreview={false} radius="full" labelText="Bukti Bayar" initialFile={selectedImage} onSelect={handleImageSelect} />
                 </PopupBody>
                 <PopupFooter>
-                  <Button type="submit" isFullwidth radius="full" buttonText="Selesaikan Pembayaran" isLoading={submitting} />
+                  <Button id="submit-pay" type="submit" isFullwidth radius="full" buttonText="Selesaikan Pembayaran" isLoading={submitting} />
                 </PopupFooter>
               </PopupForm>
             )}

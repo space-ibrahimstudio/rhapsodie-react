@@ -6,7 +6,7 @@ const ProductItem = ({ isActive = false, onSelect, value }) => {
   return (
     <section className={styles.productItem}>
       <b className={styles.itemLabel}>{value}</b>
-      <Button type="button" size="sm" variant={isActive ? "line" : "fill"} color={isActive ? "var(--color-primary)" : "var(--color-foreground)"} bgColor={isActive ? "transparent" : "var(--color-primary)"} buttonText={isActive ? "Terpilih" : "Pilih"} onClick={onSelect} />
+      <Button id={`choose-item-${value}`} type="button" size="sm" variant={isActive ? "line" : "fill"} color={isActive ? "var(--color-primary)" : "var(--color-foreground)"} bgColor={isActive ? "transparent" : "var(--color-primary)"} buttonText={isActive ? "Terpilih" : "Pilih"} onClick={onSelect} />
     </section>
   );
 };

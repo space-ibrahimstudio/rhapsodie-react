@@ -78,7 +78,7 @@ const CatSlugPage = () => {
                   <OptionButton>Privat</OptionButton>
                 </FilterSet>
                 <FilterSet title="Kategori">
-                  <Input variant="select" isSearchable isLabeled={false} radius="full" placeholder="Pilih kategori" name="time" value={inputData.category} options={catData.map((cat) => ({ value: cat.name, label: cat.name }))} onSelect={(selectedValue) => navigate(`/kategori/${toPathname(selectedValue)}`)} />
+                  <Input id="fltr-instrument-type" variant="select" isSearchable isLabeled={false} radius="full" placeholder="Pilih kategori" name="time" value={inputData.category} options={catData.map((cat) => ({ value: cat.name, label: cat.name }))} onSelect={(selectedValue) => navigate(`/kategori/${toPathname(selectedValue)}`)} />
                 </FilterSet>
                 <FilterSet title="Tipe Lokasi">
                   <OptionButton>Di tempat Murid</OptionButton>
@@ -89,8 +89,8 @@ const CatSlugPage = () => {
                 <OptionButton>Di tempat Guru</OptionButton>
               </FilterSet> */}
                 <FilterSet title="Jadwal Belajar">
-                  <Input radius="full" isLabeled={false} placeholder="Pilih jadwal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
-                  <Input radius="full" isLabeled={false} placeholder="Pilih jadwal" type="time" name="time" value={inputData.time} onChange={handleInputChange} />
+                  <Input id="fltr-learning-date" radius="full" isLabeled={false} placeholder="Pilih jadwal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
+                  <Input id="fltr-learning-time" radius="full" isLabeled={false} placeholder="Pilih jadwal" type="time" name="time" value={inputData.time} onChange={handleInputChange} />
                 </FilterSet>
               </DrawerFilter>
             )}
@@ -109,7 +109,7 @@ const CatSlugPage = () => {
             <OptionButton>Privat</OptionButton>
           </FilterSet>
           <FilterSet title="Kategori">
-            <Input variant="select" isSearchable isLabeled={false} radius="full" placeholder="Pilih kategori" name="time" value={inputData.category} options={catData.map((cat) => ({ value: cat.name, label: cat.name }))} onSelect={(selectedValue) => navigate(`/kategori/${toPathname(selectedValue)}`)} />
+            <Input id="fltr-instrument-type" variant="select" isSearchable isLabeled={false} radius="full" placeholder="Pilih kategori" name="time" value={inputData.category} options={catData.map((cat) => ({ value: cat.name, label: cat.name }))} onSelect={(selectedValue) => navigate(`/kategori/${toPathname(selectedValue)}`)} />
           </FilterSet>
           <FilterSet title="Tipe Lokasi">
             <OptionButton>Di tempat Murid</OptionButton>
@@ -120,8 +120,8 @@ const CatSlugPage = () => {
                 <OptionButton>Di tempat Guru</OptionButton>
               </FilterSet> */}
           <FilterSet title="Jadwal Belajar">
-            <Input radius="full" isLabeled={false} placeholder="Pilih jadwal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
-            <Input radius="full" isLabeled={false} placeholder="Pilih jadwal" type="time" name="time" value={inputData.time} onChange={handleInputChange} />
+            <Input id="fltr-learning-date" radius="full" isLabeled={false} placeholder="Pilih jadwal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
+            <Input id="fltr-learning-time" radius="full" isLabeled={false} placeholder="Pilih jadwal" type="time" name="time" value={inputData.time} onChange={handleInputChange} />
           </FilterSet>
         </DrawerFilter>
       )}

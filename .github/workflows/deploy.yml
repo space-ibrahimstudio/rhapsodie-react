@@ -28,6 +28,10 @@ jobs:
           echo "REACT_APP_DOMAIN_URL=${{ secrets.REACT_APP_DOMAIN_URL }}" >> $GITHUB_ENV
           echo "REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}" >> $GITHUB_ENV
           echo "REACT_APP_IMGSRC_URL=${{ secrets.REACT_APP_IMGSRC_URL }}" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_API_KEY=${{ secrets.REACT_APP_FIREBASE_API_KEY }}" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_MS_ID=${{ secrets.REACT_APP_FIREBASE_MS_ID }}" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_APP_ID=${{ secrets.REACT_APP_FIREBASE_APP_ID }}" >> $GITHUB_ENV
+          echo "REACT_APP_FIREBASE_M_ID=${{ secrets.REACT_APP_FIREBASE_M_ID }}" >> $GITHUB_ENV
 
       - name: 4. Installing required packages
         run: npm install

@@ -93,20 +93,13 @@ const GroupTypePage = () => {
                   <OptionButton>Grup</OptionButton>
                   <OptionButton>Privat</OptionButton>
                 </FilterSet>
-                {/* <FilterSet title="Kategori">
-                <Input variant="select" isSearchable isLabeled={false} radius="full" placeholder="Pilih kategori" name="time" value={inputData.category} options={catData.map((cat) => ({ value: cat.name, label: cat.name }))} onSelect={(selectedValue) => navigate(`/${toPathname(selectedValue)}`)} />
-              </FilterSet> */}
                 <FilterSet title="Tipe Lokasi">
                   <OptionButton>Di tempat Murid</OptionButton>
                   <OptionButton>Di tempat Guru</OptionButton>
                 </FilterSet>
-                {/* <FilterSet title="Lokasi">
-                <OptionButton>Di tempat Murid</OptionButton>
-                <OptionButton>Di tempat Guru</OptionButton>
-              </FilterSet> */}
                 <FilterSet title="Jadwal Belajar">
-                  <Input radius="full" isLabeled={false} placeholder="Pilih jadwal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
-                  <Input radius="full" isLabeled={false} placeholder="Pilih jadwal" type="time" name="time" value={inputData.time} onChange={handleInputChange} />
+                  <Input id="fltr-learning-date" radius="full" isLabeled={false} placeholder="Pilih jadwal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
+                  <Input id="fltr-learning-time" radius="full" isLabeled={false} placeholder="Pilih jadwal" type="time" name="time" value={inputData.time} onChange={handleInputChange} />
                 </FilterSet>
               </DrawerFilter>
             )}
@@ -124,20 +117,13 @@ const GroupTypePage = () => {
             <OptionButton>Grup</OptionButton>
             <OptionButton>Privat</OptionButton>
           </FilterSet>
-          {/* <FilterSet title="Kategori">
-                <Input variant="select" isSearchable isLabeled={false} radius="full" placeholder="Pilih kategori" name="time" value={inputData.category} options={catData.map((cat) => ({ value: cat.name, label: cat.name }))} onSelect={(selectedValue) => navigate(`/${toPathname(selectedValue)}`)} />
-              </FilterSet> */}
           <FilterSet title="Tipe Lokasi">
             <OptionButton>Di tempat Murid</OptionButton>
             <OptionButton>Di tempat Guru</OptionButton>
           </FilterSet>
-          {/* <FilterSet title="Lokasi">
-                <OptionButton>Di tempat Murid</OptionButton>
-                <OptionButton>Di tempat Guru</OptionButton>
-              </FilterSet> */}
           <FilterSet title="Jadwal Belajar">
-            <Input radius="full" isLabeled={false} placeholder="Pilih jadwal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
-            <Input radius="full" isLabeled={false} placeholder="Pilih jadwal" type="time" name="time" value={inputData.time} onChange={handleInputChange} />
+            <Input id="fltr-learning-date" radius="full" isLabeled={false} placeholder="Pilih jadwal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
+            <Input id="fltr-learning-time" radius="full" isLabeled={false} placeholder="Pilih jadwal" type="time" name="time" value={inputData.time} onChange={handleInputChange} />
           </FilterSet>
         </DrawerFilter>
       )}

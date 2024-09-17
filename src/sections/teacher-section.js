@@ -16,7 +16,7 @@ export const SectionHead = ({ title }) => {
   return (
     <header className={styles.sectionHead}>
       <h1 className={styles.sectionTitle}>{title}</h1>
-      <Button variant="hollow" size="sm" color="var(--color-primary)" buttonText="Lihat Semua" endContent={<Arrow />} onClick={() => navigate(`/${toPathname(title)}`)} />
+      <Button id={`view-source-${title}`} variant="hollow" size="sm" color="var(--color-primary)" buttonText="Lihat Semua" endContent={<Arrow />} onClick={() => navigate(`/${toPathname(title)}`)} />
     </header>
   );
 };

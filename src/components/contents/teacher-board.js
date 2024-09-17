@@ -269,7 +269,7 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
                 {awards.slice(0, 2).map((item, index) => (
                   <AwardsItem key={index} title={item.name} />
                 ))}
-                {awards.length > 2 && <Button size="sm" bgColor="var(--color-primary-10)" color="var(--color-primary)" buttonText={`Lihat ${awards.length - 2} Lainnya`} onClick={() => scroll("awards-teacher", -90)} />}
+                {awards.length > 2 && <Button id="view-more" size="sm" bgColor="var(--color-primary-10)" color="var(--color-primary)" buttonText={`Lihat ${awards.length - 2} Lainnya`} onClick={() => scroll("awards-teacher", -90)} />}
               </section>
             )}
           </section>
@@ -282,9 +282,9 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
               </Fragment>
             ) : (
               <Fragment>
-                <Button radius="full" buttonText="Reservasi Sekarang" onClick={() => setReservOpen(true)} />
-                <Button variant="line" subVariant="icon" radius="full" color="var(--color-primary)" iconContent={<Love />} />
-                {width <= 700 ? <Button variant="hollow" subVariant="icon" radius="full" color="var(--color-secondary)" iconContent={<Share />} /> : <Button variant="hollow" radius="full" color="var(--color-secondary)" buttonText="Bagikan" startContent={<Share />} />}
+                <Button id="reserv-action" radius="full" buttonText="Reservasi Sekarang" onClick={() => setReservOpen(true)} />
+                <Button id="like-teacher" variant="line" subVariant="icon" radius="full" color="var(--color-primary)" iconContent={<Love />} />
+                {width <= 700 ? <Button id="share-sm" variant="hollow" subVariant="icon" radius="full" color="var(--color-secondary)" iconContent={<Share />} /> : <Button id="share-lg" variant="hollow" radius="full" color="var(--color-secondary)" buttonText="Bagikan" startContent={<Share />} />}
               </Fragment>
             )}
           </div>
@@ -327,9 +327,9 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
               {activeTab === "2" && (
                 <div className={styles.tabContent}>
                   <PopupFieldset>
-                    <Input variant="select" radius="full" labelText="Lokasi Belajar" placeholder="Pilih lokasi" name="location_type" value={inputData.location_type} options={location.map((item) => ({ value: item.iddistrict, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "location_type", value: selectedValue } })} isSearchable={location.length > 10} />
-                    <Input variant="select" radius="full" labelText="Pilih Instrument" placeholder="Lihat pilihan instrument" name="category" value={inputData.category} options={tags.map((item) => ({ value: item.idinstruments, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable={location.length > 10} />
-                    <Input variant="select" noEmptyValue radius="full" labelText="Pilih Jam" value={selectedRange} options={timeRanges} onSelect={handleRangeChange} />
+                    <Input id="sch-location-type" variant="select" radius="full" labelText="Lokasi Belajar" placeholder="Pilih lokasi" name="location_type" value={inputData.location_type} options={location.map((item) => ({ value: item.iddistrict, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "location_type", value: selectedValue } })} isSearchable={location.length > 10} />
+                    <Input id="sch-instrument-type" variant="select" radius="full" labelText="Pilih Instrument" placeholder="Lihat pilihan instrument" name="category" value={inputData.category} options={tags.map((item) => ({ value: item.idinstruments, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable={location.length > 10} />
+                    <Input id="sch-learning-time" variant="select" noEmptyValue radius="full" labelText="Pilih Jam" value={selectedRange} options={timeRanges} onSelect={handleRangeChange} />
                   </PopupFieldset>
                   <WeeklyCalendar>
                     <CalendarTime>
@@ -420,11 +420,12 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
       {reservOpen && (
         <PopupForm title="Formulir Reservasi" onClose={closeForm} onSubmit={handleFormSubmit}>
           <PopupBody>
-            <Input variant="select" radius="full" labelText="Lokasi Belajar" placeholder="Pilih lokasi" name="location_type" value={inputData.location_type} options={location.map((item) => ({ value: item.iddistrict, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "location_type", value: selectedValue } })} isSearchable={location.length > 10} />
-            <Input variant="select" radius="full" labelText="Pilih Instrument" placeholder="Lihat pilihan instrument" name="category" value={inputData.category} options={tags.map((item) => ({ value: item.idinstruments, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable={location.length > 10} />
+            <Input id="location-type" variant="select" radius="full" labelText="Lokasi Belajar" placeholder="Pilih lokasi" name="location_type" value={inputData.location_type} options={location.map((item) => ({ value: item.iddistrict, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "location_type", value: selectedValue } })} isSearchable={location.length > 10} />
+            <Input id="instrument-type" variant="select" radius="full" labelText="Pilih Instrument" placeholder="Lihat pilihan instrument" name="category" value={inputData.category} options={tags.map((item) => ({ value: item.idinstruments, label: item.name }))} onSelect={(selectedValue) => handleInputChange({ target: { name: "category", value: selectedValue } })} isSearchable={location.length > 10} />
             <PopupFieldset>
-              <Input radius="full" labelText="Hari dan Tanggal" placeholder="Atur tanggal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
+              <Input id="learning-date" radius="full" labelText="Hari dan Tanggal" placeholder="Atur tanggal" type="date" name="date" value={inputData.date} onChange={handleInputChange} />
               <Input
+                id="learning-time"
                 variant="select"
                 isSearchable={inputData.date !== "" ? (availSchedule.length > 10 ? true : false) : false}
                 radius="full"
@@ -440,7 +441,7 @@ const TeacherBoard = ({ isLoading = false, id, avatar, header, name, shortBio, b
             {availLesson.length > 0 && <ProductSm items={availLesson} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />}
           </PopupBody>
           <PopupFooter>
-            <Button isFullwidth type="submit" radius="full" buttonText="Reservasi Sekarang" isLoading={submitting} />
+            <Button id="reserv-submit" isFullwidth type="submit" radius="full" buttonText="Reservasi Sekarang" isLoading={submitting} />
           </PopupFooter>
         </PopupForm>
       )}

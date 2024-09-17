@@ -46,8 +46,8 @@ const FPForm = ({ title, desc, children, note, onSubmit, onCancel }) => {
       {children}
       <p className={styles.formNotes}>{note}</p>
       <PopupFieldset>
-        <Button isFullwidth radius="full" bgColor="var(--color-hint)" buttonText="Konfirmasi Pembayaran" onClick={onSubmit} />
-        <Button isFullwidth variant="line" radius="full" color="var(--color-hint)" buttonText="Ubah Metode Pembayaran" onClick={onCancel} />
+        <Button id={`action-next-${title}`} isFullwidth radius="full" bgColor="var(--color-hint)" buttonText="Konfirmasi Pembayaran" onClick={onSubmit} />
+        <Button id={`action-prev-${title}`} isFullwidth variant="line" radius="full" color="var(--color-hint)" buttonText="Ubah Metode Pembayaran" onClick={onCancel} />
       </PopupFieldset>
     </form>
   );

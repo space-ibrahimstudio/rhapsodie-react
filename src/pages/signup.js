@@ -100,31 +100,31 @@ const SignupPage = () => {
             {step === "1" && (
               <Fragment>
                 <FormFieldset>
-                  <Input isLabeled={false} type="text" radius="full" name="full_name" value={inputData.full_name} placeholder="Nama Lengkap" isRequired onChange={handleInputChange} errorContent={errors.full_name} />
-                  <Input isLabeled={false} type="text" radius="full" name="phone" value={inputData.phone} placeholder="Nomor Telepon" isRequired onChange={handleInputChange} errorContent={errors.phone} />
-                  <Input isLabeled={false} type="text" radius="full" name="email" value={inputData.email} placeholder="Email" isRequired onChange={handleInputChange} errorContent={errors.email} />
+                  <Input id="signup-fullname" isLabeled={false} type="text" radius="full" name="full_name" value={inputData.full_name} placeholder="Nama Lengkap" isRequired onChange={handleInputChange} errorContent={errors.full_name} />
+                  <Input id="signup-phone" isLabeled={false} type="text" radius="full" name="phone" value={inputData.phone} placeholder="Nomor Telepon" isRequired onChange={handleInputChange} errorContent={errors.phone} />
+                  <Input id="signup-email" isLabeled={false} type="text" radius="full" name="email" value={inputData.email} placeholder="Email" isRequired onChange={handleInputChange} errorContent={errors.email} />
                 </FormFieldset>
                 <FormFieldset>
-                  <Button isFullwidth radius="full" buttonText="Selanjutnya" onClick={handleNext} />
+                  <Button id="action-submit-step1" isFullwidth radius="full" buttonText="Selanjutnya" onClick={handleNext} />
                 </FormFieldset>
                 <FormFieldset>
-                  <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Facebook" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/fb-auth.svg" />} onClick={() => handleOAuthLogin(facebook)} />
-                  <Button isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Google" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/gm-auth.svg" />} onClick={() => handleOAuthLogin(google)} />
+                  <Button id="action-fb-reauth" isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Facebook" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/fb-auth.svg" />} onClick={() => handleOAuthLogin(facebook)} />
+                  <Button id="action-gm-reauth" isFullwidth variant="line" radius="full" color="var(--color-secondary)" buttonText="Daftar dengan Google" startContent={<Image width="var(--pixel-20)" height="auto" src="/svg/gm-auth.svg" />} onClick={() => handleOAuthLogin(google)} />
                 </FormFieldset>
                 <FormFieldset startAlt="Sudah Punya Akun?">
-                  <Button isFullwidth variant="line" radius="full" color="var(--color-primary)" buttonText="Masuk" onClick={() => navigate("/login")} />
+                  <Button id="action-login-fu" isFullwidth variant="line" radius="full" color="var(--color-primary)" buttonText="Masuk" onClick={() => navigate("/login")} />
                 </FormFieldset>
               </Fragment>
             )}
             {step === "2" && (
               <Fragment>
                 <FormFieldset>
-                  <Input isLabeled={false} type="password" radius="full" name="password" value={inputData.password} placeholder="Password Baru" isRequired onChange={handleInputChange} errorContent={errors.password} />
-                  <Input isLabeled={false} type="password" radius="full" name="confirm_password" value={inputData.confirm_password} placeholder="Konfirmasi Password" isRequired onChange={handleInputChange} errorContent={errors.confirm_password} />
+                  <Input id="signup-password" isLabeled={false} type="password" radius="full" name="password" value={inputData.password} placeholder="Password Baru" isRequired onChange={handleInputChange} errorContent={errors.password} />
+                  <Input id="signup-cpassword" isLabeled={false} type="password" radius="full" name="confirm_password" value={inputData.confirm_password} placeholder="Konfirmasi Password" isRequired onChange={handleInputChange} errorContent={errors.confirm_password} />
                 </FormFieldset>
                 <FormFieldset>
-                  <Button type="submit" isFullwidth radius="full" buttonText="Daftar Sekarang" isLoading={loading} />
-                  <Button variant="line" isFullwidth radius="full" color="var(--color-primary)" buttonText="Kembali" onClick={handlePrev} />
+                  <Button id="action-submit-step2" type="submit" isFullwidth radius="full" buttonText="Daftar Sekarang" isLoading={loading} />
+                  <Button id="action-prev-step2" variant="line" isFullwidth radius="full" color="var(--color-primary)" buttonText="Kembali" onClick={handlePrev} />
                 </FormFieldset>
                 <FormTnC checked={isChecked} onChange={handleCheckboxChange} />
               </Fragment>
